@@ -12,25 +12,23 @@ router.get("/", function(req, res, next) {
 });
 
 router.post("/create", function(req, res, next) {
-    // get data from request and store in object
-    const newPatient = {
-        name: req.body.name,
-        password: req.body.password
-    };
 
-    // read existing patients from json file.
-    let data = fs.readFileSync(path);
-    let patients = data.length !== 0 ? JSON.parse(data) : [];
+    // get data from request, parse, and store in object.
+    var vehicleDetails = Object.keys(req.body);
 
-    // add new patient to existing patients
-    patients.push(newPatient);
+    // parse request body into json object
+    var data = JSON.parse(vehicleDetails);
 
     // write updated patient list to json file.
-    let json = JSON.stringify(patients);
+    let json = JSON.stringify(data);
     fs.writeFileSync(path, json);
-
     res.end(json)
 });
+
+router.get("/patients", function(req, res, next) {
+    let data = fs.readFileSync(path);
+    res.send(data);
+})
 
 
 module.exports = router;

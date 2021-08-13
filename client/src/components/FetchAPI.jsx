@@ -5,10 +5,7 @@ import axios from 'axios';
 const FetchAPI = () => {
 	const [apiResponse, setAPIResponse] = useState('');
 
-	const [state, setState] = useState({
-		name: '',
-		password: '',
-	});
+	
 
 	const callAPI = () => {
 		fetch("http://localhost:9000/testAPI")

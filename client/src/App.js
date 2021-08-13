@@ -1,12 +1,25 @@
-import './App.css';
-import FetchAPI from './components/FetchAPI';
+import Dashboard from './components/Dashboard';
+import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 
-function App() {
+const theme = createTheme({
+  palette: {
+    primary: {
+      // main: '#fdeff9',
+      main: '#FEDBD0',
+      contrastText: '#442c2e',
+    },
+    secondary: {
+      main: '#600750',
+    }
+  }
+})
+
+const App = () => {
   return (
-    <div className="App">
-      <FetchAPI />
-    </div>
-  );
+    <ThemeProvider theme={theme}>
+      <Dashboard />
+    </ThemeProvider>
+  )
 }
 
-export default App;
+export default App
