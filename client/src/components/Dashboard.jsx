@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import { AppBar, Container, Divider, Drawer, Hidden, IconButton, List, ListItem, ListItemIcon, ListItemText, SwipeableDrawer, Toolbar, Typography } from '@material-ui/core';
+import { AppBar, Divider, Drawer, Hidden, IconButton, List, ListItem, ListItemIcon, ListItemText, SwipeableDrawer, Toolbar, Typography } from '@material-ui/core';
 import { Menu as MenuIcon, MoreVert as MoreIcon, Save as SaveIcon } from '@material-ui/icons';
 import { Link, Switch, Route, Redirect } from "react-router-dom";
 import CallIcon from '@material-ui/icons/Call';
@@ -10,6 +10,8 @@ import HealingIcon from '@material-ui/icons/Healing';
 import DescriptionIcon from '@material-ui/icons/Description';
 import CallDetails from '../pages/CallDetails';
 import axios from 'axios';
+import OperatorInfo from '../pages/OperatorInfo';
+import Assessment from '../pages/Assessment';
 
 const drawerWidth = 240;
 
@@ -63,6 +65,16 @@ const Dashboard = (props) => {
 	const theme = useTheme();
 	const [open, setOpen] = useState(false);
 
+	const [callTransaction, setCallTransaction] = useState({
+		Call_ID: '12345',
+		MIN: '234545',
+		Driver_ID: '',
+		Attendant_ID: '',
+		Assisting_ID: '',
+		Vehicle_ID: '',
+		Vehicle_Status: '',
+	})
+
 	const [vehicleDetails, setVehicleDetails] = useState({
 		noPatientsTransported: 0,
 		vhTimeNotified: '',
@@ -90,6 +102,54 @@ const Dashboard = (props) => {
 		vhTotal: '',
 	})
 
+	const [patientDetails, setPatientDetails] = useState({
+		Surname: '',
+		Given_Name: '',
+		Street: '',
+		Community: '',
+		Province: '',
+		Country: '',
+		PostalCode: '',
+		Tel_No: '',
+		DOB: '',
+		Age: '',
+		Race: '',
+		Gender: '',
+		Medicare_No: '',
+		Medicare_Origin: '',
+		Hospital_Chart_No: '',
+		P_Comments: '',
+	})
+
+	const [incidentDetails, setIncidentDetails] = useState({
+		Service_Code: '',
+		Service_Type: '',
+		Dispatch_Code: '',
+		Date_of_Incident: '',
+		Inc_Street: '',
+		Inc_Community: '',
+		Inc_Province: '',
+		Inc_PostalCode: '',
+		Dest_Determinant: '',
+		DD_Other: '',
+		Geo_Locator: '',
+		Inc_Loc_Type: '',
+		Dest_Facility_Code: '',
+		Dest_Street: '',
+		Dest_Community: '',
+		Dest_Province: '',
+		Dest_PostalCode: '',
+		Dest_Facility: '',
+		Scene_Facility_Code: '',
+		Fact_Affect_EMS: '',
+		Fact_Other: '',
+		Patient_Contact: '',
+		Patient_Disposition: '',
+		Pt_Disp_Other: '',
+		Service_Patient_Respons: '',
+		Service_Payment_Number: '',
+	});
+
 	const handleDrawerToggle = () => {
 		setOpen(!open);
 	};
@@ -101,11 +161,16 @@ const Dashboard = (props) => {
 	const handleSave = (e) => {
 		e.preventDefault();
 
-		const data = JSON.stringify(vehicleDetails);
+		const EMSDATA = {
+			"Call_Transaction": callTransaction,
+			"Patient_Details": patientDetails,
+			"Vehicle_Details": vehicleDetails,
+			"Incident_Details": incidentDetails,
+		}
 
 		axios
-			.post('http://localhost:9000/testAPI/create', data)
-			.then(() => console.log('Patient Created'))
+			.post('http://localhost:9000/testAPI/create', JSON.stringify(EMSDATA))
+			.then(() => console.log('Call Details Added'))
 			.catch(err => {
 				console.error(err);
 			});
@@ -214,10 +279,10 @@ const Dashboard = (props) => {
 			</nav>
 			<div className={classes.content}>
 				<div className={classes.drawerHeader} />
-				
+
 				<Switch>
 
-					<Redirect exact from="/" to="/call-details/vehicle-details" />
+					{/* <Redirect exact from="/" to="/call-details/vehicle-details" /> */}
 					<Redirect exact from="/call-details" to="/call-details/vehicle-details" />
 
 					{/* 
@@ -225,10 +290,25 @@ const Dashboard = (props) => {
 						<CallDetails />
 					</Route> */}
 
-					<Route exact path="/call-details/:page?" render={props => <CallDetails vehicleDetails={vehicleDetails} setVehicleDetails={setVehicleDetails} {...props}  />}/>
+					<Redirect exact from="/" to="/operator-info" />
+					<Route path="/operator-info">
+						<OperatorInfo state={callTransaction} setState={setCallTransaction} />
+					</Route>
+
+					<Route exact path="/call-details/:page?"
+						render={props =>
+							<CallDetails
+								vehicleDetails={vehicleDetails}
+								setVehicleDetails={setVehicleDetails}
+								patientDetails={patientDetails}
+								setPatientDetails={setPatientDetails}
+								incidentDetails={incidentDetails}
+								setIncidentDetails={setIncidentDetails}
+								{...props}
+							/>} />
 
 					<Route path="/assessment">
-						{/* <Services /> */}
+						<Assessment />
 					</Route>
 					<Route path="/vital-signs">
 						{/* <AboutUs /> */}

@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
 import VehicleDetails from '../pages/CallDetails/VehicleDetails'
 import PatientDetails from '../pages/CallDetails/PatientDetails'
 import IncidentDetails from '../pages/CallDetails/IncidentDetails'
@@ -28,11 +26,7 @@ const CallDetails = (props) => {
 	const { params } = match;
 	const { page } = params;
 
-	const { vehicleDetails, setVehicleDetails} = props;
-
-
-
-
+	const { setVehicleDetails, setPatientDetails, setIncidentDetails } = props;
 
 	const tabNameToIndex = {
 		0: "vehicle-details",
@@ -72,10 +66,9 @@ const CallDetails = (props) => {
 					aria-labelledby={`simple-tab-${page}`}
 				>
 					{selectedTab === 0 && <VehicleDetails state={props.vehicleDetails} setState={setVehicleDetails} />}
-					{selectedTab === 1 && <PatientDetails />}
-					{selectedTab === 2 && <IncidentDetails />}
+					{selectedTab === 1 && <PatientDetails state={props.patientDetails} setState={setPatientDetails} />}
+					{selectedTab === 2 && <IncidentDetails state={props.incidentDetails} setState={setIncidentDetails}  patientDetails={props.patientDetails} />}
 				</Typography>
-
 			</div>
 		</div>
 	)

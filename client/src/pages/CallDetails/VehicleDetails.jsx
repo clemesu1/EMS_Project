@@ -1,5 +1,5 @@
 import { Grid, TextField, Typography, Paper, Button, Box, FormControl, Select, MenuItem } from '@material-ui/core'
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 
 
@@ -26,44 +26,12 @@ const crewTypes = ["EMT-1", "EMT-2", "EMT-3", "EMR", "PCP", "ACP", "CCP", "RT", 
 const VehicleDetails = ({ state, setState }) => {
 	const classes = useStyles();
 
-	// const [state, setState] = useState(JSON.parse(localStorage.getItem('vehicleDetails')) || {
-	// 	noPatientsTransported: 0,
-	// 	vhTimeNotified: '',
-	// 	vhTimeEnRoute: '',
-	// 	vhTimeAtScene: '',
-	// 	vhTimeCrewPatient: '',
-	// 	vhTimeLeftScene: '',
-	// 	vhTimeAtDestination: '',
-	// 	vhTimeAvailable: '',
-	// 	vhTimeBackArea: '',
-	// 	vhResponseToScene: '',
-	// 	vhResponseToSceneChg: '',
-	// 	vhResponseFromScene: '',
-	// 	vhResponseFromSceneChg: '',
-	// 	crwDriv: '',
-	// 	crwAtte: '',
-	// 	crwAsst: '',
-	// 	crwDrOth: '',
-	// 	crwAttnOth: '',
-	// 	crwAsstOth: '',
-	// 	vhOut: '',
-	// 	vhAtScn: '',
-	// 	vhAtDestn: '',
-	// 	vhIn: '',
-	// 	vhTotal: '',
-	// })
-
 	const handleChange = (e) => {
 		setState({
 			...state,
 			[e.target.name]: e.target.value
 		})
 	}
-
-	// useEffect(() => {
-	// 	// setVehicleDetails(state);
-	// 	localStorage.setItem('vehicleDetails', JSON.stringify(state));
-	// }, [state])
 
 	return (
 		<form className={classes.root}>
