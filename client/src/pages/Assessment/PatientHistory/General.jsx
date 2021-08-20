@@ -1,4 +1,4 @@
-import { Box, Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel, Grid, MenuItem, Paper, Radio, RadioGroup, Select, TextField, Typography } from '@material-ui/core'
+import { Box, Checkbox, FormControl, FormControlLabel, FormGroup, Grid, MenuItem, Paper, Radio, RadioGroup, Select, TextField, Typography } from '@material-ui/core'
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -41,7 +41,6 @@ const General = ({ state, setState, bodySystems, setBodySystems }) => {
 			G_DNR_Order: e.target.checked,
 		})
 	}
-
 
 	const handleCheckboxChange = (e, value) => {
 		const newBodySystems = [...bodySystems];

@@ -176,6 +176,24 @@ const Dashboard = (props) => {
 		PH_Comment: '',
 	})
 
+	const [neuroResponse, setNeuroResponse] = useState({
+		Call_ID: '12345',
+		LOC: '',
+		Status: '',
+		R_Eye_Size: '',
+		L_Eye_Size: '',
+		R_Eye_React: '',
+		L_Eye_React: '',
+		Sense_UR: '',
+		Sense_UL: '',
+		Sense_LR: '',
+		Sense_LL: '',
+		Motor_UR: '',
+		Motor_UL: '',
+		Motor_LR: '',
+		Motor_LL: '',
+	})
+
 	const [bodySystems, setBodySystems] = useState([
 		{
 			label: 'Cardiovascular',
@@ -224,6 +242,54 @@ const Dashboard = (props) => {
 		},
 	]);
 
+	const [status, setStatus] = useState([
+		{
+			label: 'Normal',
+			value: 'normal',
+			checked: false,
+		},
+		{
+			label: 'Combative',
+			value: 'combative',
+			checked: false,
+		},
+		{
+			label: 'Confused',
+			value: 'confused',
+			checked: false,
+		},
+		{
+			label: 'Dysphasia',
+			value: 'dysphasia',
+			checked: false,
+		},
+		{
+			label: 'Hallucinations',
+			value: 'hallucinations',
+			checked: false,
+		},
+		{
+			label: 'Lethargic',
+			value: 'lethargic',
+			checked: false,
+		},
+		{
+			label: 'Seizures',
+			value: 'seizures',
+			checked: false,
+		},
+		{
+			label: 'Tremors',
+			value: 'tremors',
+			checked: false,
+		},
+		{
+			label: 'Other',
+			value: 'other',
+			checked: false,
+		},
+	]);
+
 	// Allergies
 	const [checkedDrug, setCheckedDrug] = useState([]);
 	const [checkedEnv, setCheckedEnv] = useState([]);
@@ -245,6 +311,10 @@ const Dashboard = (props) => {
 		setCheckedMeds: setCheckedMeds,
 		checkedHist: checkedHist,
 		setCheckedHist: setCheckedHist,
+		neuroResponse: neuroResponse,
+		setNeuroResponse: setNeuroResponse,
+		status: status,
+		setStatus: setStatus,
 	}
 
 	const handleDrawerToggle = () => {
@@ -264,6 +334,7 @@ const Dashboard = (props) => {
 			"Vehicle_Details": vehicleDetails,
 			"Incident_Details": incidentDetails,
 			"Patient_History": patientHistory,
+			"Neuro_Response": neuroResponse,
 		}
 
 		axios

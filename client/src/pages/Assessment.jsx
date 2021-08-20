@@ -27,6 +27,7 @@ const Assessment = (props) => {
 	const { page } = params;
 
 	const { setPatientHistory } = props;
+
 	const { assessmentItems } = props;
 
 
@@ -62,7 +63,7 @@ const Assessment = (props) => {
 
 				</Tabs>
 			</AppBar>
-			<div className={classes.content}>
+			<div>
 				<Typography
 					component="div"
 					role="tabpanel"
@@ -71,7 +72,7 @@ const Assessment = (props) => {
 					aria-labelledby={`assessment-tab-${page}`}
 				>
 					{selectedTab === 0 && <PatientHistory state={props.patientHistory} setState={setPatientHistory} assessmentItems={assessmentItems} {...props} />}
-					{selectedTab === 1 && <GeneralAssessment />}
+					{selectedTab === 1 && <GeneralAssessment assessmentItems={assessmentItems} {...props}  />}
 					{selectedTab === 2 && <ComplaintBased />}
 					{selectedTab === 3 && <MechanismOfInjury />}
 
