@@ -39,6 +39,7 @@ function a11yProps(index) {
 const PatientHistory = (props) => {
 
 	const { state, setState } = props;
+	const { assessmentItems } = props;
 
 	const [selectedTab, setSelectedTab] = useState(0);
 
@@ -53,53 +54,7 @@ const PatientHistory = (props) => {
 		})
 	}
 
-	const [bodySystems, setBodySystems] = useState([
-		{
-			label: 'Cardiovascular',
-			value: 'cardiovascular',
-			checked: false,
-		},
-		{
-			label: 'Central Nervous System',
-			value: 'centralNervousSystem',
-			checked: false,
-		},
-		{
-			label: 'Endocrine',
-			value: 'endocrine',
-			checked: false,
-		},
-		{
-			label: 'GI',
-			value: 'GI',
-			checked: false,
-		},
-		{
-			label: 'Integumentary',
-			value: 'integumentary',
-			checked: false,
-		},
-		{
-			label: 'Musculoskeletal',
-			value: 'musculoskeletal',
-			checked: false,
-		},
-		{
-			label: 'Renal',
-			value: 'renal',
-			checked: false,
-		},
-		{
-			label: 'Reproductive',
-			value: 'reproductive',
-			checked: false,
-		},
-		{
-			label: 'Respiratory',
-			value: 'respiratory',
-			checked: false,
-		},
-	]);
+	const { bodySystems, setBodySystems, checkedDrug, setCheckedDrug, checkedEnv, setCheckedEnv, checkedMeds, setCheckedMeds, checkedHist, setCheckedHist } = assessmentItems;
 
 	return (
 		<div>
@@ -147,10 +102,13 @@ const PatientHistory = (props) => {
 							<General state={state} setState={setState} bodySystems={bodySystems} setBodySystems={setBodySystems} />
 						</TabPanel>
 						<TabPanel value={selectedTab} index={1}>
-							<Allergies state={state} setState={setState} />
+							<Allergies state={state} setState={setState}
+								checkedDrug={checkedDrug} setCheckedDrug={setCheckedDrug}
+								checkedEnv={checkedEnv} setCheckedEnv={setCheckedEnv}
+							/>
 						</TabPanel>
 						<TabPanel value={selectedTab} index={2}>
-							<Medications state={state} setState={setState} />
+							<Medications state={state} setState={setState} checked={checkedMeds} setChecked={setCheckedMeds} />
 						</TabPanel>
 						<TabPanel value={selectedTab} index={3}>
 							<LastMeal state={state} setState={setState} />
@@ -159,7 +117,7 @@ const PatientHistory = (props) => {
 							<EventsPrior state={state} setState={setState} />
 						</TabPanel>
 						<TabPanel value={selectedTab} index={5}>
-							<PastHistory state={state} setState={setState} />
+							<PastHistory state={state} setState={setState} checked={checkedHist} setChecked={setCheckedHist}/>
 						</TabPanel>
 					</Grid>
 

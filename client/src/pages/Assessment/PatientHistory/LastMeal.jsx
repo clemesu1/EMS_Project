@@ -21,7 +21,7 @@ const LastMeal = ({ state, setState }) => {
 	return (
 		<div className={classes.root}>
 			<Grid container spacing={3}>
-				<Grid item container row xs={12}>
+				<Grid item container xs={12}>
 					<Grid item xs={12}>
 						<Typography>Comments</Typography>
 					</Grid>

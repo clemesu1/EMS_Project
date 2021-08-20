@@ -8,7 +8,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 	listbox: {
 		width: '100%',
-		maxHeight: '29rem', 
+		maxHeight: '29rem',
 		overflow: 'auto',
 		backgroundColor: theme.palette.background.paper,
 	},
@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
 const drugList = ["ASA", "Cephalosporines (Keflex, Cefzil, Ceftin, Suprax, Vantin)", "Codeine", "Demerol", "Morphine", "Nitro", "Penicillin", "Sulpha drugs"];
 const environmentalList = ["Almonds", "Cashews", "Eggs", "Fish", "Hazelnuts", "Latex", "Milk", "Other Nuts", "Peanuts", "Sesame seeds", "Shellfish", "Soy", "Walnuts", "Wheat"];
 
-const Allergies = ({ state, setState }) => {
+const Allergies = ({ state, setState, checkedDrug, setCheckedDrug, checkedEnv, setCheckedEnv }) => {
 	const classes = useStyles();
 
 	const handleChange = (e) => {
@@ -26,8 +26,6 @@ const Allergies = ({ state, setState }) => {
 			[e.target.name]: e.target.value
 		})
 	}
-
-	const [checkedDrug, setCheckedDrug] = React.useState([]);
 
 	const handleDrugToggle = (value) => () => {
 		const currentIndex = checkedDrug.indexOf(value);
@@ -40,17 +38,18 @@ const Allergies = ({ state, setState }) => {
 		}
 
 		setCheckedDrug(newChecked);
+
 		setState({
 			...state,
 			Alr_Drugs: newChecked,
 		})
 	};
 
-	const [checkedEnv, setCheckedEnv] = React.useState([]);
-
 	const handleEnvToggle = (value) => () => {
 		const currentIndex = checkedEnv.indexOf(value);
 		const newChecked = [...checkedEnv];
+
+		console.log(currentIndex)
 
 		if (currentIndex === -1) {
 			newChecked.push(value);
@@ -59,6 +58,7 @@ const Allergies = ({ state, setState }) => {
 		}
 
 		setCheckedEnv(newChecked);
+		
 		setState({
 			...state,
 			Alr_Env: newChecked,
@@ -75,7 +75,7 @@ const Allergies = ({ state, setState }) => {
 						</Box>
 					</Typography>
 
-					<Grid item container xs={12} row spacing={3} alignItems="flex-start">
+					<Grid item container xs={12} spacing={3} alignItems="flex-start">
 						<Grid item container xs={6}>
 							<Grid item xs={12}>
 								<Typography variant="subtitle2" component="div">
@@ -87,20 +87,21 @@ const Allergies = ({ state, setState }) => {
 									{
 										drugList.map((value, index) => {
 											const labelId = `checkbox-list-label-${value}`;
+
 											return (
 												<ListItem key={index} role={undefined} dense button onClick={handleDrugToggle(value)}>
 													<ListItemIcon>
-														<Checkbox>
+														<Checkbox
 															edge="start"
 															checked={checkedDrug.indexOf(value) !== -1}
 															tabIndex={-1}
 															disableRipple
 															inputProps={{ 'aria-labelledby': labelId }}
-														</Checkbox>
+														/>
 													</ListItemIcon>
 													<ListItemText id={labelId} primary={value} />
 												</ListItem>
-											)
+											);
 										})
 									}
 								</List>
@@ -115,23 +116,24 @@ const Allergies = ({ state, setState }) => {
 							</Grid>
 							<Grid item xs={12}>
 								<List className={classes.listbox}>
-									{
+								{
 										environmentalList.map((value, index) => {
 											const labelId = `checkbox-list-label-${value}`;
+
 											return (
 												<ListItem key={index} role={undefined} dense button onClick={handleEnvToggle(value)}>
 													<ListItemIcon>
-														<Checkbox>
+														<Checkbox
 															edge="start"
-															checked={checkedDrug.indexOf(value) !== -1}
+															checked={checkedEnv.indexOf(value) !== -1}
 															tabIndex={-1}
 															disableRipple
 															inputProps={{ 'aria-labelledby': labelId }}
-														</Checkbox>
+														/>
 													</ListItemIcon>
 													<ListItemText id={labelId} primary={value} />
 												</ListItem>
-											)
+											);
 										})
 									}
 								</List>

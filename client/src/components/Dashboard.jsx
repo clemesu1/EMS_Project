@@ -176,6 +176,77 @@ const Dashboard = (props) => {
 		PH_Comment: '',
 	})
 
+	const [bodySystems, setBodySystems] = useState([
+		{
+			label: 'Cardiovascular',
+			value: 'cardiovascular',
+			checked: false,
+		},
+		{
+			label: 'Central Nervous System',
+			value: 'centralNervousSystem',
+			checked: false,
+		},
+		{
+			label: 'Endocrine',
+			value: 'endocrine',
+			checked: false,
+		},
+		{
+			label: 'GI',
+			value: 'GI',
+			checked: false,
+		},
+		{
+			label: 'Integumentary',
+			value: 'integumentary',
+			checked: false,
+		},
+		{
+			label: 'Musculoskeletal',
+			value: 'musculoskeletal',
+			checked: false,
+		},
+		{
+			label: 'Renal',
+			value: 'renal',
+			checked: false,
+		},
+		{
+			label: 'Reproductive',
+			value: 'reproductive',
+			checked: false,
+		},
+		{
+			label: 'Respiratory',
+			value: 'respiratory',
+			checked: false,
+		},
+	]);
+
+	// Allergies
+	const [checkedDrug, setCheckedDrug] = useState([]);
+	const [checkedEnv, setCheckedEnv] = useState([]);
+
+	// Medications
+	const [checkedMeds, setCheckedMeds] = useState([]);
+
+	// Past History
+	const [checkedHist, setCheckedHist] = useState([]);
+
+	const assessmentItems = {
+		bodySystems: bodySystems,
+		setBodySystems: setBodySystems,
+		checkedDrug: checkedDrug,
+		setCheckedDrug: setCheckedDrug,
+		checkedEnv: checkedEnv,
+		setCheckedEnv: setCheckedEnv,
+		checkedMeds: checkedMeds,
+		setCheckedMeds: setCheckedMeds,
+		checkedHist: checkedHist,
+		setCheckedHist: setCheckedHist,
+	}
+
 	const handleDrawerToggle = () => {
 		setOpen(!open);
 	};
@@ -335,6 +406,7 @@ const Dashboard = (props) => {
 							<Assessment
 								patientHistory={patientHistory}
 								setPatientHistory={setPatientHistory}
+								assessmentItems={assessmentItems}
 								{...props}
 							/>
 						}

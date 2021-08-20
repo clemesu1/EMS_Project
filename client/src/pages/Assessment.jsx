@@ -27,6 +27,7 @@ const Assessment = (props) => {
 	const { page } = params;
 
 	const { setPatientHistory } = props;
+	const { assessmentItems } = props;
 
 
 	const tabNameToIndex = {
@@ -69,7 +70,7 @@ const Assessment = (props) => {
 					id={`assessment-tabpanel-${page}`}
 					aria-labelledby={`assessment-tab-${page}`}
 				>
-					{selectedTab === 0 && <PatientHistory state={props.patientHistory} setState={setPatientHistory}  {...props} />}
+					{selectedTab === 0 && <PatientHistory state={props.patientHistory} setState={setPatientHistory} assessmentItems={assessmentItems} {...props} />}
 					{selectedTab === 1 && <GeneralAssessment />}
 					{selectedTab === 2 && <ComplaintBased />}
 					{selectedTab === 3 && <MechanismOfInjury />}
