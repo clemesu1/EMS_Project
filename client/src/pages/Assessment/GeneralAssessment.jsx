@@ -43,7 +43,7 @@ const GeneralAssessment = (props) => {
 
 	const { assessmentItems } = props;
 
-	const { neuroResponse, setNeuroResponse, status, setStatus } = assessmentItems;
+	const { neuroResponse, setNeuroResponse, status, setStatus, abcs, setABCs } = assessmentItems;
 
 	const [selectedTab, setSelectedTab] = useState(0);
 
@@ -65,7 +65,7 @@ const GeneralAssessment = (props) => {
 				<NeuroResponse state={neuroResponse} setState={setNeuroResponse} status={status} setStatus={setStatus} />
 			</TabPanel>
 			<TabPanel value={selectedTab} index={1}>
-				<ABCs />
+				<ABCs state={abcs} setState={setABCs} />
 			</TabPanel>
 			<TabPanel value={selectedTab} index={2}>
 				<AssessmentFindings />

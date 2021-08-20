@@ -194,6 +194,18 @@ const Dashboard = (props) => {
 		Motor_LL: '',
 	})
 
+	const [abcs, setABCs] = useState({
+		Call_ID: '12345',
+		Airway_Status: '',
+		Breath_Effort: '',
+		Breath_Rate: '',
+		Breath_Rhythm: '',
+		Circul_Site: '',
+		Circul_Rate: '',
+		Circul_Vol: '',
+		Circul_Rhythm: '',
+	})
+
 	const [bodySystems, setBodySystems] = useState([
 		{
 			label: 'Cardiovascular',
@@ -315,6 +327,8 @@ const Dashboard = (props) => {
 		setNeuroResponse: setNeuroResponse,
 		status: status,
 		setStatus: setStatus,
+		abcs: abcs,
+		setABCs: setABCs,
 	}
 
 	const handleDrawerToggle = () => {
@@ -335,6 +349,7 @@ const Dashboard = (props) => {
 			"Incident_Details": incidentDetails,
 			"Patient_History": patientHistory,
 			"Neuro_Response": neuroResponse,
+			"ABCs": abcs
 		}
 
 		axios
@@ -408,9 +423,9 @@ const Dashboard = (props) => {
 					<IconButton aria-label="save data in fields" edge="end" color="inherit" onClick={handleSave}>
 						<SaveIcon />
 					</IconButton>
-					<IconButton aria-label="display more actions" edge="end" color="inherit">
+					{/* <IconButton aria-label="display more actions" edge="end" color="inherit">
 						<MoreIcon />
-					</IconButton>
+					</IconButton> */}
 				</Toolbar>
 			</AppBar>
 			<nav className={classes.drawer} aria-label="mailbox folders">
