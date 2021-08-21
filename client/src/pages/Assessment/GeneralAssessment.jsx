@@ -43,14 +43,13 @@ const GeneralAssessment = (props) => {
 
 	const { assessmentItems } = props;
 
-	const { neuroResponse, setNeuroResponse, status, setStatus, abcs, setABCs } = assessmentItems;
+	const { neuroResponse, setNeuroResponse, status, setStatus, abcs, setABCs, assessFindings, setAssessFindings } = assessmentItems;
 
 	const [selectedTab, setSelectedTab] = useState(0);
 
 	const handleTabChange = (e, value) => {
 		setSelectedTab(value);
 	}
-
 
 	return (
 		<div className={classes.content}>
@@ -68,7 +67,7 @@ const GeneralAssessment = (props) => {
 				<ABCs state={abcs} setState={setABCs} />
 			</TabPanel>
 			<TabPanel value={selectedTab} index={2}>
-				<AssessmentFindings />
+				<AssessmentFindings state={assessFindings} setState={setAssessFindings} assessmentItems={assessmentItems} />
 			</TabPanel>
 		</div>
 	)

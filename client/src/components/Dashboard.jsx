@@ -206,6 +206,13 @@ const Dashboard = (props) => {
 		Circul_Rhythm: '',
 	})
 
+	const [assessFindings, setAssessFindings] = useState({
+		Call_ID: '12345',
+		Assess_Find: '',
+		Body_Area_Find: '',
+		Find_Other: '',
+	})
+
 	const [bodySystems, setBodySystems] = useState([
 		{
 			label: 'Cardiovascular',
@@ -312,6 +319,10 @@ const Dashboard = (props) => {
 	// Past History
 	const [checkedHist, setCheckedHist] = useState([]);
 
+	// Assessment Findings
+	const [assessChecked, setAssessChecked] = useState([])
+	const [bodyChecked, setBodyChecked] = useState([])
+
 	const assessmentItems = {
 		bodySystems: bodySystems,
 		setBodySystems: setBodySystems,
@@ -329,6 +340,12 @@ const Dashboard = (props) => {
 		setStatus: setStatus,
 		abcs: abcs,
 		setABCs: setABCs,
+		assessFindings: assessFindings,
+		setAssessFindings: setAssessFindings,
+		assessChecked: assessChecked,
+		setAssessChecked: setAssessChecked,
+		bodyChecked: bodyChecked,
+		setBodyChecked: setBodyChecked,
 	}
 
 	const handleDrawerToggle = () => {
@@ -349,7 +366,8 @@ const Dashboard = (props) => {
 			"Incident_Details": incidentDetails,
 			"Patient_History": patientHistory,
 			"Neuro_Response": neuroResponse,
-			"ABCs": abcs
+			"ABCs": abcs,
+			"Assess_Findings": assessFindings,
 		}
 
 		axios

@@ -2,7 +2,7 @@ var express = require("express");
 var router = express.Router();
 const fs = require("fs");
 
-const path = "../api/database/db.json"
+const path = "../api/database/EMSDATA.json"
 
 router.get("/", function(req, res, next) {
     res.send("API is working properly");
