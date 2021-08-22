@@ -213,6 +213,23 @@ const Dashboard = (props) => {
 		Find_Other: '',
 	})
 
+	const [respiratory, setRespiratory] = useState({
+		Call_ID: '12345',
+		Level_of_distress: '',
+		Breath_sound_I: '',
+		Breath_sound_II: '',
+		PreEMS_Medication: '',
+		Response_to_Medic: '',
+		Pain_Scale: '',
+		Coughing: '',
+		Tobacco: '',
+		Allerg_Exposure: '',
+		Medication_Admin: '',
+		JVD: '',
+		Periph_Edema: '',
+		Acc_Mus_Use: '',
+	})
+
 	const [bodySystems, setBodySystems] = useState([
 		{
 			label: 'Cardiovascular',
@@ -309,6 +326,44 @@ const Dashboard = (props) => {
 		},
 	]);
 
+	const [breathSoundChecksII, setBreathSoundChecksII] = useState([
+		{
+			label: 'Wheezes',
+			value: 'Wheezes',
+			checked: false,
+		},
+		{
+			label: 'Crackles',
+			value: 'Crackles',
+			checked: false,
+		},
+		{
+			label: 'Other',
+			value: 'Other',
+			checked: false,
+		},
+		{
+			label: 'Right Apex',
+			value: 'Right Apex',
+			checked: false,
+		},
+		{
+			label: 'Left Apex',
+			value: 'Left Apex',
+			checked: false,
+		},
+		{
+			label: 'Right Base',
+			value: 'Right Base',
+			checked: false,
+		},
+		{
+			label: 'Left Base',
+			value: 'Left Base',
+			checked: false,
+		},
+	]);
+
 	// Allergies
 	const [checkedDrug, setCheckedDrug] = useState([]);
 	const [checkedEnv, setCheckedEnv] = useState([]);
@@ -346,6 +401,10 @@ const Dashboard = (props) => {
 		setAssessChecked: setAssessChecked,
 		bodyChecked: bodyChecked,
 		setBodyChecked: setBodyChecked,
+		respiratory: respiratory,
+		setRespiratory: setRespiratory,
+		breathSoundChecksII: breathSoundChecksII,
+		setBreathSoundChecksII: setBreathSoundChecksII,
 	}
 
 	const handleDrawerToggle = () => {
@@ -368,6 +427,7 @@ const Dashboard = (props) => {
 			"Neuro_Response": neuroResponse,
 			"ABCs": abcs,
 			"Assess_Findings": assessFindings,
+			"Respiratory": respiratory,
 		}
 
 		axios

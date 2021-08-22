@@ -89,7 +89,7 @@ const NeuroResponse = (props) => {
 					<Grid item container xs={8} alignItems="center">
 						<Grid item xs>
 							<FormControl component="fieldset" className={classes.formControl} >
-								<FormGroup row >
+								<FormGroup row>
 									{status.map((item, index) => (
 										<FormControlLabel
 											key={index}
