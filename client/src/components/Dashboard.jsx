@@ -230,6 +230,19 @@ const Dashboard = (props) => {
 		Acc_Mus_Use: '',
 	})
 
+	const [seizure, setSeizure] = useState({
+		Call_ID: '12345',
+		Witnessed_Seizure: '',
+		Cause: '',
+		Cause_Other: '',
+		Witness_of_Seizure: '',
+		S_Other: '',
+		Type_of_Seizure: '',
+		Type_Other: '',
+		No_of_Seizure: '',
+		Seiz_Duration: '',
+	})
+
 	const [bodySystems, setBodySystems] = useState([
 		{
 			label: 'Cardiovascular',
@@ -405,6 +418,8 @@ const Dashboard = (props) => {
 		setRespiratory: setRespiratory,
 		breathSoundChecksII: breathSoundChecksII,
 		setBreathSoundChecksII: setBreathSoundChecksII,
+		seizure: seizure,
+		setSeizure: setSeizure,
 	}
 
 	const handleDrawerToggle = () => {
@@ -428,6 +443,7 @@ const Dashboard = (props) => {
 			"ABCs": abcs,
 			"Assess_Findings": assessFindings,
 			"Respiratory": respiratory,
+			"Seizure_Assessment": seizure
 		}
 
 		axios

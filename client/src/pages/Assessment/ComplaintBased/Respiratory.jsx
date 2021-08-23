@@ -1,26 +1,15 @@
-import { Checkbox, FormControl, FormGroup, Grid, MenuItem, Paper, Radio, RadioGroup, Select, Slider, Typography } from '@material-ui/core'
+import { Checkbox, FormControl, FormLabel, FormControlLabel, FormGroup, Grid, MenuItem, Paper, Radio, RadioGroup, Select, Slider, TextField, Typography } from '@material-ui/core'
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles';
-import { TextField } from '@material-ui/core';
-import { FormLabel } from '@material-ui/core';
-import { FormControlLabel } from '@material-ui/core';
+
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-        flexGrow: 1,
-    },
     paper: {
         width: "100%",
         height: "100%",
         padding: theme.spacing(2),
         margin: 'auto',
     },
-    formControl: {
-        minWidth: 120,
-    },
-    textField: {
-        width: 120,
-    }
 }));
 
 const Respiratory = (props) => {
