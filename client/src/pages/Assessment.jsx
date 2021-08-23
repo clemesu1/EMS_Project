@@ -55,7 +55,7 @@ const Assessment = (props) => {
 	return (
 		<div className={classes.root}>
 			<AppBar position="static">
-				<Tabs value={selectedTab} onChange={handleChange}>
+				<Tabs value={selectedTab} onChange={handleChange} scrollButtons="auto" variant="scrollable">
 					<Tab label="Patient History" />
 					<Tab label="General Assessment" />
 					<Tab label="Complaint based Assessment & History" />
@@ -72,13 +72,13 @@ const Assessment = (props) => {
 					aria-labelledby={`assessment-tab-${page}`}
 				>
 					{selectedTab === 0 && <PatientHistory state={props.patientHistory} setState={setPatientHistory} assessmentItems={assessmentItems} {...props} />}
-					{selectedTab === 1 && <GeneralAssessment assessmentItems={assessmentItems} {...props}  />}
-					{selectedTab === 2 && <ComplaintBased assessmentItems={assessmentItems} {...props}/>}
+					{selectedTab === 1 && <GeneralAssessment assessmentItems={assessmentItems} {...props} />}
+					{selectedTab === 2 && <ComplaintBased assessmentItems={assessmentItems} {...props} />}
 					{selectedTab === 3 && <MechanismOfInjury />}
 
 				</Typography>
 			</div>
-			
+
 		</div>
 	)
 }

@@ -243,6 +243,23 @@ const Dashboard = (props) => {
 		Seiz_Duration: '',
 	})
 
+	const [toxicExposure, setToxicExposure] = useState({
+		Call_ID: '12345',
+		Nature_of_Expo: '',
+		Exposure_time: '',
+		Name_of_substance: '',
+		Type_of_substance: '',
+		Typ_sub_Other: '',
+		Amount_of_substance: '',
+		Duration: '',
+		Route_of_entry: '',
+		Route_Other: '',
+		Type_of_reaction: '',
+		Reaction_Other: '',
+		Evidence: '',
+		Evidence_Other: '',
+	})
+
 	const [bodySystems, setBodySystems] = useState([
 		{
 			label: 'Cardiovascular',
@@ -391,6 +408,10 @@ const Dashboard = (props) => {
 	const [assessChecked, setAssessChecked] = useState([])
 	const [bodyChecked, setBodyChecked] = useState([])
 
+	// Toxic Exposure
+	const [substanceAmount, setSubstanceAmount] = useState('')
+    const [substanceUnit, setSubstanceUnit] = useState('')
+
 	const assessmentItems = {
 		bodySystems: bodySystems,
 		setBodySystems: setBodySystems,
@@ -420,6 +441,12 @@ const Dashboard = (props) => {
 		setBreathSoundChecksII: setBreathSoundChecksII,
 		seizure: seizure,
 		setSeizure: setSeizure,
+		toxicExposure: toxicExposure,
+		setToxicExposure: setToxicExposure,
+		substanceAmount: substanceAmount,
+		setSubstanceAmount: setSubstanceAmount,
+		substanceUnit: substanceUnit,
+		setSubstanceUnit: setSubstanceUnit,
 	}
 
 	const handleDrawerToggle = () => {
@@ -443,7 +470,8 @@ const Dashboard = (props) => {
 			"ABCs": abcs,
 			"Assess_Findings": assessFindings,
 			"Respiratory": respiratory,
-			"Seizure_Assessment": seizure
+			"Seizure_Assessment": seizure,
+			"ToxicExpo_Assessment": toxicExposure,
 		}
 
 		axios

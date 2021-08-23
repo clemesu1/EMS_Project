@@ -44,12 +44,6 @@ const Seizure = (props) => {
                     <Grid item xs={3}>
                         <Typography>Suspected cause of Seizure</Typography>
                     </Grid>
-                    {/* Diabetes
-                        Epilepsy
-                        Fever
-                        Other
-                        Over Dose
-                        Trauma */}
                     <Grid item xs={9}>
                         <FormControl
                             variant="outlined"
@@ -72,26 +66,24 @@ const Seizure = (props) => {
                             </Select>
                         </FormControl>
                     </Grid>
-                    {
-                        state.Cause !== "Other" ? '' :
-                            <>
-                                <Grid item>
-                                    <Typography>Other</Typography>
-                                </Grid>
-                                <Grid item xs>
-                                    <TextField
-                                        size="small"
-                                        color="secondary"
-                                        variant="outlined"
-                                        fullWidth
-                                        name="Cause_Other"
-                                        value={state.Cause_Other}
-                                        onChange={handleChange}
-                                    />
-                                </Grid>
-                            </>
+                    {state.Cause !== "Other" ? '' :
+                        <>
+                            <Grid item>
+                                <Typography>Other</Typography>
+                            </Grid>
+                            <Grid item xs>
+                                <TextField
+                                    size="small"
+                                    color="secondary"
+                                    variant="outlined"
+                                    fullWidth
+                                    name="Cause_Other"
+                                    value={state.Cause_Other}
+                                    onChange={handleChange}
+                                />
+                            </Grid>
+                        </>
                     }
-
                 </Grid>
             </Grid>
             <Grid item container xs={12} spacing={2}>
@@ -157,11 +149,6 @@ const Seizure = (props) => {
                                 value={state.Type_of_Seizure || ''}
                                 onChange={handleChange}
                             >
-                                {/* Grand Mal
-                                    Petit Mal
-                                    Focal
-                                    Jacksonian
-                                    Other */}
                                 <MenuItem value={"Grand Mal"}>Grand Mal</MenuItem>
                                 <MenuItem value={"Petit Mal"}>Petit Mal</MenuItem>
                                 <MenuItem value={"Focal"}>Focal</MenuItem>
@@ -197,8 +184,7 @@ const Seizure = (props) => {
                         <Typography>Seizure Duration</Typography>
                     </Grid>
                     <Grid item>
-
-                        <FormControl 
+                        <FormControl
                             variant="outlined"
                             color="secondary"
                             size="small"

@@ -99,7 +99,7 @@ const PatientHistory = (props) => {
 			<Grid container>
 				<Grid item container xs={12}>
 					<AppBar position="static">
-						<Tabs value={selectedTab} onChange={handleTabChange} aria-label="patient history tabs">
+						<Tabs value={selectedTab} onChange={handleTabChange} aria-label="patient history tabs" scrollButtons="auto" variant="scrollable">
 							<Tab label="General" {...a11yProps(0)} />
 							<Tab label="Allergies" {...a11yProps(1)} />
 							<Tab label="Medications" {...a11yProps(2)} />

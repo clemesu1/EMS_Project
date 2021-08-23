@@ -12,7 +12,7 @@ import Trauma from '../Assessment/ComplaintBased/Trauma'
 function TabPanel(props) {
 	const { children, value, index, ...other } = props;
 
-	
+
 	return (
 		<div
 			role="tabpanel"
@@ -38,7 +38,7 @@ function a11yProps(index) {
 const ComplaintBased = (props) => {
 	const { assessmentItems } = props;
 
-	const { respiratory, setRespiratory, breathSoundChecksII, setBreathSoundChecksII, seizure, setSeizure } = assessmentItems;
+	const { respiratory, setRespiratory, breathSoundChecksII, setBreathSoundChecksII, seizure, setSeizure, toxicExposure, setToxicExposure } = assessmentItems;
 
 
 	const [selectedTab, setSelectedTab] = useState(0);
@@ -50,7 +50,7 @@ const ComplaintBased = (props) => {
 	return (
 		<div>
 			<AppBar position="static">
-				<Tabs value={selectedTab} onChange={handleTabChange} aria-label="complaint based tabs">
+				<Tabs value={selectedTab} onChange={handleTabChange} aria-label="complaint based tabs" scrollButtons="auto" variant="scrollable">
 					<Tab label="Respiratory" {...a11yProps(0)} />
 					<Tab label="Seizure" {...a11yProps(1)} />
 					<Tab label="Toxic Exposure" {...a11yProps(2)} />
@@ -63,13 +63,13 @@ const ComplaintBased = (props) => {
 			</AppBar>
 			<Box p={3}>
 				<TabPanel value={selectedTab} index={0}>
-					<Respiratory state={respiratory} setState={setRespiratory} breath={breathSoundChecksII} setBreath={setBreathSoundChecksII}/>
+					<Respiratory state={respiratory} setState={setRespiratory} breath={breathSoundChecksII} setBreath={setBreathSoundChecksII} />
 				</TabPanel>
 				<TabPanel value={selectedTab} index={1}>
-					<Seizure  state={seizure} setState={setSeizure} />
+					<Seizure state={seizure} setState={setSeizure} />
 				</TabPanel>
 				<TabPanel value={selectedTab} index={2}>
-					<ToxicExposure />
+					<ToxicExposure state={toxicExposure} setState={setToxicExposure} assessmentItems={assessmentItems} />
 				</TabPanel>
 				<TabPanel value={selectedTab} index={3}>
 					<CardiacArrest />
