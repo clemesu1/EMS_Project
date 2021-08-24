@@ -284,6 +284,26 @@ const Dashboard = (props) => {
 		PImp_Defib_Other: '',
 	})
 
+	const [chestPain, setChestPain] = useState({
+		Call_ID: '12345',
+		Pain_Severity: '',
+		Name_of_PreEMS_Medic: '',
+		Self_Medic_Admin: '',
+		Response_to_Medic: '',
+		OnSet: '',
+		Provoked: '',
+		Quality: '',
+		Qty_Other: '',
+		Source_of_Pain: '',
+		SPain_Other: '',
+		Pain_radiation_site: '',
+		PRSite_Other: '',
+		State_at_Onset: '',
+		SOnset_Other: '',
+		Pace_Implant_Defib: '',
+		PIDefib_Other: '',
+	})
+
 	const [bodySystems, setBodySystems] = useState([
 		{
 			label: 'Cardiovascular',
@@ -473,6 +493,8 @@ const Dashboard = (props) => {
 		setSubstanceUnit: setSubstanceUnit,
 		cardiacArrest: cardiacArrest,
 		setCardiacArrest: setCardiacArrest,
+		chestPain: chestPain,
+		setChestPain: setChestPain,
 	}
 
 	const handleDrawerToggle = () => {
@@ -499,6 +521,7 @@ const Dashboard = (props) => {
 			"Seizure_Assessment": seizure,
 			"ToxicExpo_Assessment": toxicExposure,
 			"Cardiac_Assessment": cardiacArrest,
+			"Chestpain_Assessment": chestPain,
 		}
 
 		axios
