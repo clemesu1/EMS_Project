@@ -260,6 +260,30 @@ const Dashboard = (props) => {
 		Evidence_Other: '',
 	})
 
+	const [cardiacArrest, setCardiacArrest] = useState({
+		Call_ID: '12345',
+		Arrest_Clarify: '',
+		Witness: '',
+		Witns_Other: '',
+		Defib_Prior_Ambul_arrival: '',
+		Time_of_First_CPR: '',
+		Time_of_Crew_CPR: '',
+		Time_first_Defib: '',
+		No_Defib_Prior_EMS: '',
+		Time_CPR_Discontinue: '',
+		Spon_Circ: '',
+		Spon_Respir: '',
+		Pulse_rate_dest: '',
+		Type_of_Ambul_Defib: '',
+		Typ_Amb_Defib_Other: '',
+		Reason_CPR_Discontinue: '',
+		CPR_Discon_Other: '',
+		Reason_not_Init_CPR: '',
+		NInit_CPR_Other: '',
+		Pace_Implant_Defib: '',
+		PImp_Defib_Other: '',
+	})
+
 	const [bodySystems, setBodySystems] = useState([
 		{
 			label: 'Cardiovascular',
@@ -410,7 +434,7 @@ const Dashboard = (props) => {
 
 	// Toxic Exposure
 	const [substanceAmount, setSubstanceAmount] = useState('')
-    const [substanceUnit, setSubstanceUnit] = useState('')
+	const [substanceUnit, setSubstanceUnit] = useState('')
 
 	const assessmentItems = {
 		bodySystems: bodySystems,
@@ -447,6 +471,8 @@ const Dashboard = (props) => {
 		setSubstanceAmount: setSubstanceAmount,
 		substanceUnit: substanceUnit,
 		setSubstanceUnit: setSubstanceUnit,
+		cardiacArrest: cardiacArrest,
+		setCardiacArrest: setCardiacArrest,
 	}
 
 	const handleDrawerToggle = () => {
@@ -472,6 +498,7 @@ const Dashboard = (props) => {
 			"Respiratory": respiratory,
 			"Seizure_Assessment": seizure,
 			"ToxicExpo_Assessment": toxicExposure,
+			"Cardiac_Assessment": cardiacArrest,
 		}
 
 		axios

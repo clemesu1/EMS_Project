@@ -86,7 +86,7 @@ const Seizure = (props) => {
                     }
                 </Grid>
             </Grid>
-            <Grid item container xs={12} spacing={2}>
+            <Grid item container xs={12} spacing={2} alignItems="center">
                 <Grid item container xs={7} spacing={2} alignItems="center">
                     <Grid item>
                         <Typography>Witness of seizure</Typography>
@@ -114,24 +114,23 @@ const Seizure = (props) => {
                         </FormControl>
                     </Grid>
                 </Grid>
-                {
-                    state.Witness_of_Seizure !== "Other" ? '' :
-                        <>
-                            <Grid item>
-                                <Typography>Other</Typography>
-                            </Grid>
-                            <Grid item xs>
-                                <TextField
-                                    size="small"
-                                    color="secondary"
-                                    variant="outlined"
-                                    fullWidth
-                                    name="S_Other"
-                                    value={state.S_Other}
-                                    onChange={handleChange}
-                                />
-                            </Grid>
-                        </>
+                {state.Witness_of_Seizure !== "Other" ? '' :
+                    <>
+                        <Grid item>
+                            <Typography>Other</Typography>
+                        </Grid>
+                        <Grid item xs>
+                            <TextField
+                                size="small"
+                                color="secondary"
+                                variant="outlined"
+                                fullWidth
+                                name="S_Other"
+                                value={state.S_Other}
+                                onChange={handleChange}
+                            />
+                        </Grid>
+                    </>
                 }
                 <Grid item container xs={7} spacing={2} alignItems="center">
                     <Grid item>
@@ -215,6 +214,7 @@ const Seizure = (props) => {
                             variant="outlined"
                             color="secondary"
                             type="number"
+                            placeholder="0"
                             size="small"
                             value={state.No_of_Seizure}
                             onChange={handleChange}

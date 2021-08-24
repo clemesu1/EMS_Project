@@ -71,7 +71,7 @@ const AssessmentFindings = (props) => {
 					<Typography variant="h6">Body Area Assessed</Typography>
 				</Grid>
 				<Grid item container xs={12} justifyContent="center">
-					<FixedSizeList height={450} width={600} itemSize={46} itemCount={assessmentFindingsList.length}>
+					<FixedSizeList height={450} width={600} itemSize={46} itemCount={bodyAreaAssessedList.length}>
 						{renderBodyRow}
 					</FixedSizeList>
 				</Grid>
