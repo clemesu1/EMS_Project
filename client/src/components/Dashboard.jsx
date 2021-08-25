@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { AppBar, Divider, Drawer, Hidden, IconButton, List, ListItem, ListItemIcon, ListItemText, SwipeableDrawer, Toolbar, Typography } from '@material-ui/core';
-import { Menu as MenuIcon, MoreVert as MoreIcon, Save as SaveIcon } from '@material-ui/icons';
+import { Menu as MenuIcon, Save as SaveIcon } from '@material-ui/icons';
 import { Link, Switch, Route, Redirect } from "react-router-dom";
 import CallIcon from '@material-ui/icons/Call';
 import AssessmentIcon from '@material-ui/icons/Assessment';
@@ -304,6 +304,25 @@ const Dashboard = (props) => {
 		PIDefib_Other: '',
 	})
 
+	
+	const [neonatalAssessment, setNeonatalAssessment] = useState({
+		Call_ID: '12345',
+		Inf_Time_Breath: '',
+		min1_Heartrate: '',
+		min1_Respeffort: '',
+		min1_Muscletone: '',
+		min1_Reflexirrit: '',
+		min1_Colour: '',
+		min5_Heartrate: '',
+		min5_Respeffort: '',
+		min5_Muscletone: '',
+		min5_Reflexirrit: '',
+		min5_Colour: '',
+		min1_Total: '',
+		min5_Total: '',
+	})
+
+
 	const [bodySystems, setBodySystems] = useState([
 		{
 			label: 'Cardiovascular',
@@ -495,6 +514,8 @@ const Dashboard = (props) => {
 		setCardiacArrest: setCardiacArrest,
 		chestPain: chestPain,
 		setChestPain: setChestPain,
+		neonatalAssessment: neonatalAssessment,
+		setNeonatalAssessment: setNeonatalAssessment,
 	}
 
 	const handleDrawerToggle = () => {
@@ -522,6 +543,7 @@ const Dashboard = (props) => {
 			"ToxicExpo_Assessment": toxicExposure,
 			"Cardiac_Assessment": cardiacArrest,
 			"Chestpain_Assessment": chestPain,
+			"Neonatal_Assessment": neonatalAssessment
 		}
 
 		axios

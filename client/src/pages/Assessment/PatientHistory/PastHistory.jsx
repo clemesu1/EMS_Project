@@ -1,4 +1,4 @@
-import { Box, Checkbox, Grid, List, ListItem, ListItemIcon, ListItemText, Paper, TextField, Typography } from '@material-ui/core';
+import { Box, Checkbox, Grid, List, ListItem, ListItemIcon, ListItemText, TextField, Typography } from '@material-ui/core';
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 

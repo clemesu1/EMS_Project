@@ -1,5 +1,5 @@
 import React from 'react';
-import { Checkbox, Grid, List, ListItem, ListItemIcon, ListItemText, TextField, Typography } from '@material-ui/core';
+import { Checkbox, Grid, ListItem, ListItemIcon, ListItemText, TextField, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { FixedSizeList } from 'react-window';
 
