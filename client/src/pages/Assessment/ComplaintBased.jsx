@@ -38,7 +38,7 @@ function a11yProps(index) {
 const ComplaintBased = (props) => {
 	const { assessmentItems } = props;
 
-	const { respiratory, setRespiratory, breathSoundChecksII, setBreathSoundChecksII, seizure, setSeizure, toxicExposure, setToxicExposure, cardiacArrest, setCardiacArrest, chestPain, setChestPain, neonatalAssessment, setNeonatalAssessment } = assessmentItems;
+	const { respiratory, setRespiratory, breathSoundChecksII, setBreathSoundChecksII, seizure, setSeizure, toxicExposure, setToxicExposure, cardiacArrest, setCardiacArrest, chestPain, setChestPain, neonatalAssessment, setNeonatalAssessment, obstetric, setObstetric } = assessmentItems;
 
 
 	const [selectedTab, setSelectedTab] = useState(0);
@@ -81,7 +81,7 @@ const ComplaintBased = (props) => {
 					<Neonatal state={neonatalAssessment} setState={setNeonatalAssessment} />
 				</TabPanel>
 				<TabPanel value={selectedTab} index={6}>
-					<Obstetric />
+					<Obstetric state={obstetric} setState={setObstetric}/>
 				</TabPanel>
 			</Box>
 			<TabPanel value={selectedTab} index={7}>

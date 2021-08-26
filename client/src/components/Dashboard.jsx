@@ -304,7 +304,7 @@ const Dashboard = (props) => {
 		PIDefib_Other: '',
 	})
 
-	
+
 	const [neonatalAssessment, setNeonatalAssessment] = useState({
 		Call_ID: '12345',
 		Inf_Time_Breath: '',
@@ -320,6 +320,19 @@ const Dashboard = (props) => {
 		min5_Colour: '',
 		min1_Total: '',
 		min5_Total: '',
+	})
+
+	const [obstetric, setObstetric] = useState({
+		Call_ID: '12345',
+		Parity: '',
+		Gravidity: '',
+		Gestation_Stage: '',
+		Delivery: '',
+		Deliv_Other: '',
+		Baby_Presentation: '',
+		Baby_Prsnt_Other: '',
+		Time_of_Birth: new Date().toLocaleTimeString('en-US'),
+		Time_Placenta_Delivered: new Date().toLocaleTimeString('en-US'),
 	})
 
 
@@ -516,6 +529,8 @@ const Dashboard = (props) => {
 		setChestPain: setChestPain,
 		neonatalAssessment: neonatalAssessment,
 		setNeonatalAssessment: setNeonatalAssessment,
+		obstetric: obstetric,
+		setObstetric: setObstetric,
 	}
 
 	const handleDrawerToggle = () => {
@@ -543,7 +558,8 @@ const Dashboard = (props) => {
 			"ToxicExpo_Assessment": toxicExposure,
 			"Cardiac_Assessment": cardiacArrest,
 			"Chestpain_Assessment": chestPain,
-			"Neonatal_Assessment": neonatalAssessment
+			"Neonatal_Assessment": neonatalAssessment,
+			"Obstetric": obstetric,
 		}
 
 		axios
