@@ -334,6 +334,19 @@ const Dashboard = (props) => {
 		Time_of_Birth: new Date().toLocaleTimeString('en-US'),
 		Time_Placenta_Delivered: new Date().toLocaleTimeString('en-US'),
 	})
+	const [mechanismInjury, setMechanismInjury] = useState({
+		Call_ID: '12345',
+		Cause_of_Injury: '',
+		COI_Other: '',
+		Human_Factor: '',
+		HF_Other: '',
+		Nature_of_Injury: '',
+		Safety_Protect_Equip: '',
+		SPE_Other: '',
+		Work_related: '',
+		Comments: '',
+		MVC: '',
+	})
 
 
 	const [bodySystems, setBodySystems] = useState([
@@ -531,6 +544,8 @@ const Dashboard = (props) => {
 		setNeonatalAssessment: setNeonatalAssessment,
 		obstetric: obstetric,
 		setObstetric: setObstetric,
+		mechanismInjury: mechanismInjury, 
+		setMechanismInjury: setMechanismInjury,
 	}
 
 	const handleDrawerToggle = () => {
@@ -560,6 +575,7 @@ const Dashboard = (props) => {
 			"Chestpain_Assessment": chestPain,
 			"Neonatal_Assessment": neonatalAssessment,
 			"Obstetric": obstetric,
+			"Mechanism_Injury": mechanismInjury,
 		}
 
 		axios

@@ -74,7 +74,7 @@ const Assessment = (props) => {
 					{selectedTab === 0 && <PatientHistory state={props.patientHistory} setState={setPatientHistory} assessmentItems={assessmentItems} {...props} />}
 					{selectedTab === 1 && <GeneralAssessment assessmentItems={assessmentItems} {...props} />}
 					{selectedTab === 2 && <ComplaintBased assessmentItems={assessmentItems} {...props} />}
-					{selectedTab === 3 && <MechanismOfInjury />}
+					{selectedTab === 3 && <MechanismOfInjury assessmentItems={assessmentItems} {...props}/>}
 
 				</Typography>
 			</div>
