@@ -22,7 +22,7 @@ const ChestPain = ({ state, setState }) => {
                 <TextField
                     label="Pain Severity"
                     placeholder="0"
-                    variant="outlined"
+                    variant="filled"
                     color="secondary"
                     size="small"
                     type="number"
@@ -36,7 +36,7 @@ const ChestPain = ({ state, setState }) => {
             <Grid item xs={12} sm={8}>
                 <TextField
                     label="Name of the Pre-EMS Medication"
-                    variant="outlined"
+                    variant="filled"
                     color="secondary"
                     size="small"
                     name="Name_of_PreEMS_Medic"
@@ -46,7 +46,7 @@ const ChestPain = ({ state, setState }) => {
                     fullWidth
                 />
             </Grid>
-            <Grid item container xs={12} sm={6} justifyContent="center">
+            <Grid item container xs={12} sm={6}>
                 <FormControl component="fieldset" color="secondary">
                     <FormLabel component="legend">Self-Medication Administered</FormLabel>
                     <RadioGroup row aria-label="self-medication administered" name="Self_Medic_Admin" value={state.Self_Medic_Admin} onChange={handleChange}>
@@ -57,7 +57,7 @@ const ChestPain = ({ state, setState }) => {
             </Grid>
             <Grid item xs={12} sm={6}>
                 <FormControl
-                    variant="outlined"
+                    variant="filled"
                     color="secondary"
                     size="small"
                     fullWidth
@@ -83,7 +83,7 @@ const ChestPain = ({ state, setState }) => {
                 <InputMask mask="99:99" value={state.OnSet} onChange={handleChange}>
                     <TextField
                         label="Onset"
-                        variant="outlined"
+                        variant="filled"
                         color="secondary"
                         size="small"
                         name="OnSet"
@@ -95,7 +95,7 @@ const ChestPain = ({ state, setState }) => {
             <Grid item xs={12} sm={6}>
                 <TextField
                     label="Provoked"
-                    variant="outlined"
+                    variant="filled"
                     color="secondary"
                     size="small"
                     name="Provoked"
@@ -107,7 +107,7 @@ const ChestPain = ({ state, setState }) => {
             </Grid>
             <Grid item xs={12} sm={6}>
                 <FormControl
-                    variant="outlined"
+                    variant="filled"
                     color="secondary"
                     size="small"
                     fullWidth
@@ -131,7 +131,7 @@ const ChestPain = ({ state, setState }) => {
                 {state.Quality !== 'Other' ? '' :
                     <TextField
                         label="Other"
-                        variant="outlined"
+                        variant="filled"
                         color="secondary"
                         size="small"
                         name="Qty_Other"
@@ -144,7 +144,7 @@ const ChestPain = ({ state, setState }) => {
             </Grid>
             <Grid item xs={12} sm={6}>
                 <FormControl
-                    variant="outlined"
+                    variant="filled"
                     color="secondary"
                     size="small"
                     fullWidth
@@ -168,7 +168,7 @@ const ChestPain = ({ state, setState }) => {
                 {state.Source_of_Pain !== 'Other' ? '' :
                     <TextField
                         label="Other"
-                        variant="outlined"
+                        variant="filled"
                         color="secondary"
                         size="small"
                         name="SPain_Other"
@@ -181,7 +181,7 @@ const ChestPain = ({ state, setState }) => {
             </Grid>
             <Grid item xs={12} sm={6}>
                 <FormControl
-                    variant="outlined"
+                    variant="filled"
                     color="secondary"
                     size="small"
                     fullWidth
@@ -205,7 +205,7 @@ const ChestPain = ({ state, setState }) => {
                 {state.Pain_radiation_site !== 'Other' ? '' :
                     <TextField
                         label="Other"
-                        variant="outlined"
+                        variant="filled"
                         color="secondary"
                         size="small"
                         name="PRSite_Other"
@@ -218,7 +218,7 @@ const ChestPain = ({ state, setState }) => {
             </Grid>
             <Grid item xs={12} sm={6}>
                 <FormControl
-                    variant="outlined"
+                    variant="filled"
                     color="secondary"
                     size="small"
                     fullWidth
@@ -242,7 +242,7 @@ const ChestPain = ({ state, setState }) => {
                 {state.State_at_Onset !== 'Other' ? '' :
                     <TextField
                         label="Other"
-                        variant="outlined"
+                        variant="filled"
                         color="secondary"
                         size="small"
                         name="SOnset_Other"
@@ -255,7 +255,7 @@ const ChestPain = ({ state, setState }) => {
             </Grid>
             <Grid item xs={12} sm={6}>
                 <FormControl
-                    variant="outlined"
+                    variant="filled"
                     color="secondary"
                     size="small"
                     fullWidth
@@ -279,7 +279,7 @@ const ChestPain = ({ state, setState }) => {
                 {state.Pace_Implant_Defib !== 'Other' ? '' :
                     <TextField
                         label="Other"
-                        variant="outlined"
+                        variant="filled"
                         color="secondary"
                         size="small"
                         name="PIDefib_Other"

@@ -58,7 +58,7 @@ const Allergies = ({ state, setState, checkedDrug, setCheckedDrug, checkedEnv, s
 		}
 
 		setCheckedEnv(newChecked);
-		
+
 		setState({
 			...state,
 			Alr_Env: newChecked,
@@ -68,7 +68,7 @@ const Allergies = ({ state, setState, checkedDrug, setCheckedDrug, checkedEnv, s
 	return (
 		<div className={classes.root}>
 			<Grid container spacing={3} alignItems="flex-start">
-				<Grid item container xs={8} direction="column">
+				<Grid item container xs={12} md={8} direction="column">
 					<Typography variant="subtitle1" component="div">
 						<Box fontWeight="fontWeightMedium">
 							Allergies (select all that are applicable)
@@ -76,7 +76,7 @@ const Allergies = ({ state, setState, checkedDrug, setCheckedDrug, checkedEnv, s
 					</Typography>
 
 					<Grid item container xs={12} spacing={3} alignItems="flex-start">
-						<Grid item container xs={6}>
+						<Grid item container xs={12} md={6}>
 							<Grid item xs={12}>
 								<Typography variant="subtitle2" component="div">
 									Drugs
@@ -108,7 +108,7 @@ const Allergies = ({ state, setState, checkedDrug, setCheckedDrug, checkedEnv, s
 							</Grid>
 						</Grid>
 
-						<Grid item container xs={6} >
+						<Grid item container xs={12} md={6} >
 							<Grid item xs={12}>
 								<Typography variant="subtitle2" component="div">
 									Environmental
@@ -116,7 +116,7 @@ const Allergies = ({ state, setState, checkedDrug, setCheckedDrug, checkedEnv, s
 							</Grid>
 							<Grid item xs={12}>
 								<List className={classes.listbox}>
-								{
+									{
 										environmentalList.map((value, index) => {
 											const labelId = `checkbox-list-label-${value}`;
 
@@ -142,13 +142,9 @@ const Allergies = ({ state, setState, checkedDrug, setCheckedDrug, checkedEnv, s
 					</Grid>
 
 				</Grid>
-				<Grid item xs={4}>
-					<Typography variant="subtitle1" component="div">
-						<Box fontWeight="fontWeightMedium">
-							Others
-						</Box>
-					</Typography>
+				<Grid item xs={12} md={4}>
 					<TextField
+						label="Others"
 						fullWidth
 						variant="outlined"
 						color="secondary"

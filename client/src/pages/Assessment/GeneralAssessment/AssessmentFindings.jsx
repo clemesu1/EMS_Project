@@ -56,34 +56,34 @@ const AssessmentFindings = (props) => {
 
 	return (
 		<Grid container spacing={3}>
-			<Grid item container xs={6} justifyContent="center">
+			<Grid item container xs={12} md={6} justifyContent="center">
 				<Grid item>
 					<Typography variant="h6">Assessment Finding</Typography>
 				</Grid>
 				<Grid item container xs={12} justifyContent="center">
-					<FixedSizeList height={450} width={600} itemSize={46} itemCount={assessmentFindingsList.length}>
+					<FixedSizeList height={450} width="100%" itemSize={46} itemCount={assessmentFindingsList.length}>
 						{renderAssessRow}
 					</FixedSizeList>
 				</Grid>
 			</Grid>
-			<Grid item container xs={6} justifyContent="center">
+			<Grid item container xs={12} md={6} justifyContent="center">
 				<Grid item>
 					<Typography variant="h6">Body Area Assessed</Typography>
 				</Grid>
 				<Grid item container xs={12} justifyContent="center">
-					<FixedSizeList height={450} width={600} itemSize={46} itemCount={bodyAreaAssessedList.length}>
+					<FixedSizeList height={450} width="100%" itemSize={46} itemCount={bodyAreaAssessedList.length}>
 						{renderBodyRow}
 					</FixedSizeList>
 				</Grid>
 			</Grid>
 			<Grid item container xs={12}>
-				<Grid item xs={1}>
+				<Grid item>
 					<FormControlLabel control={
 						<Checkbox />}
 						label="Other"
 					/>
 				</Grid>
-				<Grid item xs={11}>
+				<Grid item xs>
 					<TextField
 						variant="outlined"
 						color="secondary"

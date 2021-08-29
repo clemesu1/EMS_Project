@@ -71,7 +71,7 @@ const General = ({ state, setState, bodySystems, setBodySystems }) => {
 							</Box>
 						</Typography>
 					</Grid>
-					<Grid item xs>
+					<Grid item xs={12}>
 						<FormControl component="fieldset" className={classes.formControl}>
 							<FormGroup row>
 								{bodySystems.map((item, index) => (
@@ -95,7 +95,7 @@ const General = ({ state, setState, bodySystems, setBodySystems }) => {
 				</Paper>
 			</Grid>
 			<Grid item container spacing={3} xs={12}>
-				<Grid item container spacing={2} xs={6} justifyContent="flex-start" alignItems="center">
+				<Grid item container spacing={2} xs={12} md={6} justifyContent="flex-start" alignItems="center">
 					<Grid item>
 						<Typography gutterBottom variant="subtitle1" component="div">
 							<Box fontWeight="fontWeightMedium">
@@ -118,8 +118,8 @@ const General = ({ state, setState, bodySystems, setBodySystems }) => {
 						/>
 					</Grid>
 				</Grid>
-				<Grid item container spacing={2} xs={6} justifyContent="flex-start" alignItems="center">
-					<Grid item>
+				<Grid item container spacing={2} xs={12} md={6} justifyContent="flex-start" alignItems="center">
+					<Grid item >
 						<Typography gutterBottom variant="subtitle1" component="div">
 							<Box fontWeight="fontWeightMedium">
 								Time of Injury
@@ -141,7 +141,7 @@ const General = ({ state, setState, bodySystems, setBodySystems }) => {
 						/>
 					</Grid>
 				</Grid>
-				<Grid item container spacing={2} xs={6} justifyContent="flex-start" alignItems="center">
+				<Grid item container spacing={2} xs={12} lg={6} justifyContent="flex-start" alignItems="center">
 					<Grid item>
 						<Typography gutterBottom variant="subtitle1" component="div">
 							<Box fontWeight="fontWeightMedium">
@@ -168,7 +168,7 @@ const General = ({ state, setState, bodySystems, setBodySystems }) => {
 						</FormControl>
 					</Grid>
 				</Grid>
-				<Grid item container spacing={2} xs={6} justifyContent="flex-start" alignItems="center">
+				<Grid item container spacing={2} xs={12} lg={6} justifyContent="flex-start" alignItems="center">
 					<Grid item>
 						<Typography gutterBottom variant="subtitle1" component="div">
 							<Box fontWeight="fontWeightMedium">
@@ -195,7 +195,7 @@ const General = ({ state, setState, bodySystems, setBodySystems }) => {
 						</FormControl>
 					</Grid>
 				</Grid>
-				<Grid item container spacing={2} xs={6} justifyContent="flex-start" alignItems="center">
+				<Grid item container spacing={2} xs={12} lg={6} justifyContent="flex-start" alignItems="center">
 					<Grid item>
 						<Typography gutterBottom variant="subtitle1" component="div">
 							<Box fontWeight="fontWeightMedium">
@@ -222,15 +222,15 @@ const General = ({ state, setState, bodySystems, setBodySystems }) => {
 						</FormControl>
 					</Grid>
 				</Grid>
-				<Grid item container spacing={2} xs={6} justifyContent="flex-start" alignItems="center">
-					<Grid item xs={3}>
+				<Grid item container spacing={2} xs={12} md={5} justifyContent="flex-start" alignItems="center">
+					<Grid item>
 						<Typography gutterBottom variant="subtitle1" component="div">
 							<Box fontWeight="fontWeightMedium">
 								Patient Displacement
 							</Box>
 						</Typography>
 					</Grid>
-					<Grid item xs={5}>
+					<Grid item xs>
 						<FormControl component="fieldset">
 							<RadioGroup row aria-label="patient displacement" name="G_Pt_Disp" value={state.G_Pt_Disp} onChange={handleChange}>
 								<FormControlLabel value="Yes" control={<Radio />} label="Yes" />
@@ -239,7 +239,7 @@ const General = ({ state, setState, bodySystems, setBodySystems }) => {
 						</FormControl>
 					</Grid>
 				</Grid>
-				<Grid item container spacing={2} xs={9} justifyContent="flex-start" alignItems="center">
+				<Grid item container spacing={2} xs={12} md={7} lg={9} justifyContent="flex-start" alignItems="center">
 					<Grid item>
 						<Typography gutterBottom variant="subtitle1" component="div">
 							<Box fontWeight="fontWeightMedium">
@@ -266,7 +266,7 @@ const General = ({ state, setState, bodySystems, setBodySystems }) => {
 						</FormControl>
 					</Grid>
 				</Grid>
-				<Grid item container spacing={2} xs justifyContent="flex-start" alignItems="center">
+				<Grid item container spacing={2} xs={12} lg={3} justifyContent="flex-start" alignItems="center">
 					<Grid item xs>
 						<FormControlLabel control={<Checkbox checked={state.G_DNR_Order || false} name="G_DNR_Order" onChange={handleSingleCheckboxChange} />} label="DNR Order" />
 					</Grid>

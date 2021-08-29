@@ -12,6 +12,7 @@ import CallDetails from '../pages/CallDetails';
 import axios from 'axios';
 import OperatorInfo from '../pages/OperatorInfo';
 import Assessment from '../pages/Assessment';
+import VitalSigns from '../pages/VitalSigns';
 
 const drawerWidth = 240;
 
@@ -20,7 +21,7 @@ const useStyles = makeStyles(theme => ({
 		display: 'flex',
 	},
 	drawer: {
-		[theme.breakpoints.up('sm')]: {
+		[theme.breakpoints.up('md')]: {
 			width: drawerWidth,
 			flexShrink: 0,
 		},
@@ -30,7 +31,7 @@ const useStyles = makeStyles(theme => ({
 	},
 	menuButton: {
 		marginRight: theme.spacing(2),
-		[theme.breakpoints.up('sm')]: {
+		[theme.breakpoints.up('md')]: {
 			display: 'none',
 		},
 	},
@@ -77,30 +78,34 @@ const Dashboard = (props) => {
 
 	const [vehicleDetails, setVehicleDetails] = useState({
 		Call_ID: '12345',
-		noPatientsTransported: 0,
-		vhTimeNotified: '',
-		vhTimeEnRoute: '',
-		vhTimeAtScene: '',
-		vhTimeCrewPatient: '',
-		vhTimeLeftScene: '',
-		vhTimeAtDestination: '',
-		vhTimeAvailable: '',
-		vhTimeBackArea: '',
-		vhResponseToScene: '',
-		vhResponseToSceneChg: '',
-		vhResponseFromScene: '',
-		vhResponseFromSceneChg: '',
-		crwDriv: '',
-		crwAtte: '',
-		crwAsst: '',
-		crwDrOth: '',
-		crwAttnOth: '',
-		crwAsstOth: '',
-		vhOut: '',
-		vhAtScn: '',
-		vhAtDestn: '',
-		vhIn: '',
-		vhTotal: '',
+		Date_Notified: '',
+		T_Notified: '',
+		T_enRoute: '',
+		T_at_Scene: '',
+		T_Crew_Patient: '',
+		T_Left_Scene: '',
+		T_at_destn: '',
+		T_available: '',
+		T_backarea: '',
+		RTS_Type: '',
+		RTS_Change: '',
+		RFS_Type: '',
+		RFS_Change: '',
+		No_Transported: 0,
+		C_driver: '',
+		C_driv_oth: '',
+		C_attendant: '',
+		C_attn_oth: '',
+		C_assistant: '',
+		C_asst_oth: '',
+		M_Out: '',
+		M_atScene: '',
+		M_atDest: '',
+		M_In: '',
+		M_Total: '',
+		Dest_determinant: '',
+		Doc_Start: '',
+		Doc_Finish: '',
 	})
 
 	const [patientDetails, setPatientDetails] = useState({
@@ -149,7 +154,7 @@ const Dashboard = (props) => {
 		Patient_Contact: '',
 		Patient_Disposition: '',
 		Pt_Disp_Other: '',
-		Service_Patient_Respons: '',
+		Service_Payment_Respons: '',
 		Service_Payment_Number: '',
 	});
 
@@ -239,8 +244,8 @@ const Dashboard = (props) => {
 		S_Other: '',
 		Type_of_Seizure: '',
 		Type_Other: '',
-		No_of_Seizure: '',
-		Seiz_Duration: '',
+		No_of_Seizure: 0,
+		Seiz_Duration: 0,
 	})
 
 	const [toxicExposure, setToxicExposure] = useState({
@@ -544,9 +549,56 @@ const Dashboard = (props) => {
 		setNeonatalAssessment: setNeonatalAssessment,
 		obstetric: obstetric,
 		setObstetric: setObstetric,
-		mechanismInjury: mechanismInjury, 
+		mechanismInjury: mechanismInjury,
 		setMechanismInjury: setMechanismInjury,
 	}
+
+	const [interventions, setInterventions] = useState({
+		Call_ID: '12345',
+		Proc_Time_Start: '',
+		Proc_Time_End: '',
+		Procedur: '',
+		Proc_Other: '',
+		Procedur_outcome: '',
+		Device_Method: '',
+		Procedur_Technician: '',
+		Device_Size: '',
+		Procedur_Success: '',
+		Treatment_Type: '',
+		Treat_Total_Time: '',
+		Treatment_technician: '',
+		Adm_Rt_Other: '',
+		Admin_Route: '',
+		Dosage_Amount: '',
+		Dosage_Unit: '',
+		Treatment_Outcome: '',
+	})
+
+	const [medications, setMedications] = useState({
+		Call_ID: '12345',
+		Medic_Date: '',
+		Medic_Given: '',
+		Medic_Now: '',
+		Medic_Amount: '',
+		Medic_Unit: '',
+		Route: '',
+		Effect_on_Patient: '',
+		Paramedic_ID: '',
+	})
+
+	const [vitalSign, setVitalSign] = useState({
+		Call_ID: '12345',
+
+	})
+
+	const vitalSignFields = {
+		interventions: interventions,
+		setInterventions: setInterventions,
+		medications: medications,
+		setMedications: setMedications,
+		vitalSign: vitalSign,
+		setVitalSign: setVitalSign,
+	};
 
 	const handleDrawerToggle = () => {
 		setOpen(!open);
@@ -675,7 +727,7 @@ const Dashboard = (props) => {
 						{drawer}
 					</SwipeableDrawer>
 				</Hidden>
-				<Hidden xsDown implementation="css">
+				<Hidden smDown implementation="css">
 					<Drawer
 						classes={{
 							paper: classes.drawerPaper,
@@ -694,6 +746,7 @@ const Dashboard = (props) => {
 					<Redirect exact from="/" to="/operator-info" />
 					<Redirect exact from="/call-details" to="/call-details/vehicle-details" />
 					<Redirect exact from="/assessment" to="/assessment/patient-history" />
+					<Redirect exact from="/vital-signs" to="/vital-signs/interventions" />
 
 					<Route path="/operator-info">
 						<OperatorInfo state={callTransaction} setState={setCallTransaction} />
@@ -724,9 +777,14 @@ const Dashboard = (props) => {
 						}
 					/>
 
-					<Route path="/vital-signs">
-						{/* <AboutUs /> */}
-					</Route>
+					<Route exact path="/vital-signs/:page?"
+						render={props =>
+							<VitalSigns
+								vitalSignFields={vitalSignFields}
+								{...props}
+							/>
+						}
+					/>
 					<Route path="/treatment">
 						{/* <ContactUs /> */}
 					</Route>
@@ -737,7 +795,7 @@ const Dashboard = (props) => {
 				{/* {JSON.stringify(vehicleDetails)} */}
 
 			</div>
-		</div>
+		</div >
 	)
 }
 

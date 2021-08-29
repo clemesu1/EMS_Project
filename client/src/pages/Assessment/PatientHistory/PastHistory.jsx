@@ -49,7 +49,7 @@ const PastHistory = ({ state, setState, checked, setChecked }) => {
 	return (
 		<div className={classes.root}>
 			<Grid container spacing={3} justifyContent="center">
-				<Grid item xs={6}>
+				<Grid item xs={12} md={6}>
 					<Typography variant="subtitle1" component="div" className={classes.text}>
 						<Box fontWeight="fontWeightMedium">
 							History
@@ -77,17 +77,10 @@ const PastHistory = ({ state, setState, checked, setChecked }) => {
 							})
 						}
 					</List>
-
-
 				</Grid>
-				<Grid item xs={6}>
-					<Typography variant="subtitle1" component="div" className={classes.text}>
-						<Box fontWeight="fontWeightMedium">
-							Others / Comments
-						</Box>
-					</Typography>
-
+				<Grid item xs={12} md={6}>
 					<TextField
+						label="Others / Comments"
 						multiline
 						fullWidth
 						rows={22}

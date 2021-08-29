@@ -21,7 +21,7 @@ const CardiacArrest = ({ state, setState }) => {
         <Grid container spacing={3}>
             <Grid item xs={12} sm={6}>
                 <FormControl
-                    variant="outlined"
+                    variant="filled"
                     color="secondary"
                     size="small"
                     fullWidth
@@ -44,7 +44,7 @@ const CardiacArrest = ({ state, setState }) => {
             <Grid item container xs={12} sm={6} spacing={2}>
                 <Grid item xs={12} sm={12}>
                     <FormControl
-                        variant="outlined"
+                        variant="filled"
                         color="secondary"
                         size="small"
                         fullWidth
@@ -68,7 +68,7 @@ const CardiacArrest = ({ state, setState }) => {
                     <Grid item xs={12} sm={12}>
                         <TextField
                             label="Other"
-                            variant="outlined"
+                            variant="filled"
                             color="secondary"
                             size="small"
                             name="Witns_Other"
@@ -95,7 +95,7 @@ const CardiacArrest = ({ state, setState }) => {
                 <TextField
                     label="No. of Defibrillator Prior EMS"
                     placeholder="0"
-                    variant="outlined"
+                    variant="filled"
                     color="secondary"
                     size="small"
                     type="number"
@@ -272,7 +272,7 @@ const CardiacArrest = ({ state, setState }) => {
             </Grid>
             <Grid item xs={12} sm={8}>
                 <FormControl
-                    variant="outlined"
+                    variant="filled"
                     color="secondary"
                     size="small"
                     fullWidth
@@ -296,7 +296,7 @@ const CardiacArrest = ({ state, setState }) => {
                 {state.Type_of_Ambul_Defib !== 'Other' ? '' :
                     <TextField
                         label="Other"
-                        variant="outlined"
+                        variant="filled"
                         color="secondary"
                         size="small"
                         name="Typ_Amb_Defib_Other"
@@ -309,7 +309,7 @@ const CardiacArrest = ({ state, setState }) => {
             </Grid>
             <Grid item xs={12} sm={8}>
                 <FormControl
-                    variant="outlined"
+                    variant="filled"
                     color="secondary"
                     size="small"
                     fullWidth
@@ -333,7 +333,7 @@ const CardiacArrest = ({ state, setState }) => {
                 {state.Reason_CPR_Discontinue !== 'Other' ? '' :
                     <TextField
                         label="Other"
-                        variant="outlined"
+                        variant="filled"
                         color="secondary"
                         size="small"
                         name="CPR_Discon_Other"
@@ -346,7 +346,7 @@ const CardiacArrest = ({ state, setState }) => {
             </Grid>
             <Grid item xs={12} sm={8}>
                 <FormControl
-                    variant="outlined"
+                    variant="filled"
                     color="secondary"
                     size="small"
                     fullWidth
@@ -370,7 +370,7 @@ const CardiacArrest = ({ state, setState }) => {
                 {state.Reason_not_Init_CPR !== 'Other' ? '' :
                     <TextField
                         label="Other"
-                        variant="outlined"
+                        variant="filled"
                         color="secondary"
                         size="small"
                         name="NInit_CPR_Other"
@@ -383,7 +383,7 @@ const CardiacArrest = ({ state, setState }) => {
             </Grid>
             <Grid item xs={12} sm={8}>
                 <FormControl
-                    variant="outlined"
+                    variant="filled"
                     color="secondary"
                     size="small"
                     fullWidth
@@ -407,7 +407,7 @@ const CardiacArrest = ({ state, setState }) => {
                 {state.Pace_Implant_Defib !== 'Other' ? '' :
                     <TextField
                         label="Other"
-                        variant="outlined"
+                        variant="filled"
                         color="secondary"
                         size="small"
                         name="PImp_Defib_Other"

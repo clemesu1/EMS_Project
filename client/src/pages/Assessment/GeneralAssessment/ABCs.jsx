@@ -24,11 +24,11 @@ const ABCs = (props) => {
 
 	return (
 		<Grid container spacing={3}  justifyContent="center" alignItems="center">
-			<Grid item xs={2}>
+			<Grid item xs={12} md={2}>
 				<Typography>Airway Status</Typography>
 			</Grid>
 
-			<Grid item xs={9} >
+			<Grid item xs={12} md={9}>
 				<Paper variant="outlined" className={classes.paper}>
 
 					<FormControl component="fieldset" fullWidth>
@@ -42,10 +42,10 @@ const ABCs = (props) => {
 			</Grid>
 			<Grid item xs={1} />
 
-			<Grid item xs={2}>
+			<Grid item xs={12} md={2}>
 				<Typography>Breathing</Typography>
 			</Grid>
-			<Grid item xs={3}>
+			<Grid item xs={12} md={3}>
 				<Paper variant="outlined" className={classes.paper}>
 
 					<FormControl component="fieldset">
@@ -57,7 +57,7 @@ const ABCs = (props) => {
 					</FormControl>
 				</Paper>
 			</Grid>
-			<Grid item xs={3}>
+			<Grid item xs={12} md={3}>
 				<Paper variant="outlined" className={classes.paper}>
 
 					<FormControl component="fieldset">
@@ -72,7 +72,7 @@ const ABCs = (props) => {
 				</Paper>
 			</Grid>
 
-			<Grid item xs={3}>
+			<Grid item xs={12} md={3}>
 				<Paper variant="outlined" className={classes.paper}>
 
 					<FormControl component="fieldset" >
@@ -86,11 +86,11 @@ const ABCs = (props) => {
 			</Grid>
 			<Grid item xs={1} />
 
-			<Grid item xs={2}>
+			<Grid item xs={12} md={2}>
 				<Typography>Circulation</Typography>
 			</Grid>
-			<Grid item container xs={9} spacing={3}>
-				<Grid item xs={12}>
+			<Grid item container xs={12} md={9} spacing={3}>
+				<Grid item xs={6} md={12}>
 					<Paper variant="outlined" className={classes.paper}>
 
 						<FormControl component="fieldset" fullWidth>
@@ -105,7 +105,7 @@ const ABCs = (props) => {
 						</FormControl>
 					</Paper>
 				</Grid>
-				<Grid item xs={4}>
+				<Grid item xs={6} md={4}>
 					<Paper variant="outlined" className={classes.paper}>
 
 						<FormControl component="fieldset">
@@ -119,9 +119,8 @@ const ABCs = (props) => {
 						</FormControl>
 					</Paper>
 				</Grid>
-				<Grid item xs={4}>
+				<Grid item xs={6} md={4}>
 					<Paper variant="outlined" className={classes.paper}>
-
 						<FormControl component="fieldset">
 							<FormLabel color="secondary" component="legend">Volume</FormLabel>
 							<RadioGroup aria-label="circul-vol" name="Circul_Vol" value={state.Circul_Vol} onChange={handleChange}>
@@ -132,7 +131,7 @@ const ABCs = (props) => {
 						</FormControl>
 					</Paper>
 				</Grid>
-				<Grid item xs={4}>
+				<Grid item xs={6} md={4}>
 					<Paper variant="outlined" className={classes.paper}>
 
 						<FormControl component="fieldset">

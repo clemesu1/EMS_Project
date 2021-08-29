@@ -1,24 +1,20 @@
-import { Grid, TextField, Typography, Paper, Button, Box, FormControl, Select, MenuItem } from '@material-ui/core'
+import { Button, ButtonGroup, Container, FormControl, Grid, InputLabel, MenuItem, Paper, Select, TextField, Typography } from '@material-ui/core'
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 
-
 const useStyles = makeStyles((theme) => ({
+
 	root: {
-		flexGrow: 1,
+		'&$disabled': {
+			color: '#000000',
+
+		},
 	},
+	disabled: {},
 	paper: {
-		width: "100%",
-		height: "100%",
 		padding: theme.spacing(2),
-		margin: 'auto',
+		width: '100%',
 	},
-	formControl: {
-		minWidth: 120,
-	},
-	textField: {
-		width: 120,
-	}
 }));
 
 const crewTypes = ["EMT-1", "EMT-2", "EMT-3", "EMR", "PCP", "ACP", "CCP", "RT", "RN", "MD", "Student", "Other"];
@@ -26,263 +22,331 @@ const crewTypes = ["EMT-1", "EMT-2", "EMT-3", "EMR", "PCP", "ACP", "CCP", "RT", 
 const VehicleDetails = ({ state, setState }) => {
 	const classes = useStyles();
 
+	const handleIncrement = () => {
+		setState(prev => ({
+			...prev,
+			No_Transported: state.No_Transported + 1,
+		}));
+	}
+
+	const handleDecrement = () => {
+		setState(prev => ({
+			...prev,
+			No_Transported: state.No_Transported - 1,
+		}));
+	}
+
 	const handleChange = (e) => {
-		setState({
-			...state,
-			[e.target.name]: e.target.value
-		})
+		setState(prev => ({
+			...prev,
+			[e.target.name]: e.target.value,
+		}));
 	}
 
 	return (
-		<form className={classes.root}>
-			<Grid container spacing={3} justifyContent="center" alignItems="center">
-				<Grid item xs={12} container>
-					<Grid item xs container spacing={2} justifyContent="flex-start" alignItems="center">
-						<Grid item>
-							<Typography variant="subtitle1">Number of Patients Transported</Typography>
-						</Grid>
-						<Grid item>
-							<TextField
-								name="noPatientsTransported"
-								variant="outlined"
-								color="secondary"
-								type="number"
-								size="small"
-								value={state.noPatientsTransported}
-								onChange={handleChange}
-							/>
-						</Grid>
+		<Container maxWidth="xl">
+			<Grid container spacing={3}>
+				<Grid item container xs={12} spacing={4} alignItems="center">
+					<Grid item>
+						<Typography variant="subtitle1" gutterBottom>Number of Patient(s) Transported</Typography>
 					</Grid>
+					<Grid item>
+						<ButtonGroup
+							orientation="vertical"
+							aria-label="number of patient(s) transported"
+						>
+							<Button variant="contained" onClick={handleIncrement}>+</Button>
+							<Button disabled classes={{
+								root: classes.root, // class name, e.g. `root-x`
+								disabled: classes.disabled, // class name, e.g. `disabled-x`
+							}}>{state.No_Transported}</Button>
+							<Button variant="contained" onClick={handleDecrement}>-</Button>
+						</ButtonGroup>
+					</Grid>
+
 				</Grid>
-
-				<Grid item xs={12} container>
+				<Grid item container xs={12} alignItems="center">
 					<Paper variant="outlined" className={classes.paper}>
-						<Grid item xs={12}>
-							<Typography variant="subtitle1" component="div">
-								<Box fontWeight="fontWeightMedium">
-									Time
-								</Box>
-							</Typography>
-						</Grid>
-						<Grid item xs={12} container justifyContent="center" alignItems="center" spacing={2}>
-							<Grid item xs={3} container justifyContent="flex-start" alignItems="center" spacing={1}>
-								<Grid item>
-									<Button variant="contained" onClick={() => {
-										setState({
-											...state,
-											vhTimeNotified: new Date().toLocaleTimeString('en-US'),
-										})
-									}}>Notified</Button>
-								</Grid>
-								<Grid item>
-									<TextField
-										name="vhTimeNotified"
-										variant="outlined"
-										color="secondary"
-										size="small"
-										value={state.vhTimeNotified}
-										onChange={handleChange}
+						<Typography
+							color="textSecondary"
+							gutterBottom
+						>
+							Time
+						</Typography>
+						<Grid item container xs={12} spacing={2} justifyContent="center">
+							<Grid item container xs={12} sm={12} md={6} lg={3} spacing={2}>
+								<Grid item xs={6}>
+									<Button
+										variant="contained"
+										fullWidth
 										onClick={() => {
-											if (state.vhTimeNotified === '')
-
-												setState({
-													...state,
-													vhTimeNotified: new Date().toLocaleTimeString('en-US'),
-												})
+											setState({
+												...state,
+												T_Notified: new Date().toLocaleTimeString('en-US'),
+											})
 										}}
-									/>
+									>
+										Notified
+									</Button>
 								</Grid>
-							</Grid>
-							<Grid item xs={3} container justifyContent="flex-start" alignItems="center" spacing={1}>
-								<Grid item>
-									<Button variant="contained" onClick={() => {
-										setState({
-											...state,
-											vhTimeEnRoute: new Date().toLocaleTimeString('en-US'),
-										})
-									}}>En Route</Button>
-								</Grid>
-								<Grid item>
+								<Grid item xs={6}>
 									<TextField
-										name="vhTimeEnRoute"
 										variant="outlined"
-										color="secondary"
 										size="small"
-										value={state.vhTimeEnRoute}
+										color="secondary"
+										name="T_Notified"
+										fullWidth
+										value={state.T_Notified}
 										onChange={handleChange}
 										onClick={() => {
-											if (state.vhTimeEnRoute === '')
-
+											if (state.T_Notified === '')
 												setState({
 													...state,
-													vhTimeEnRoute: new Date().toLocaleTimeString('en-US'),
-												})
-										}}
-									/>
-								</Grid>
-							</Grid>
-							<Grid item xs={3} container justifyContent="flex-start" alignItems="center" spacing={1}>
-								<Grid item>
-									<Button variant="contained" onClick={() => {
-										setState({
-											...state,
-											vhTimeAtScene: new Date().toLocaleTimeString('en-US'),
-										})
-									}}>At Scene</Button>
-								</Grid>
-								<Grid item>
-									<TextField
-										name="vhTimeAtScene"
-										variant="outlined"
-										color="secondary"
-										size="small"
-										value={state.vhTimeAtScene}
-										onChange={handleChange}
-										onClick={() => {
-											if (state.vhTimeAtScene === '')
-
-												setState({
-													...state,
-													vhTimeAtScene: new Date().toLocaleTimeString('en-US'),
-												})
-										}} />
-								</Grid>
-							</Grid>
-							<Grid item xs={3} container justifyContent="flex-start" alignItems="center" spacing={1}>
-								<Grid item>
-									<Button variant="contained" onClick={() => {
-										setState({
-											...state,
-											vhTimeCrewPatient: new Date().toLocaleTimeString('en-US'),
-										})
-									}}>Crew Patient</Button>
-								</Grid>
-								<Grid item>
-									<TextField
-										name="vhTimeCrewPatient"
-										variant="outlined"
-										color="secondary"
-										size="small"
-										value={state.vhTimeCrewPatient}
-										onChange={handleChange}
-										onClick={() => {
-											if (state.vhTimeCrewPatient === '')
-
-												setState({
-													...state,
-													vhTimeCrewPatient: new Date().toLocaleTimeString('en-US'),
+													T_Notified: new Date().toLocaleTimeString('en-US'),
 												})
 										}}
 									/>
 								</Grid>
 							</Grid>
 
-							<Grid item xs={3} container justifyContent="flex-start" alignItems="center" spacing={1}>
-								<Grid item>
-									<Button variant="contained" onClick={() => {
-										setState({
-											...state,
-											vhTimeLeftScene: new Date().toLocaleTimeString('en-US'),
-										})
-									}}>Left Scene</Button>
+							<Grid item container xs={12} sm={12} md={6} lg={3} spacing={2}>
+								<Grid item xs={6}>
+									<Button
+										variant="contained"
+										fullWidth
+										onClick={() => {
+											setState({
+												...state,
+												T_enRoute: new Date().toLocaleTimeString('en-US'),
+											})
+										}}
+									>
+										En Route
+									</Button>
 								</Grid>
-								<Grid item>
+								<Grid item xs={6}>
 									<TextField
-										name="vhTimeLeftScene"
 										variant="outlined"
-										color="secondary"
 										size="small"
-										value={state.vhTimeLeftScene}
+										color="secondary"
+										name="T_enRoute"
+										fullWidth
+										value={state.T_enRoute}
 										onChange={handleChange}
 										onClick={() => {
-											if (state.vhTimeLeftScene === '')
+											if (state.T_enRoute === '')
 												setState({
 													...state,
-													vhTimeLeftScene: new Date().toLocaleTimeString('en-US'),
+													T_enRoute: new Date().toLocaleTimeString('en-US'),
 												})
 										}}
 									/>
 								</Grid>
 							</Grid>
-							<Grid item xs={3} container justifyContent="flex-start" alignItems="center" spacing={1}>
-								<Grid item>
-									<Button variant="contained" onClick={() => {
-										setState({
-											...state,
-											vhTimeAtDestination: new Date().toLocaleTimeString('en-US'),
-										})
-									}}>At Destination</Button>
+
+							<Grid item container xs={12} sm={12} md={6} lg={3} spacing={2}>
+								<Grid item xs={6}>
+									<Button
+										variant="contained"
+										fullWidth
+										onClick={() => {
+											setState({
+												...state,
+												T_at_Scene: new Date().toLocaleTimeString('en-US'),
+											})
+										}}
+									>
+										At Scene
+									</Button>
 								</Grid>
-								<Grid item>
+								<Grid item xs={6}>
 									<TextField
-										name="vhTimeAtDestination"
 										variant="outlined"
-										color="secondary"
 										size="small"
-										value={state.vhTimeAtDestination}
+										color="secondary"
+										name="T_at_Scene"
+										fullWidth
+										value={state.T_at_Scene}
 										onChange={handleChange}
 										onClick={() => {
-											if (state.vhTimeAtDestination === '')
-
+											if (state.T_at_Scene === '')
 												setState({
 													...state,
-													vhTimeAtDestination: new Date().toLocaleTimeString('en-US'),
+													T_at_Scene: new Date().toLocaleTimeString('en-US'),
 												})
 										}}
 									/>
 								</Grid>
 							</Grid>
-							<Grid item xs={3} container justifyContent="flex-start" alignItems="center" spacing={1}>
-								<Grid item>
-									<Button variant="contained" onClick={() => {
-										setState({
-											...state,
-											vhTimeAvailable: new Date().toLocaleTimeString('en-US'),
-										})
-									}}>Available</Button>
+
+							<Grid item container xs={12} sm={12} md={6} lg={3} spacing={2}>
+								<Grid item xs={6}>
+									<Button
+										variant="contained"
+										fullWidth
+										onClick={() => {
+											setState({
+												...state,
+												T_Crew_Patient: new Date().toLocaleTimeString('en-US'),
+											})
+										}}
+									>
+										Crew Patient
+									</Button>
 								</Grid>
-								<Grid item>
+								<Grid item xs={6}>
 									<TextField
-										name="vhTimeAvailable"
 										variant="outlined"
-										color="secondary"
 										size="small"
-										value={state.vhTimeAvailable}
+										color="secondary"
+										name="T_Crew_Patient"
+										fullWidth
+										value={state.T_Crew_Patient}
 										onChange={handleChange}
 										onClick={() => {
-											if (state.vhTimeAvailable === '')
-
+											if (state.T_Crew_Patient === '')
 												setState({
 													...state,
-													vhTimeAvailable: new Date().toLocaleTimeString('en-US'),
+													T_Crew_Patient: new Date().toLocaleTimeString('en-US'),
 												})
 										}}
 									/>
 								</Grid>
 							</Grid>
-							<Grid item xs={3} container justifyContent="flex-start" alignItems="center" spacing={1}>
-								<Grid item>
-									<Button variant="contained" onClick={() => {
-										setState({
-											...state,
-											vhTimeBackArea: new Date().toLocaleTimeString('en-US'),
-										})
-									}}>Back Area</Button>
+							<Grid item container xs={12} sm={12} md={6} lg={3} spacing={2}>
+								<Grid item xs={6}>
+									<Button
+										variant="contained"
+										fullWidth
+										onClick={() => {
+											setState({
+												...state,
+												T_Left_Scene: new Date().toLocaleTimeString('en-US'),
+											})
+										}}
+									>
+										Left Scene
+									</Button>
 								</Grid>
-								<Grid item>
+								<Grid item xs={6}>
 									<TextField
-										name="vhTimeBackArea"
 										variant="outlined"
-										color="secondary"
 										size="small"
-										value={state.vhTimeBackArea}
+										color="secondary"
+										name="T_Left_Scene"
+										fullWidth
+										value={state.T_Left_Scene}
 										onChange={handleChange}
 										onClick={() => {
-											if (state.vhTimeBackArea === '')
-
+											if (state.T_Left_Scene === '')
 												setState({
 													...state,
-													vhTimeBackArea: new Date().toLocaleTimeString('en-US'),
+													T_Left_Scene: new Date().toLocaleTimeString('en-US'),
+												})
+										}}
+									/>
+								</Grid>
+							</Grid>
+
+							<Grid item container xs={12} sm={12} md={6} lg={3} spacing={2}>
+								<Grid item xs={6}>
+									<Button
+										variant="contained"
+										fullWidth
+										onClick={() => {
+											setState({
+												...state,
+												T_at_destn: new Date().toLocaleTimeString('en-US'),
+											})
+										}}
+									>
+										At Destination
+									</Button>
+								</Grid>
+								<Grid item xs={6}>
+									<TextField
+										variant="outlined"
+										size="small"
+										color="secondary"
+										name="T_at_destn"
+										fullWidth
+										value={state.T_at_destn}
+										onChange={handleChange}
+										onClick={() => {
+											if (state.T_at_destn === '')
+												setState({
+													...state,
+													T_at_destn: new Date().toLocaleTimeString('en-US'),
+												})
+										}}
+									/>
+								</Grid>
+							</Grid>
+
+							<Grid item container xs={12} sm={12} md={6} lg={3} spacing={2}>
+								<Grid item xs={6}>
+									<Button
+										variant="contained"
+										fullWidth
+										onClick={() => {
+											setState({
+												...state,
+												T_available: new Date().toLocaleTimeString('en-US'),
+											})
+										}}
+									>
+										Available
+									</Button>
+								</Grid>
+								<Grid item xs={6}>
+									<TextField
+										variant="outlined"
+										size="small"
+										color="secondary"
+										name="T_available"
+										fullWidth
+										value={state.T_available}
+										onChange={handleChange}
+										onClick={() => {
+											if (state.T_available === '')
+												setState({
+													...state,
+													T_available: new Date().toLocaleTimeString('en-US'),
+												})
+										}}
+									/>
+								</Grid>
+							</Grid>
+
+							<Grid item container xs={12} sm={12} md={6} lg={3} spacing={2}>
+								<Grid item xs={6}>
+									<Button
+										variant="contained"
+										fullWidth
+										onClick={() => {
+											setState({
+												...state,
+												T_backarea: new Date().toLocaleTimeString('en-US'),
+											})
+										}}
+									>
+										Back Area
+									</Button>
+								</Grid>
+								<Grid item xs={6}>
+									<TextField
+										variant="outlined"
+										size="small"
+										color="secondary"
+										name="T_backarea"
+										fullWidth
+										value={state.T_backarea}
+										onChange={handleChange}
+										onClick={() => {
+											if (state.T_backarea === '')
+												setState({
+													...state,
+													T_backarea: new Date().toLocaleTimeString('en-US'),
 												})
 										}}
 									/>
@@ -291,417 +355,315 @@ const VehicleDetails = ({ state, setState }) => {
 						</Grid>
 					</Paper>
 				</Grid>
-				<Grid container item xs={12} spacing={1}>
-					<Grid container item xs={6}>
-						<Paper variant="outlined" className={classes.paper}>
-							<Grid item xs={12}>
-								<Typography variant="subtitle1" component="div">
-									<Box fontWeight="fontWeightMedium">
-										Response to Scene
-									</Box>
-								</Typography>
-							</Grid>
-							<Grid item xs={12} container alignItems="center" spacing={2}>
-								<Grid item xs={6} container justifyContent="flex-start" alignItems="center" spacing={1}>
-									<Grid item>
-										<Typography variant="subtitle1" component="div">
-											<Box fontWeight="fontWeightMedium">
-												Type
-											</Box>
-										</Typography>
-									</Grid>
-									<Grid item>
-										<FormControl
-											variant="outlined"
-											color="secondary"
-											size="small"
-											className={classes.formControl}
-										>
-											<Select
-												name="vhResponseToScene"
-												value={state.vhResponseToScene}
-												onChange={handleChange}
-											>
-												<MenuItem value={"Cold"}>Cold</MenuItem>
-												<MenuItem value={"Hot"}>Hot</MenuItem>
-											</Select>
-										</FormControl>
-									</Grid>
-								</Grid>
-								<Grid item xs={6} container justifyContent="flex-start" alignItems="center" spacing={1}>
-									<Grid item>
-										<Typography variant="subtitle1" component="div">
-											<Box fontWeight="fontWeightMedium">
-												Change in Response
-
-											</Box>
-										</Typography>
-									</Grid>
-									<Grid item>
-										<FormControl
-											variant="outlined"
-											color="secondary"
-											size="small"
-											className={classes.formControl}
-										>
-											<Select
-												name="vhResponseToSceneChg"
-												value={state.vhResponseToSceneChg}
-												onChange={handleChange}
-											>
-												<MenuItem value={"Cold"}>Cold</MenuItem>
-												<MenuItem value={"Hot"}>Hot</MenuItem>
-											</Select>
-										</FormControl>
-									</Grid>
-								</Grid>
-							</Grid>
-						</Paper>
-					</Grid>
-					<Grid container item xs={6}>
-						<Paper variant="outlined" className={classes.paper}>
-							<Grid item xs={12}>
-								<Typography variant="subtitle1" component="div">
-									<Box fontWeight="fontWeightMedium">
-										Response from Scene
-									</Box>
-								</Typography>
-							</Grid>
-							<Grid item xs={12} container alignItems="center" spacing={2}>
-								<Grid item xs={6} container justifyContent="flex-start" alignItems="center" spacing={1}>
-									<Grid item>
-										<Typography variant="subtitle1" component="div">
-											<Box fontWeight="fontWeightMedium">
-												Type
-											</Box>
-										</Typography>
-									</Grid>
-									<Grid item>
-										<FormControl
-											variant="outlined"
-											color="secondary"
-											size="small"
-											className={classes.formControl}
-										>
-											<Select
-												name="vhResponseFromScene"
-												value={state.vhResponseFromScene}
-												onChange={handleChange}
-											>
-												<MenuItem value={"Cold"}>Cold</MenuItem>
-												<MenuItem value={"Hot"}>Hot</MenuItem>
-											</Select>
-										</FormControl>
-									</Grid>
-								</Grid>
-								<Grid item xs={6} container justifyContent="flex-start" alignItems="center" spacing={1}>
-									<Grid item>
-										<Typography variant="subtitle1" component="div">
-											<Box fontWeight="fontWeightMedium">
-												Change in Response
-											</Box>
-										</Typography>
-									</Grid>
-									<Grid item>
-										<FormControl
-											variant="outlined"
-											color="secondary"
-											size="small"
-											className={classes.formControl}
-										>
-											<Select
-												name="vhResponseFromSceneChg"
-												value={state.vhResponseFromSceneChg}
-												onChange={handleChange}
-											>
-												<MenuItem value={"Cold"}>Cold</MenuItem>
-												<MenuItem value={"Hot"}>Hot</MenuItem>
-											</Select>
-										</FormControl>
-									</Grid>
-								</Grid>
-							</Grid>
-						</Paper>
-					</Grid>
-				</Grid>
-				<Grid item xs={12} container>
+				<Grid item container xs={12} sm={12} md={6} lg={6}>
 					<Paper variant="outlined" className={classes.paper}>
-						<Grid item xs={12}>
-							<Typography variant="subtitle1" component="div">
-								<Box fontWeight="fontWeightMedium">
-									Crew Type
-								</Box>
-							</Typography>
+						<Typography
+							color="textSecondary"
+							gutterBottom
+						>
+							Response to Scene
+						</Typography>
+						<Grid item container xs={12} spacing={2}>
+							<Grid item xs={12} sm={12} md={12} lg={6}>
+								<FormControl
+									variant="filled"
+									color="secondary"
+									size="small"
+									fullWidth
+								>
+									<InputLabel id="rts-type-label">Type</InputLabel>
+									<Select
+										labelId="rts-type-label"
+										id="rts-type"
+										name="RTS_Type"
+										value={state.RTS_Type}
+										onChange={handleChange}
+										label="Type"
+									>
+										<MenuItem value={"Cold"}>Cold</MenuItem>
+										<MenuItem value={"Hot"}>Hot</MenuItem>
+									</Select>
+								</FormControl>
+							</Grid>
+							<Grid item xs={12} sm={12} md={12} lg={6}>
+								<FormControl
+									variant="filled"
+									color="secondary"
+									size="small"
+									fullWidth
+								>
+									<InputLabel id="rts-change-label">Change in Response</InputLabel>
+									<Select
+										labelId="rts-change-label"
+										id="rts-change"
+										name="RTS_Change"
+										value={state.RTS_Change}
+										onChange={handleChange}
+										label="Change in Response"
+									>
+										<MenuItem value={"Cold"}>Cold</MenuItem>
+										<MenuItem value={"Hot"}>Hot</MenuItem>
+									</Select>
+								</FormControl>
+							</Grid>
 						</Grid>
-						<Grid item xs={12} container justifyContent="center" alignItems="flex-start" spacing={2}>
-							<Grid item xs={4} container spacing={2}>
-								<Grid item xs={12} container justifyContent="flex-start" alignItems="center" spacing={1}>
-									<Grid item>
-										<Typography variant="subtitle1" component="div">
-											<Box fontWeight="fontWeightMedium">
-												Driver
-											</Box>
-										</Typography>
-									</Grid>
-									<Grid item>
-										<FormControl
-											variant="outlined"
-											color="secondary"
-											size="small"
-											className={classes.formControl}
-										>
-											<Select
-												name="crwDriv"
-												value={state.crwDriv}
-												onChange={handleChange}
-											>
-												{crewTypes.map((item, index) => (
-													<MenuItem key={index} value={item}>{item}</MenuItem>
-												))}
-											</Select>
-										</FormControl>
-									</Grid>
-								</Grid>
-								{state.crwDriv !== 'Other' ? '' :
-									<Grid item xs={12} container justifyContent="flex-start" alignItems="center" spacing={1}>
-										<Grid item>
-											<Typography variant="subtitle1" component="div">
-												<Box fontWeight="fontWeightMedium">
-													Other
-												</Box>
-											</Typography>
-										</Grid>
-										<Grid item>
-											<TextField
-												name="crwDrOth"
-												variant="outlined"
-												color="secondary"
-												size="small"
-												value={state.crwDrOth}
-												onChange={handleChange}
-											/>
-										</Grid>
-									</Grid>
-								}
+
+					</Paper>
+				</Grid>
+				<Grid item container xs={12} sm={12} md={6} lg={6}>
+					<Paper variant="outlined" className={classes.paper}>
+						<Typography
+							color="textSecondary"
+							gutterBottom
+						>
+							Response from Scene
+						</Typography>
+						<Grid item container xs={12} spacing={2}>
+							<Grid item xs={12} sm={12} md={12} lg={6}>
+								<FormControl
+									variant="filled"
+									color="secondary"
+									size="small"
+									fullWidth
+								>
+									<InputLabel id="rfs-type-label">Type</InputLabel>
+									<Select
+										labelId="rfs-type-label"
+										id="rfs-type"
+										name="RFS_Type"
+										value={state.RFS_Type}
+										onChange={handleChange}
+										label="Type"
+									>
+										<MenuItem value={"Cold"}>Cold</MenuItem>
+										<MenuItem value={"Hot"}>Hot</MenuItem>
+									</Select>
+								</FormControl>
 							</Grid>
-							<Grid item xs={4} container spacing={2}>
-								<Grid item xs={12} container justifyContent="flex-start" alignItems="center" spacing={1}>
-									<Grid item>
-										<Typography variant="subtitle1" component="div">
-											<Box fontWeight="fontWeightMedium">
-												Attendant
-											</Box>
-										</Typography>
-									</Grid>
-									<Grid item>
-										<FormControl
-											variant="outlined"
-											color="secondary"
-											size="small"
-											className={classes.formControl}
-										>
-											<Select
-												name="crwAtte"
-												value={state.crwAtte}
-												onChange={handleChange}
-											>
-												{crewTypes.map((item, index) => (
-													<MenuItem key={index} value={item}>{item}</MenuItem>
-												))}
-											</Select>
-										</FormControl>
-									</Grid>
-								</Grid>
-								{state.crwAtte !== 'Other' ? '' :
-									<Grid item xs={12} container justifyContent="flex-start" alignItems="center" spacing={1}>
-										<Grid item>
-											<Typography variant="subtitle1" component="div">
-												<Box fontWeight="fontWeightMedium">
-													Other
-												</Box>
-											</Typography>
-										</Grid>
-										<Grid item>
-											<TextField
-												name="crwAttnOth"
-												variant="outlined"
-												color="secondary"
-												size="small"
-												value={state.crwAttnOth}
-												onChange={handleChange}
-											/>
-										</Grid>
-									</Grid>
-								}
-							</Grid>
-							<Grid item xs={4} container spacing={2}>
-								<Grid item xs={12} container justifyContent="flex-start" alignItems="center" spacing={1}>
-									<Grid item>
-										<Typography variant="subtitle1" component="div">
-											<Box fontWeight="fontWeightMedium">
-												Assisting Personnel
-											</Box>
-										</Typography>
-									</Grid>
-									<Grid item>
-										<FormControl
-											variant="outlined"
-											color="secondary"
-											size="small"
-											className={classes.formControl}
-										>
-											<Select
-												name="crwAsst"
-												value={state.crwAsst}
-												onChange={handleChange}
-											>
-												{crewTypes.map((item, index) => (
-													<MenuItem key={index} value={item}>{item}</MenuItem>
-												))}
-											</Select>
-										</FormControl>
-									</Grid>
-								</Grid>
-								{state.crwAsst !== 'Other' ? '' :
-									<Grid item xs={12} container justifyContent="flex-start" alignItems="center" spacing={1}>
-										<Grid item>
-											<Typography variant="subtitle1" component="div">
-												<Box fontWeight="fontWeightMedium">
-													Other
-												</Box>
-											</Typography>
-										</Grid>
-										<Grid item>
-											<TextField
-												name="crwAsstOth"
-												variant="outlined"
-												color="secondary"
-												size="small"
-												value={state.crwAsstOth}
-												onChange={handleChange}
-											/>
-										</Grid>
-									</Grid>
-								}
+							<Grid item xs={12} sm={12} md={12} lg={6}>
+								<FormControl
+									variant="filled"
+									color="secondary"
+									size="small"
+									fullWidth
+								>
+									<InputLabel id="rfs-change-label">Change in Response</InputLabel>
+									<Select
+										labelId="rfs-change-label"
+										id="rfs-change"
+										name="RFS_Change"
+										value={state.RFS_Change}
+										onChange={handleChange}
+										label="Change in Response"
+									>
+										<MenuItem value={"Cold"}>Cold</MenuItem>
+										<MenuItem value={"Hot"}>Hot</MenuItem>
+									</Select>
+								</FormControl>
 							</Grid>
 						</Grid>
 					</Paper>
 				</Grid>
-				<Grid item xs={12} container>
+				<Grid item container xs={12}>
 					<Paper variant="outlined" className={classes.paper}>
-						<Grid item xs={12}>
-							<Typography variant="subtitle1" component="div">
-								<Box fontWeight="fontWeightMedium">
-									Mileage
-								</Box>
-							</Typography>
+						<Typography
+							color="textSecondary"
+							gutterBottom
+						>
+							Crew Type
+						</Typography>
+						<Grid item container xs={12} spacing={2}>
+							<Grid item container xs={12} sm={12} md={4} lg={4} spacing={2}>
+								<Grid item xs={12} sm={6} md={12} lg={12}>
+									<FormControl
+										variant="filled"
+										color="secondary"
+										size="small"
+										fullWidth
+									>
+										<InputLabel id="c-driver-label">Driver</InputLabel>
+										<Select
+											labelId="c-driver-label"
+											id="c-driver"
+											name="C_driver"
+											value={state.C_driver}
+											onChange={handleChange}
+											label="Driver"
+										>
+											{crewTypes.map((item, index) => (
+												<MenuItem key={index} value={item}>{item}</MenuItem>
+											))}
+										</Select>
+									</FormControl>
+								</Grid>
+								<Grid item xs={12} sm={6} md={12} lg={12}>
+									{state.C_driver !== "Other" ? '' : (
+										<TextField
+											variant="filled"
+											size="small"
+											color="secondary"
+											label="Other"
+											name="C_driv_oth"
+											value={state.C_driv_oth}
+											onChange={handleChange}
+											fullWidth
+										/>
+									)}
+								</Grid>
+							</Grid>
+							<Grid item container xs={12} sm={12} md={4} lg={4} spacing={2}>
+								<Grid item xs={12} sm={6} md={12} lg={12}>
+									<FormControl
+										variant="filled"
+										color="secondary"
+										size="small"
+										fullWidth
+									>
+										<InputLabel id="c-attendant-label">Attendant</InputLabel>
+										<Select
+											labelId="c-attendant-label"
+											id="c-attendant"
+											name="C_attendant"
+											value={state.C_attendant}
+											onChange={handleChange}
+											label="Attendant"
+										>
+											{crewTypes.map((item, index) => (
+												<MenuItem key={index} value={item}>{item}</MenuItem>
+											))}
+										</Select>
+									</FormControl>
+								</Grid>
+								<Grid item xs={12} sm={6} md={12} lg={12}>
+									{state.C_attendant !== "Other" ? '' : (
+										<TextField
+											variant="filled"
+											size="small"
+											color="secondary"
+											label="Other"
+											name="C_attn_oth"
+											value={state.C_attn_oth}
+											onChange={handleChange}
+											fullWidth
+										/>
+									)}
+								</Grid>
+							</Grid>
+							<Grid item container xs={12} sm={12} md={4} lg={4} spacing={2}>
+								<Grid item xs={12} sm={6} md={12} lg={12}>
+									<FormControl
+										variant="filled"
+										color="secondary"
+										size="small"
+										fullWidth
+									>
+										<InputLabel id="c-assistant-label">Assistant</InputLabel>
+										<Select
+											labelId="c-assistant-label"
+											id="c-assistant"
+											name="C_assistant"
+											value={state.C_assistant}
+											onChange={handleChange}
+											label="Assistant"
+										>
+											{crewTypes.map((item, index) => (
+												<MenuItem key={index} value={item}>{item}</MenuItem>
+											))}
+										</Select>
+									</FormControl>
+								</Grid>
+								<Grid item xs={12} sm={6} md={12} lg={12}>
+									{state.C_assistant !== "Other" ? '' : (
+										<TextField
+											variant="filled"
+											size="small"
+											color="secondary"
+											label="Other"
+											name="C_asst_oth"
+											value={state.C_asst_oth}
+											onChange={handleChange}
+											fullWidth
+										/>
+									)}
+								</Grid>
+							</Grid>
 						</Grid>
-						<Grid item xs={12} container justifyContent="center" alignItems="flex-start" spacing={2}>
-							<Grid container item xs justifyContent="flex-start" alignItems="center" wrap="nowrap" spacing={1}>
-								<Grid item>
-									<Typography variant="subtitle1" component="div">
-										<Box fontWeight="fontWeightMedium">
-											Out
-										</Box>
-									</Typography>
-								</Grid>
-								<Grid item>
-									<TextField
-										name="vhOut"
-										variant="outlined"
-										color="secondary"
-										size="small"
-										value={state.vhOut}
-										onChange={handleChange}
-										className={classes.textField}
-									/>
-								</Grid>
+					</Paper>
+				</Grid>
+				<Grid item container xs={12}>
+					<Paper variant="outlined" className={classes.paper}>
+						<Typography
+							color="textSecondary"
+							gutterBottom
+						>
+							Mileage
+						</Typography>
+						<Grid item container xs={12} spacing={2} justifyContent="center">
+							<Grid item xs={12} lg={2}>
+								<TextField
+									label="Out"
+									variant="filled"
+									size="small"
+									color="secondary"
+									name="M_Out"
+									value={state.M_Out}
+									onChange={handleChange}
+									fullWidth
+								/>
 							</Grid>
-							<Grid container item xs justifyContent="flex-start" alignItems="center" wrap="nowrap" spacing={1}>
-								<Grid item>
-									<Typography variant="subtitle1" component="div">
-										<Box fontWeight="fontWeightMedium">
-											At Scene
-										</Box>
-									</Typography>
-								</Grid>
-								<Grid item>
-									<TextField
-										name="vhAtScn"
-										variant="outlined"
-										color="secondary"
-										size="small"
-										value={state.vhAtScn}
-										onChange={handleChange}
-										className={classes.textField}
-									/>
-								</Grid>
+							<Grid item xs={12} lg={2}>
+								<TextField
+									label="At Scene"
+									variant="filled"
+									size="small"
+									name="M_atScene"
+									value={state.M_atScene}
+									onChange={handleChange}
+									color="secondary"
+									fullWidth
+								/>
 							</Grid>
-							<Grid container item xs justifyContent="flex-start" alignItems="center" wrap="nowrap" spacing={1}>
-								<Grid item>
-									<Typography variant="subtitle1" component="div">
-										<Box fontWeight="fontWeightMedium">
-											At Destination
-										</Box>
-									</Typography>
-								</Grid>
-								<Grid item>
-									<TextField
-										name="vhAtDestn"
-										variant="outlined"
-										color="secondary"
-										size="small"
-										value={state.vhAtDestn}
-										onChange={handleChange}
-										className={classes.textField}
-									/>
-								</Grid>
+							<Grid item xs={12} lg={2}>
+								<TextField
+									label="At Destination"
+									variant="filled"
+									size="small"
+									name="M_atDest"
+									value={state.M_atDest}
+									onChange={handleChange}
+									color="secondary"
+									fullWidth
+								/>
 							</Grid>
-							<Grid container item xs justifyContent="flex-start" alignItems="center" wrap="nowrap" spacing={1}>
-								<Grid item>
-									<Typography variant="subtitle1" component="div">
-										<Box fontWeight="fontWeightMedium">
-											In
-										</Box>
-									</Typography>
-								</Grid>
-								<Grid item>
-									<TextField
-										name="vhIn"
-										variant="outlined"
-										color="secondary"
-										size="small"
-										value={state.vhIn}
-										onChange={handleChange}
-										className={classes.textField}
-									/>
-								</Grid>
+							<Grid item xs={12} lg={2}>
+								<TextField
+									label="In"
+									variant="filled"
+									size="small"
+									name="M_In"
+									value={state.M_In}
+									onChange={handleChange}
+									color="secondary"
+									fullWidth
+								/>
 							</Grid>
-							<Grid container item xs justifyContent="flex-start" alignItems="center" wrap="nowrap" spacing={1}>
-								<Grid item>
-									<Typography variant="subtitle1" component="div">
-										<Box fontWeight="fontWeightMedium">
-											Total
-										</Box>
-									</Typography>
-								</Grid>
-								<Grid item>
-									<TextField
-										name="vhTotal"
-										variant="outlined"
-										color="secondary"
-										size="small"
-										value={state.vhTotal}
-										onChange={handleChange}
-										className={classes.textField}
-									/>
-								</Grid>
+							<Grid item xs={12} lg={2}>
+								<TextField
+									label="Total"
+									variant="filled"
+									size="small"
+									name="M_Total"
+									value={state.M_Total}
+									onChange={handleChange}
+									color="secondary"
+									fullWidth
+								/>
 							</Grid>
 						</Grid>
 					</Paper>
 				</Grid>
 			</Grid>
-		</form>
+		</Container >
 	)
 }
 

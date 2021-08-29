@@ -10,12 +10,6 @@ import UpperExtremities from '../ComplaintBased/Trauma/UpperExtremities'
 import LowerExtremities from '../ComplaintBased/Trauma/LowerExtremities'
 import Back from '../ComplaintBased/Trauma/Back'
 
-const useStyles = makeStyles((theme) => ({
-	content: {
-		paddingTop: theme.spacing(5),
-	},
-}));
-
 function TabPanel(props) {
 	const { children, value, index, ...other } = props;
 
@@ -44,7 +38,6 @@ function a11yProps(index) {
 }
 
 const Trauma = (props) => {
-    const classes = useStyles();
 
     const [selectedTab, setSelectedTab] = useState(0);
 
@@ -53,9 +46,9 @@ const Trauma = (props) => {
 	}
     
     return (
-        <div className={classes.content}>
+        <div>
 			<AppBar position="static">
-				<Tabs value={selectedTab} onChange={handleTabChange} aria-label="complaint based tabs">
+				<Tabs value={selectedTab} onChange={handleTabChange} variant="scrollable" aria-label="complaint based tabs">
 					<Tab label="Head" {...a11yProps(0)} />
 					<Tab label="Neck" {...a11yProps(1)} />
 					<Tab label="Abdoment" {...a11yProps(2)} />

@@ -16,8 +16,8 @@ const ToxicExposure = ({ state, setState, assessmentItems }) => {
             [e.target.name]: e.target.value,
         })
     }
-    
-    const { substanceAmount, setSubstanceAmount, substanceUnit, setSubstanceUnit} = assessmentItems;
+
+    const { substanceAmount, setSubstanceAmount, substanceUnit, setSubstanceUnit } = assessmentItems;
 
     const handleSubstanceAmount = (e) => {
         setSubstanceAmount(e.target.value)
@@ -36,9 +36,9 @@ const ToxicExposure = ({ state, setState, assessmentItems }) => {
     return (
         <Container maxWidth="lg">
             <Grid container spacing={4}>
-                <Grid item xs={8} sm={12}>
+                <Grid item xs={6} md={12}>
                     <TextField
-                        variant="outlined"
+                        variant="filled"
                         label="Duration"
                         color="secondary"
                         size="small"
@@ -48,9 +48,9 @@ const ToxicExposure = ({ state, setState, assessmentItems }) => {
                         onChange={handleChange}
                     />
                 </Grid>
-                <Grid item xs={8} sm={8} md={6}>
+                <Grid item xs={12} sm={4} md={6}>
                     <FormControl
-                        variant="outlined"
+                        variant="filled"
                         color="secondary"
                         size="small"
                         fullWidth
@@ -70,39 +70,37 @@ const ToxicExposure = ({ state, setState, assessmentItems }) => {
                         </Select>
                     </FormControl>
                 </Grid>
-                <Grid item container xs={8} sm={4} md={6} spacing={2}>
-                    <Grid item xs={6} sm={4} md={4}>
-                        <Button
-                            variant="contained"
-                            color="default"
-                            fullWidth
-                            onClick={() => {
-                                setState({
-                                    ...state,
-                                    Exposure_time: new Date().toLocaleTimeString('en-US'),
-                                })
-                            }}
-                        >
-                            Time of Exposure
-                        </Button>
-                    </Grid>
-                    <Grid item xs={6} sm={4} md={4}>
-                        <TextField
-                            variant="outlined"
-                            color="secondary"
-                            size="small"
-                            name="Exposure_time"
-                            id="exposure-time"
-                            value={state.Exposure_time}
-                            onChange={handleChange}
-                            fullWidth
-                        />
-                    </Grid>
+                <Grid item xs={6} sm={4} md={3}>
+                    <Button
+                        variant="contained"
+                        color="default"
+                        fullWidth
+                        onClick={() => {
+                            setState({
+                                ...state,
+                                Exposure_time: new Date().toLocaleTimeString('en-US'),
+                            })
+                        }}
+                    >
+                        Time of Exposure
+                    </Button>
+                </Grid>
+                <Grid item xs={6} sm={4} md={3}>
+                    <TextField
+                        variant="outlined"
+                        color="secondary"
+                        size="small"
+                        name="Exposure_time"
+                        id="exposure-time"
+                        value={state.Exposure_time}
+                        onChange={handleChange}
+                        fullWidth
+                    />
                 </Grid>
 
-                <Grid item xs={8} sm={8} md={6}>
+                <Grid item xs={12} sm={8} md={6}>
                     <FormControl
-                        variant="outlined"
+                        variant="filled"
                         color="secondary"
                         size="small"
                         fullWidth
@@ -122,16 +120,17 @@ const ToxicExposure = ({ state, setState, assessmentItems }) => {
                         </Select>
                     </FormControl>
                 </Grid>
-                <Grid item container xs={8} sm={4} md={6} spacing={2} alignItems="center">
+                <Grid item container xs={12} sm={4} md={6} spacing={2} alignItems="center">
                     <Grid item>
                         <Typography>Amount of Substance</Typography>
                     </Grid>
                     <Grid item container xs={6} sm={6} md={4} spacing={1}>
                         <Grid item xs sm md lg xl>
                             <TextField
-                                variant="outlined"
+                                variant="filled"
                                 color="secondary"
                                 size="small"
+                                placeholder="0"
                                 name="substanceAmount"
                                 id="substance-amount"
                                 value={substanceAmount}
@@ -141,7 +140,7 @@ const ToxicExposure = ({ state, setState, assessmentItems }) => {
                         </Grid>
                         <Grid item xs sm md lg xl>
                             <FormControl
-                                variant="outlined"
+                                variant="filled"
                                 color="secondary"
                                 size="small"
                             >
@@ -164,10 +163,10 @@ const ToxicExposure = ({ state, setState, assessmentItems }) => {
 
                     </Grid>
                 </Grid>
-                <Grid item container xs={8} sm={8} md={12} spacing={2}>
+                <Grid item container xs={12} sm={8} md={12} spacing={2}>
                     <Grid item xs={12} sm={12} md={6}>
                         <FormControl
-                            variant="outlined"
+                            variant="filled"
                             color="secondary"
                             size="small"
                             fullWidth
@@ -191,7 +190,7 @@ const ToxicExposure = ({ state, setState, assessmentItems }) => {
                         <Grid item xs={12} sm={12} md={6}>
                             <TextField
                                 label="Other"
-                                variant="outlined"
+                                variant="filled"
                                 color="secondary"
                                 size="small"
                                 name="Typ_sub_Other"
@@ -203,10 +202,10 @@ const ToxicExposure = ({ state, setState, assessmentItems }) => {
                         </Grid>
                     }
                 </Grid>
-                <Grid item container xs={8} sm={8} md={12} spacing={2}>
+                <Grid item container xs={12} sm={8} md={12} spacing={2}>
                     <Grid item xs={12} sm={12} md={6}>
                         <FormControl
-                            variant="outlined"
+                            variant="filled"
                             color="secondary"
                             size="small"
                             fullWidth
@@ -230,7 +229,7 @@ const ToxicExposure = ({ state, setState, assessmentItems }) => {
                         <Grid item xs={12} sm={12} md={6}>
                             <TextField
                                 label="Other"
-                                variant="outlined"
+                                variant="filled"
                                 color="secondary"
                                 size="small"
                                 name="Route_Other"
@@ -242,10 +241,10 @@ const ToxicExposure = ({ state, setState, assessmentItems }) => {
                         </Grid>
                     }
                 </Grid>
-                <Grid item container xs={8} sm={8} md={12} spacing={2}>
+                <Grid item container xs={12} sm={8} md={12} spacing={2}>
                     <Grid item xs={12} sm={12} md={6}>
                         <FormControl
-                            variant="outlined"
+                            variant="filled"
                             color="secondary"
                             size="small"
                             fullWidth
@@ -269,7 +268,7 @@ const ToxicExposure = ({ state, setState, assessmentItems }) => {
                         <Grid item xs={12} sm={12} md={6}>
                             <TextField
                                 label="Other"
-                                variant="outlined"
+                                variant="filled"
                                 color="secondary"
                                 size="small"
                                 name="Reaction_Other"
@@ -281,10 +280,10 @@ const ToxicExposure = ({ state, setState, assessmentItems }) => {
                         </Grid>
                     }
                 </Grid>
-                <Grid item container xs={8} sm={8} md={12} spacing={2}>
+                <Grid item container xs={12} sm={8} md={12} spacing={2}>
                     <Grid item xs={12} sm={12} md={6}>
                         <FormControl
-                            variant="outlined"
+                            variant="filled"
                             color="secondary"
                             size="small"
                             fullWidth
@@ -308,7 +307,7 @@ const ToxicExposure = ({ state, setState, assessmentItems }) => {
                         <Grid item xs={12} sm={12} md={6}>
                             <TextField
                                 label="Other"
-                                variant="outlined"
+                                variant="filled"
                                 color="secondary"
                                 size="small"
                                 name="Evidence_Other"

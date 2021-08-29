@@ -51,18 +51,18 @@ const Medications = ({ state, setState, checked, setChecked }) => {
 	return (
 		<div className={classes.root}>
 			<Grid container spacing={2}>
-				<Grid item container xs={6}>
+				<Grid item container xs={12} md={6}>
 					<Grid item xs={12}>
 						<Typography>Medications (select all that are applicable)</Typography>
 					</Grid>
-					<FixedSizeList height={450} width={450} itemSize={46} itemCount={medications.length}>
+					<FixedSizeList height={450} width="100%" itemSize={46} itemCount={medications.length}>
 						{renderRow}
 					</FixedSizeList>
 
 				</Grid>
-				<Grid item container xs={6}>
-					<Typography>Others / Comments</Typography>
+				<Grid item container xs={12} md={6}>
 					<TextField
+						label="Others / Comments"
 						multiline
 						fullWidth
 						rows={22}

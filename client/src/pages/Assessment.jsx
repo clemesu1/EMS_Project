@@ -9,14 +9,13 @@ import MechanismOfInjury from './Assessment/MechanismOfInjury';
 const useStyles = makeStyles((theme) => ({
 	root: {
 		flexGrow: 1,
-		backgroundColor: theme.palette.background.paper,
 	},
 	content: {
 		padding: theme.spacing(3),
 	},
 	tabInactive: {
 		display: 'none',
-	}
+	},
 }));
 
 const Assessment = (props) => {
@@ -55,7 +54,12 @@ const Assessment = (props) => {
 	return (
 		<div className={classes.root}>
 			<AppBar position="static">
-				<Tabs value={selectedTab} onChange={handleChange} scrollButtons="auto" variant="scrollable">
+				<Tabs
+					value={selectedTab}
+					onChange={handleChange}
+					variant="scrollable"
+					scrollButtons="auto"
+				>
 					<Tab label="Patient History" />
 					<Tab label="General Assessment" />
 					<Tab label="Complaint based Assessment & History" />
@@ -74,7 +78,7 @@ const Assessment = (props) => {
 					{selectedTab === 0 && <PatientHistory state={props.patientHistory} setState={setPatientHistory} assessmentItems={assessmentItems} {...props} />}
 					{selectedTab === 1 && <GeneralAssessment assessmentItems={assessmentItems} {...props} />}
 					{selectedTab === 2 && <ComplaintBased assessmentItems={assessmentItems} {...props} />}
-					{selectedTab === 3 && <MechanismOfInjury assessmentItems={assessmentItems} {...props}/>}
+					{selectedTab === 3 && <MechanismOfInjury assessmentItems={assessmentItems} {...props} />}
 
 				</Typography>
 			</div>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { AppBar, Box, Tab, Tabs, Typography } from '@material-ui/core'
+import { AppBar, Box, Container, Tab, Tabs, Typography } from '@material-ui/core'
 import Respiratory from '../Assessment/ComplaintBased/Respiratory'
 import Seizure from '../Assessment/ComplaintBased/Seizure'
 import ToxicExposure from '../Assessment/ComplaintBased/ToxicExposure'
@@ -11,7 +11,6 @@ import Trauma from '../Assessment/ComplaintBased/Trauma'
 
 function TabPanel(props) {
 	const { children, value, index, ...other } = props;
-
 
 	return (
 		<div
@@ -40,7 +39,6 @@ const ComplaintBased = (props) => {
 
 	const { respiratory, setRespiratory, breathSoundChecksII, setBreathSoundChecksII, seizure, setSeizure, toxicExposure, setToxicExposure, cardiacArrest, setCardiacArrest, chestPain, setChestPain, neonatalAssessment, setNeonatalAssessment, obstetric, setObstetric } = assessmentItems;
 
-
 	const [selectedTab, setSelectedTab] = useState(0);
 
 	const handleTabChange = (e, value) => {
@@ -50,7 +48,14 @@ const ComplaintBased = (props) => {
 	return (
 		<div>
 			<AppBar position="static">
-				<Tabs value={selectedTab} onChange={handleTabChange} aria-label="complaint based tabs" scrollButtons="auto" variant="scrollable">
+				<Tabs
+					value={selectedTab}
+					onChange={handleTabChange}
+					variant="scrollable"
+					scrollButtons="auto"
+					aria-label="scrollable auto tabs example"
+
+				>
 					<Tab label="Respiratory" {...a11yProps(0)} />
 					<Tab label="Seizure" {...a11yProps(1)} />
 					<Tab label="Toxic Exposure" {...a11yProps(2)} />
@@ -81,7 +86,7 @@ const ComplaintBased = (props) => {
 					<Neonatal state={neonatalAssessment} setState={setNeonatalAssessment} />
 				</TabPanel>
 				<TabPanel value={selectedTab} index={6}>
-					<Obstetric state={obstetric} setState={setObstetric}/>
+					<Obstetric state={obstetric} setState={setObstetric} />
 				</TabPanel>
 			</Box>
 			<TabPanel value={selectedTab} index={7}>
