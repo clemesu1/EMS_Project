@@ -8,6 +8,7 @@ import Pelvis from '../ComplaintBased/Trauma/Pelvis'
 import UpperExtremities from '../ComplaintBased/Trauma/UpperExtremities'
 import LowerExtremities from '../ComplaintBased/Trauma/LowerExtremities'
 import Back from '../ComplaintBased/Trauma/Back'
+import Chest from './Trauma/Chest';
 
 function TabPanel(props) {
 	const { children, value, index, ...other } = props;
@@ -51,11 +52,12 @@ const Trauma = (props) => {
 				<Tabs value={selectedTab} onChange={handleTabChange} variant="scrollable" aria-label="complaint based tabs">
 					<Tab label="Head" {...a11yProps(0)} />
 					<Tab label="Neck" {...a11yProps(1)} />
-					<Tab label="Abdoment" {...a11yProps(2)} />
-					<Tab label="Pelvis" {...a11yProps(3)} />
-					<Tab label="Upper Extremities" {...a11yProps(4)} />
-					<Tab label="Lower Extremities" {...a11yProps(5)} />
-					<Tab label="Back" {...a11yProps(6)} />
+					<Tab label="Chest" {...a11yProps(2)} />
+					<Tab label="Abdoment" {...a11yProps(3)} />
+					<Tab label="Pelvis" {...a11yProps(4)} />
+					<Tab label="Upper Extremities" {...a11yProps(5)} />
+					<Tab label="Lower Extremities" {...a11yProps(6)} />
+					<Tab label="Back" {...a11yProps(7)} />
 				</Tabs>
 			</AppBar>
 			<TabPanel value={selectedTab} index={0}>
@@ -65,18 +67,21 @@ const Trauma = (props) => {
 				<Neck state={state} setState={setState} />
 			</TabPanel>
 			<TabPanel value={selectedTab} index={2}>
-				<Abdoment state={state} setState={setState} />
+				<Chest state={state} setState={setState} />
 			</TabPanel>
 			<TabPanel value={selectedTab} index={3}>
-				<Pelvis state={state} setState={setState}/>
+				<Abdoment state={state} setState={setState} />
 			</TabPanel>
 			<TabPanel value={selectedTab} index={4}>
-				<UpperExtremities state={state} setState={setState}/>
+				<Pelvis state={state} setState={setState}/>
 			</TabPanel>
 			<TabPanel value={selectedTab} index={5}>
-				<LowerExtremities state={state} setState={setState}/>
+				<UpperExtremities state={state} setState={setState}/>
 			</TabPanel>
 			<TabPanel value={selectedTab} index={6}>
+				<LowerExtremities state={state} setState={setState}/>
+			</TabPanel>
+			<TabPanel value={selectedTab} index={7}>
 				<Back state={state} setState={setState}/>
 			</TabPanel>
 		</div>
