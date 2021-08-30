@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { AppBar, Box, Container, Tab, Tabs, Typography } from '@material-ui/core'
+import { AppBar, Box, Tab, Tabs, Typography } from '@material-ui/core'
 import Respiratory from '../Assessment/ComplaintBased/Respiratory'
 import Seizure from '../Assessment/ComplaintBased/Seizure'
 import ToxicExposure from '../Assessment/ComplaintBased/ToxicExposure'
@@ -37,7 +37,7 @@ function a11yProps(index) {
 const ComplaintBased = (props) => {
 	const { assessmentItems } = props;
 
-	const { respiratory, setRespiratory, breathSoundChecksII, setBreathSoundChecksII, seizure, setSeizure, toxicExposure, setToxicExposure, cardiacArrest, setCardiacArrest, chestPain, setChestPain, neonatalAssessment, setNeonatalAssessment, obstetric, setObstetric } = assessmentItems;
+	const { respiratory, setRespiratory, breathSoundChecksII, setBreathSoundChecksII, seizure, setSeizure, toxicExposure, setToxicExposure, cardiacArrest, setCardiacArrest, chestPain, setChestPain, neonatalAssessment, setNeonatalAssessment, obstetric, setObstetric, traumaAssessment, setTraumaAssessment } = assessmentItems;
 
 	const [selectedTab, setSelectedTab] = useState(0);
 
@@ -90,7 +90,7 @@ const ComplaintBased = (props) => {
 				</TabPanel>
 			</Box>
 			<TabPanel value={selectedTab} index={7}>
-				<Trauma />
+				<Trauma state={traumaAssessment} setState={setTraumaAssessment}/>
 			</TabPanel>
 
 		</div>

@@ -1,6 +1,5 @@
 import { AppBar, Box, Tab, Tabs, Typography } from '@material-ui/core';
 import React, { useState } from 'react'
-import { makeStyles } from '@material-ui/core/styles';
 
 import Head from '../ComplaintBased/Trauma/Head'
 import Neck from '../ComplaintBased/Trauma/Neck'
@@ -39,14 +38,15 @@ function a11yProps(index) {
 
 const Trauma = (props) => {
 
-    const [selectedTab, setSelectedTab] = useState(0);
+	const [selectedTab, setSelectedTab] = useState(0);
+	const { state, setState } = props;
 
 	const handleTabChange = (e, value) => {
 		setSelectedTab(value);
 	}
-    
-    return (
-        <div>
+
+	return (
+		<div>
 			<AppBar position="static">
 				<Tabs value={selectedTab} onChange={handleTabChange} variant="scrollable" aria-label="complaint based tabs">
 					<Tab label="Head" {...a11yProps(0)} />
@@ -59,28 +59,28 @@ const Trauma = (props) => {
 				</Tabs>
 			</AppBar>
 			<TabPanel value={selectedTab} index={0}>
-                <Head />
+				<Head state={state} setState={setState} />
 			</TabPanel>
 			<TabPanel value={selectedTab} index={1}>
-                <Neck/>
+				<Neck state={state} setState={setState} />
 			</TabPanel>
 			<TabPanel value={selectedTab} index={2}>
-                <Abdoment/>
+				<Abdoment state={state} setState={setState} />
 			</TabPanel>
 			<TabPanel value={selectedTab} index={3}>
-                <Pelvis/>
+				<Pelvis state={state} setState={setState}/>
 			</TabPanel>
 			<TabPanel value={selectedTab} index={4}>
-                <UpperExtremities/>
+				<UpperExtremities state={state} setState={setState}/>
 			</TabPanel>
 			<TabPanel value={selectedTab} index={5}>
-                <LowerExtremities/>
+				<LowerExtremities state={state} setState={setState}/>
 			</TabPanel>
 			<TabPanel value={selectedTab} index={6}>
-                <Back />
+				<Back state={state} setState={setState}/>
 			</TabPanel>
 		</div>
-    )
+	)
 }
 
 export default Trauma

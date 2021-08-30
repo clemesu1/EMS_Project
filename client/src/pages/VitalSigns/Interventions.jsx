@@ -258,7 +258,7 @@ const Interventions = ({ state, setState }) => {
                             </Grid>
                             <Grid item container xs={12} lg={4} spacing={1} alignItems="center">
                                 <Grid item xs>
-                                    <Typography>Dosage/Amount Unit</Typography>
+                                    <Typography>Dosage Amount/Unit</Typography>
                                 </Grid>
                                 <Grid item container xs spacing={1}>
                                     <Grid item xs>
@@ -267,7 +267,8 @@ const Interventions = ({ state, setState }) => {
                                             color="secondary"
                                             size="small"
                                             placeholder="0"
-                                            id="substance-amount"
+                                            id="dosage-amount"
+                                            name="Dosage_Amount"
                                             value={state.Dosage_Amount}
                                             onChange={handleChange}
                                             fullWidth

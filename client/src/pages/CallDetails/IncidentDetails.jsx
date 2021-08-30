@@ -56,7 +56,7 @@ const IncidentDetails = ({ state, setState, patientDetails }) => {
 								labelId="service-code-label"
 								id="service-code"
 								name="Service_Code"
-								value={state.Service_Code}
+								value={state.Service_Code || ''}
 								onChange={handleChange}
 								label="Service Code"
 							>
@@ -79,7 +79,7 @@ const IncidentDetails = ({ state, setState, patientDetails }) => {
 									labelId="service-type-label"
 									id="service-type"
 									name="Service_Type"
-									value={state.Service_Type}
+									value={state.Service_Type || ''}
 									onChange={handleChange}
 									label="Service Type"
 								>
@@ -209,7 +209,6 @@ const IncidentDetails = ({ state, setState, patientDetails }) => {
 						</Grid>
 					</Paper>
 				</Grid>
-				<Grid item container xs={12} spacing={2}>
 					<Grid item xs={12} md={6} lg={7}>
 						<FormControl
 							variant="filled"
@@ -222,7 +221,7 @@ const IncidentDetails = ({ state, setState, patientDetails }) => {
 								labelId="dest-determinant-label"
 								id="dest-determinant"
 								name="Dest_Determinant"
-								value={state.Dest_Determinant}
+								value={state.Dest_Determinant || ''}
 								onChange={handleChange}
 								label="Destination Determination"
 							>
@@ -258,7 +257,7 @@ const IncidentDetails = ({ state, setState, patientDetails }) => {
 								labelId="incident-location-type-label"
 								id="incident-location-type"
 								name="Inc_Loc_Type"
-								value={state.Inc_Loc_Type}
+								value={state.Inc_Loc_Type || ''}
 								onChange={handleChange}
 								label="Incident Location Type"
 							>
@@ -292,7 +291,7 @@ const IncidentDetails = ({ state, setState, patientDetails }) => {
 								labelId="destination-location-type-label"
 								id="destination-location-type"
 								name="Dest_Loc_Type"
-								value={state.Dest_Loc_Type}
+								value={state.Dest_Loc_Type || ''}
 								onChange={handleChange}
 								label="Destination Location Type"
 							>
@@ -314,7 +313,7 @@ const IncidentDetails = ({ state, setState, patientDetails }) => {
 								labelId="scene-facility-code-label"
 								id="scene-facility-code"
 								name="Scene_Facility_Code"
-								value={state.Scene_Facility_Code}
+								value={state.Scene_Facility_Code || ''}
 								onChange={handleChange}
 								label="Scene Facility Code"
 							>
@@ -324,7 +323,6 @@ const IncidentDetails = ({ state, setState, patientDetails }) => {
 							</Select>
 						</FormControl>
 					</Grid>
-				</Grid>
 				<Grid item container xs={12} >
 					<Paper variant="outlined" className={classes.paper}>
 						<Typography
@@ -346,7 +344,7 @@ const IncidentDetails = ({ state, setState, patientDetails }) => {
 										labelId="dest-facility-code-label"
 										id="dest-facility-code"
 										name="Dest_Facility_Code"
-										value={state.Dest_Facility_Code}
+										value={state.Dest_Facility_Code || ''}
 										onChange={handleChange}
 										label="Facility Code"
 									>
@@ -424,7 +422,7 @@ const IncidentDetails = ({ state, setState, patientDetails }) => {
 								labelId="patient-contact-label"
 								id="patient-contact"
 								name="Patient_Contact"
-								value={state.Patient_Contact}
+								value={state.Patient_Contact || ''}
 								onChange={handleChange}
 								label="Patient Contact"
 							>
@@ -446,7 +444,7 @@ const IncidentDetails = ({ state, setState, patientDetails }) => {
 								labelId="patient-disposition-label"
 								id="patient-disposition"
 								name="Patient_Disposition"
-								value={state.Patient_Disposition}
+								value={state.Patient_Disposition || ''}
 								onChange={handleChange}
 								label="Patient Disposition"
 							>
@@ -484,7 +482,7 @@ const IncidentDetails = ({ state, setState, patientDetails }) => {
 								labelId="fact-affect-ems-label"
 								id="fact-affect-ems"
 								name="Fact_Affect_EMS"
-								value={state.Fact_Affect_EMS}
+								value={state.Fact_Affect_EMS || ''}
 								onChange={handleChange}
 								label="Factors Affecting EMS"
 							>

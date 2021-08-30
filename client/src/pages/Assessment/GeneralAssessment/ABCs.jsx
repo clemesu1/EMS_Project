@@ -133,7 +133,6 @@ const ABCs = (props) => {
 				</Grid>
 				<Grid item xs={6} md={4}>
 					<Paper variant="outlined" className={classes.paper}>
-
 						<FormControl component="fieldset">
 							<FormLabel color="secondary" component="legend">Rhythm</FormLabel>
 							<RadioGroup aria-label="circul-rhythm" name="Circul_Rhythm" value={state.Circul_Rhythm} onChange={handleChange}>

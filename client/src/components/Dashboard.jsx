@@ -339,6 +339,7 @@ const Dashboard = (props) => {
 		Time_of_Birth: new Date().toLocaleTimeString('en-US'),
 		Time_Placenta_Delivered: new Date().toLocaleTimeString('en-US'),
 	})
+
 	const [mechanismInjury, setMechanismInjury] = useState({
 		Call_ID: '12345',
 		Cause_of_Injury: '',
@@ -352,6 +353,39 @@ const Dashboard = (props) => {
 		Comments: '',
 		MVC: '',
 	})
+
+	const [traumaAssessment, setTraumaAssessment] = useState({
+		Call_ID: '12345',
+		H_Face: '',
+		H_REar: '',
+		H_LEar: '',
+		H_Nose: '',
+		H_Mouth: '',
+		H_Scalp: '',
+		N_Anterior: '',
+		N_Posterior: '',
+		C_Left: '',
+		C_Right: '',
+		Ab_LUQ: '',
+		Ab_RUQ: '',
+		Ab_LLQ: '',
+		Ab_RLQ: '',
+		Ab_UBQ: '',
+		P_Vaginal: '',
+		P_Genitalia: '',
+		UE_LArm: '',
+		UE_RArm: '',
+		UE_LHand: '',
+		UE_RHand: '',
+		LE_LLeg: '',
+		LE_RLeg: '',
+		LE_LFoot: '',
+		LE_RFoot: '',
+		B_Thoratic: '',
+		B_Lumbar: '',
+	})
+
+
 
 
 	const [bodySystems, setBodySystems] = useState([
@@ -551,6 +585,8 @@ const Dashboard = (props) => {
 		setObstetric: setObstetric,
 		mechanismInjury: mechanismInjury,
 		setMechanismInjury: setMechanismInjury,
+		traumaAssessment: traumaAssessment,
+		setTraumaAssessment: setTraumaAssessment,
 	}
 
 	const [interventions, setInterventions] = useState({
@@ -576,9 +612,9 @@ const Dashboard = (props) => {
 
 	const [medications, setMedications] = useState({
 		Call_ID: '12345',
-		Medic_Date: '',
+		Medic_Given_Date: null,
+		Medic_Given_Time: '',
 		Medic_Given: '',
-		Medic_Now: '',
 		Medic_Amount: '',
 		Medic_Unit: '',
 		Route: '',
@@ -588,7 +624,27 @@ const Dashboard = (props) => {
 
 	const [vitalSign, setVitalSign] = useState({
 		Call_ID: '12345',
-
+		Vitals_Date: null,
+		Vitals_Time: '',
+		Heart_Rate: '',
+		Heart_Site: '',
+		Heart_Site_Oth: '',
+		Card_Rhyth: '',
+		Card_Rhyth_Oth: '',
+		BP_Sys: '',
+		BP_Dia: '',
+		Resp_Rate: '',
+		Oxy_Sat: '',
+		Glucose: '',
+		Glascow_Eye: '',
+		Glascow_Verbal: '',
+		Glascow_Motor: '',
+		Skin_Color: '',
+		Skin_Temp: '',
+		Skin_Moisture: '',
+		VT_Temp: '',
+		VT_Temp_Site: '',
+		LOC: '',
 	})
 
 	const vitalSignFields = {
@@ -628,6 +684,10 @@ const Dashboard = (props) => {
 			"Neonatal_Assessment": neonatalAssessment,
 			"Obstetric": obstetric,
 			"Mechanism_Injury": mechanismInjury,
+			"Trauma_Assessment": traumaAssessment,
+			"Interventions": interventions,
+			"Medications": medications,
+			"Vital_Sign": vitalSign,
 		}
 
 		axios
@@ -747,6 +807,7 @@ const Dashboard = (props) => {
 					<Redirect exact from="/call-details" to="/call-details/vehicle-details" />
 					<Redirect exact from="/assessment" to="/assessment/patient-history" />
 					<Redirect exact from="/vital-signs" to="/vital-signs/interventions" />
+					<Redirect exact from="/treatment" to="/treatment/interventions" />
 
 					<Route path="/operator-info">
 						<OperatorInfo state={callTransaction} setState={setCallTransaction} />
@@ -785,9 +846,14 @@ const Dashboard = (props) => {
 							/>
 						}
 					/>
-					<Route path="/treatment">
-						{/* <ContactUs /> */}
-					</Route>
+					<Route exact path="/treatment/:page?"
+						render={props =>
+							<VitalSigns
+								vitalSignFields={vitalSignFields}
+								{...props}
+							/>
+						}
+					/>
 					<Route path="/call-report">
 						{/* <Hospital /> */}
 					</Route>
