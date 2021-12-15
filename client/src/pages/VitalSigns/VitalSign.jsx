@@ -4,6 +4,8 @@ import { Button, Container, FormControl, Grid, InputLabel, MenuItem, Paper, Sele
 import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
 import { makeStyles } from '@material-ui/core/styles';
+import { useSelector, useDispatch } from 'react-redux';
+import { store } from '../../features/vitalSign';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -27,14 +29,16 @@ const vitalsTemps = ["30.0", "30.1", "30.2", "30.3", "30.4", "30.5", "30.6", "30
 const vitalsTempSites = ["Oral", "Rectal", "Tympanic", "Axilla"];
 const LOCs = ["Alert", "Verbal", "Painful", "Unresponsive"];
 
-const VitalSign = ({ state, setState }) => {
+const VitalSign = () => {
     const classes = useStyles();
+    const dispatch = useDispatch();
+	const vitalSign = useSelector((state) => state.vitalSign.value)
 
     const handleChange = (e) => {
-        setState(prev => ({
-            ...prev,
-            [e.target.name]: e.target.value
-        }))
+        dispatch(store({
+			...vitalSign,
+			[e.target.name]: e.target.value,
+		}))
     }
 
     return (
@@ -56,9 +60,9 @@ const VitalSign = ({ state, setState }) => {
                             size="small"
                             fullWidth
                             name="Vitals_Date"
-                            value={state.Vitals_Date}
-                            onChange={(date) => setState(prev => ({
-                                ...prev,
+                            value={vitalSign.Vitals_Date}
+                            onChange={(date) =>  dispatch(store({
+                                ...vitalSign,
                                 Vitals_Date: date
                             }))}
                             InputLabelProps={{ shrink: true }}
@@ -77,7 +81,7 @@ const VitalSign = ({ state, setState }) => {
                         type="time"
                         step="1"
                         name="Vitals_Time"
-                        value={state.Vitals_Time}
+                        value={vitalSign.Vitals_Time}
                         onChange={handleChange}
                         fullWidth
                         InputLabelProps={{ shrink: true }}
@@ -88,8 +92,8 @@ const VitalSign = ({ state, setState }) => {
                         variant="contained"
                         fullWidth
                         onClick={() => {
-                            setState(prev => ({
-                                ...prev,
+                            dispatch(store({
+                                ...vitalSign,
                                 Vitals_Date: new Date(),
                                 Vitals_Time: (new Date()).getHours() + ':' + (new Date()).getMinutes(),
                             }))
@@ -119,7 +123,7 @@ const VitalSign = ({ state, setState }) => {
                                     <Select
                                         labelId="heart-rate-label"
                                         name="Heart_Rate"
-                                        value={state.Heart_Rate}
+                                        value={vitalSign.Heart_Rate}
                                         onChange={handleChange}
                                     >
                                         <MenuItem value={0}>0</MenuItem>
@@ -140,7 +144,7 @@ const VitalSign = ({ state, setState }) => {
                                     <Select
                                         labelId="heart-site-label"
                                         name="Heart_Site"
-                                        value={state.Heart_Site}
+                                        value={vitalSign.Heart_Site}
                                         onChange={handleChange}
                                     >
                                         {heartSites.map((item, index) => (
@@ -149,7 +153,7 @@ const VitalSign = ({ state, setState }) => {
                                     </Select>
                                 </FormControl>
                             </Grid>
-                            {state.Heart_Site !== "Other" ? '' : (
+                            {vitalSign.Heart_Site !== "Other" ? '' : (
                                 <Grid item xs={12} sm={4}>
                                     <TextField
                                         label="Other"
@@ -157,7 +161,7 @@ const VitalSign = ({ state, setState }) => {
                                         color="secondary"
                                         size="small"
                                         name="Heart_Site_Oth"
-                                        value={state.Heart_Site_Oth}
+                                        value={vitalSign.Heart_Site_Oth}
                                         onChange={handleChange}
                                         fullWidth
                                     />
@@ -174,7 +178,7 @@ const VitalSign = ({ state, setState }) => {
                                     <Select
                                         labelId="cardiac-rhythm-label"
                                         name="Card_Rhyth"
-                                        value={state.Card_Rhyth}
+                                        value={vitalSign.Card_Rhyth}
                                         onChange={handleChange}
                                     >
                                         {cardiacRhythms.map((item, index) => (
@@ -184,14 +188,14 @@ const VitalSign = ({ state, setState }) => {
                                 </FormControl>
                             </Grid>
                             <Grid item xs={12} sm={4}>
-                                {state.Card_Rhyth !== "Other" ? '' : (
+                                {vitalSign.Card_Rhyth !== "Other" ? '' : (
                                     <TextField
                                         label="Other"
                                         variant="filled"
                                         color="secondary"
                                         size="small"
                                         name="Card_Rhyth_Oth"
-                                        value={state.Card_Rhyth_Oth}
+                                        value={vitalSign.Card_Rhyth_Oth}
                                         onChange={handleChange}
                                         fullWidth
                                     />
@@ -211,7 +215,7 @@ const VitalSign = ({ state, setState }) => {
                                     <Select
                                         labelId="bp-systolic-label"
                                         name="BP_Sys"
-                                        value={state.BP_Sys}
+                                        value={vitalSign.BP_Sys}
                                         onChange={handleChange}
                                     >
                                         {[...Array(251).keys()].map((item, index) => (
@@ -234,7 +238,7 @@ const VitalSign = ({ state, setState }) => {
                                     <Select
                                         labelId="bp-diastolic-label"
                                         name="BP_Dia"
-                                        value={state.BP_Dia}
+                                        value={vitalSign.BP_Dia}
                                         onChange={handleChange}
                                     >
                                         <MenuItem value={"Palp"}>Palp</MenuItem>
@@ -260,7 +264,7 @@ const VitalSign = ({ state, setState }) => {
                             <Select
                                 labelId="resp-rate-label"
                                 name="Resp_Rate"
-                                value={state.Resp_Rate}
+                                value={vitalSign.Resp_Rate}
                                 onChange={handleChange}
                             >
                                 {[...Array(61).keys()].map((item, index) => (
@@ -281,7 +285,7 @@ const VitalSign = ({ state, setState }) => {
                             <Select
                                 labelId="oxy-sat-label"
                                 name="Oxy_Sat"
-                                value={state.Oxy_Sat}
+                                value={vitalSign.Oxy_Sat}
                                 onChange={handleChange}
                             >
                                 {[...Array(101).keys()].map((item, index) => (
@@ -302,7 +306,7 @@ const VitalSign = ({ state, setState }) => {
                             <Select
                                 labelId="glucose-label"
                                 name="Glucose"
-                                value={state.Glucose}
+                                value={vitalSign.Glucose}
                                 onChange={handleChange}
                             >
                                 {glucoseValues.map((item, index) => (
@@ -332,7 +336,7 @@ const VitalSign = ({ state, setState }) => {
                                     <Select
                                         labelId="glascow-eye-label"
                                         name="Glascow_Eye"
-                                        value={state.Glascow_Eye}
+                                        value={vitalSign.Glascow_Eye}
                                         onChange={handleChange}
                                     >
                                         {glascowEyeValues.map((item, index) => (
@@ -352,7 +356,7 @@ const VitalSign = ({ state, setState }) => {
                                     <Select
                                         labelId="glascow-verbal-label"
                                         name="Glascow_Verbal"
-                                        value={state.Glascow_Verbal}
+                                        value={vitalSign.Glascow_Verbal}
                                         onChange={handleChange}
                                     >
                                         {glascowVerbalValues.map((item, index) => (
@@ -372,7 +376,7 @@ const VitalSign = ({ state, setState }) => {
                                     <Select
                                         labelId="glascow-motor-label"
                                         name="Glascow_Motor"
-                                        value={state.Glascow_Motor}
+                                        value={vitalSign.Glascow_Motor}
                                         onChange={handleChange}
                                     >
                                         {glascowMotorValues.map((item, index) => (
@@ -405,7 +409,7 @@ const VitalSign = ({ state, setState }) => {
                                     <Select
                                         labelId="skin-color-label"
                                         name="Skin_Color"
-                                        value={state.Skin_Color}
+                                        value={vitalSign.Skin_Color}
                                         onChange={handleChange}
                                     >
                                         {skinColors.map((item, index) => (
@@ -425,7 +429,7 @@ const VitalSign = ({ state, setState }) => {
                                     <Select
                                         labelId="skin-temp-label"
                                         name="Skin_Temp"
-                                        value={state.Skin_Temp}
+                                        value={vitalSign.Skin_Temp}
                                         onChange={handleChange}
                                     >
                                         {skinTemps.map((item, index) => (
@@ -445,7 +449,7 @@ const VitalSign = ({ state, setState }) => {
                                     <Select
                                         labelId="skin-moisture-label"
                                         name="Skin_Moisture"
-                                        value={state.Skin_Moisture}
+                                        value={vitalSign.Skin_Moisture}
                                         onChange={handleChange}
                                     >
                                         {skinMoistures.map((item, index) => (
@@ -478,7 +482,7 @@ const VitalSign = ({ state, setState }) => {
                                 <Select
                                     labelId="vital-temp-label"
                                     name="VT_Temp"
-                                    value={state.VT_Temp}
+                                    value={vitalSign.VT_Temp}
                                     onChange={handleChange}
                                 >
                                     {vitalsTemps.map((item, index) => (
@@ -500,7 +504,7 @@ const VitalSign = ({ state, setState }) => {
                                 <Select
                                     labelId="vital-temp-site-label"
                                     name="VT_Temp_Site"
-                                    value={state.VT_Temp_Site}
+                                    value={vitalSign.VT_Temp_Site}
                                     onChange={handleChange}
                                 >
                                     {vitalsTempSites.map((item, index) => (
@@ -522,7 +526,7 @@ const VitalSign = ({ state, setState }) => {
                         <Select
                             labelId="vitals-loc-label"
                             name="LOC"
-                            value={state.LOC}
+                            value={vitalSign.LOC}
                             onChange={handleChange}
                         >
                             {LOCs.map((item, index) => (

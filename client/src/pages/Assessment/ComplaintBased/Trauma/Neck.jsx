@@ -1,14 +1,19 @@
 import React from 'react'
 import { Container, FormControl, Grid, InputLabel, MenuItem, Select } from '@material-ui/core'
+import { useSelector, useDispatch } from 'react-redux';
+import { store } from '../../../../features/traumaAssessment';
 
 const traumaList = ["Deformity", "Contusions", "Crepitus", "Abrasions", "Avulsions", "Punctures", "Paradoxical Mov't", "Burn - Superficial", "Burn - partial", "Burn - full", "Burn - circumferencial", "Lacerations ", "Pulsating Mass", "Swelling", "Discolouration", "Gaurding", "Tenderness", "Instability ", "Rigidity", "Tracheal Deviation", "JVD (Jugular vien distention)", "Flail Segment", "SQ Emphysema", "Shortening - ext rot", "Shortening - int rot", "Shortening - no rot", "Amputation - complete", "Amputation - partial"];
 
-const Neck = ({ state, setState }) => {
+const Neck = () => {
+    const dispatch = useDispatch();
+	const traumaAssessment = useSelector((state) => state.traumaAssessment.value)
+
     const handleChange = (e) => {
-        setState(prev => ({
-            ...prev,
-            [e.target.name]: e.target.value,
-        }));
+        dispatch(store({
+			...traumaAssessment,
+			[e.target.name]: e.target.value,
+		}))
     }
 
     return (
@@ -26,7 +31,7 @@ const Neck = ({ state, setState }) => {
                             labelId="n-anterior-label"
                             id="n-anterior"
                             name="N_Anterior"
-                            value={state.N_Anterior || ''}
+                            value={traumaAssessment.N_Anterior || ''}
                             onChange={handleChange}
                         >
                             {traumaList.map((item, index) => (
@@ -47,7 +52,7 @@ const Neck = ({ state, setState }) => {
                             labelId="n-posterior-label"
                             id="n-posterior"
                             name="N_Posterior"
-                            value={state.N_Posterior || ''}
+                            value={traumaAssessment.N_Posterior || ''}
                             onChange={handleChange}
                         >
                             {traumaList.map((item, index) => (

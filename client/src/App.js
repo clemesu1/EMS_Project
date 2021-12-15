@@ -1,5 +1,6 @@
 import Dashboard from './components/Dashboard';
 import { createTheme, ThemeProvider } from '@material-ui/core/styles';
+import { CssBaseline } from "@material-ui/core";
 
 const theme = createTheme({
   palette: {
@@ -18,9 +19,11 @@ const theme = createTheme({
 
 const App = () => {
   return (
-    <ThemeProvider theme={theme}>
+    <>
+      <CssBaseline />
       <Dashboard />
-    </ThemeProvider>
+    </>
+
   )
 }
 

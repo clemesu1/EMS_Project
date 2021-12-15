@@ -19,9 +19,6 @@ const useStyles = makeStyles((theme) => ({
 
 
 const VitalSigns = (props) => {
-    const { vitalSignFields } = props;
-
-    const { interventions, setInterventions, medications, setMedications, vitalSign, setVitalSign } = vitalSignFields;
 
     const classes = useStyles();
 
@@ -71,9 +68,9 @@ const VitalSigns = (props) => {
                     id={`vital-signs-tabpanel-${page}`}
                     aria-labelledby={`vital-signs-tab-${page}`}
                 >
-                    {selectedTab === 0 && <Interventions state={interventions} setState={setInterventions}  {...props} />}
-                    {selectedTab === 1 && <Medications state={medications} setState={setMedications} {...props} />}
-                    {selectedTab === 2 && <VitalSign state={vitalSign} setState={setVitalSign} {...props} />}
+                    {selectedTab === 0 && <Interventions {...props} />}
+                    {selectedTab === 1 && <Medications {...props} />}
+                    {selectedTab === 2 && <VitalSign {...props} />}
 
                 </Typography>
             </Box>

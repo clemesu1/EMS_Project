@@ -1,27 +1,30 @@
 import { Container, FormControl, FormControlLabel, FormLabel, Grid, InputLabel, MenuItem, Radio, RadioGroup, Select, TextField } from '@material-ui/core'
 import React from 'react'
 import MuiPhoneNumber from 'material-ui-phone-number';
+import { useSelector, useDispatch } from 'react-redux';
+import { savePatientDetails } from '../../features/patientDetails';
 
 const races = ["African American", "Asian", "Caucasian", "Hispanic", "Latino", "Native"];
 const ages = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60", "61", "62", "63", "64", "65", "66", "67", "68", "69", "70", "71", "72", "73", "74", "75", "76", "77", "78", "79", "80", "81", "82", "83", "84", "85", "86", "87", "88", "89", "90", "91", "92", "93", "94", "95", "96", "97", "98", "99", "100"];
 const medicareOrigins = ["NB", "NS", "PE", "NF", "QC", "ON", "MAN", "SK", "AB", "BC", "Yukon", "NWT", "Nunavut"];
 
-const PatientDetails = ({ state, setState }) => {
+const PatientDetails = () => {
+	const dispatch = useDispatch();
+	const patientDetails = useSelector((state) => state.patientDetails.value)
 
 	const handleChange = (e) => {
-		setState(prev => ({
-			...prev,
+		dispatch(savePatientDetails({
+			...patientDetails,
 			[e.target.name]: e.target.value,
 		}));
 	}
 
 	const handlePhoneChange = (value) => {
-		setState(prev => ({
-			...prev,
+		dispatch(savePatientDetails({
+			...patientDetails,
 			Tel_No: value,
 		}));
 	}
-
 
 	return (
 		<Container maxWidth="lg">
@@ -34,7 +37,7 @@ const PatientDetails = ({ state, setState }) => {
 						name="Surname"
 						color="secondary"
 						autoComplete="family-name"
-						value={state.Surname}
+						value={patientDetails.Surname}
 						onChange={handleChange}
 						fullWidth
 					/>
@@ -47,7 +50,7 @@ const PatientDetails = ({ state, setState }) => {
 						color="secondary"
 						name="Given_Name"
 						autoComplete="given-name"
-						value={state.Given_Name}
+						value={patientDetails.Given_Name}
 						onChange={handleChange}
 						fullWidth
 					/>
@@ -60,7 +63,7 @@ const PatientDetails = ({ state, setState }) => {
 						name="Street"
 						color="secondary"
 						autoComplete="street-address"
-						value={state.Street}
+						value={patientDetails.Street}
 						onChange={handleChange}
 						fullWidth
 					/>
@@ -73,7 +76,7 @@ const PatientDetails = ({ state, setState }) => {
 						color="secondary"
 						name="Community"
 						autoComplete="address-level1"
-						value={state.Community}
+						value={patientDetails.Community}
 						onChange={handleChange}
 						fullWidth
 					/>
@@ -86,7 +89,7 @@ const PatientDetails = ({ state, setState }) => {
 						color="secondary"
 						name="Province"
 						autoComplete="address-level1"
-						value={state.Province}
+						value={patientDetails.Province}
 						onChange={handleChange}
 						fullWidth
 					/>
@@ -99,7 +102,7 @@ const PatientDetails = ({ state, setState }) => {
 						color="secondary"
 						name="PostalCode"
 						autoComplete="postal-code"
-						value={state.PostalCode}
+						value={patientDetails.PostalCode}
 						onChange={handleChange}
 						fullWidth
 					/>
@@ -112,7 +115,7 @@ const PatientDetails = ({ state, setState }) => {
 						color="secondary"
 						name="Country"
 						autoComplete="country-name"
-						value={state.Country}
+						value={patientDetails.Country}
 						onChange={handleChange}
 						fullWidth
 					/>
@@ -127,7 +130,7 @@ const PatientDetails = ({ state, setState }) => {
 						name="Tel_No"
 						autoComplete="tel"
 						defaultCountry="ca"
-						value={state.Tel_No}
+						value={patientDetails.Tel_No}
 						onChange={handlePhoneChange}
 						fullWidth
 					/>
@@ -144,7 +147,7 @@ const PatientDetails = ({ state, setState }) => {
 							labelId="race-label"
 							id="race"
 							name="Race"
-							value={state.Race}
+							value={patientDetails.Race}
 							onChange={handleChange}
 							label="Race"
 						>
@@ -164,7 +167,7 @@ const PatientDetails = ({ state, setState }) => {
 						InputLabelProps={{ shrink: true }}
 						type="date"
 						autoComplete="bday"
-						value={state.DOB}
+						value={patientDetails.DOB}
 						onChange={handleChange}
 						fullWidth
 					/>
@@ -181,7 +184,7 @@ const PatientDetails = ({ state, setState }) => {
 							labelId="age-label"
 							id="age"
 							name="Age"
-							value={state.Age}
+							value={patientDetails.Age}
 							onChange={handleChange}
 							label="Age"
 						>
@@ -194,7 +197,7 @@ const PatientDetails = ({ state, setState }) => {
 				<Grid item xs={12} md={4}>
 					<FormControl component="fieldset" color="secondary">
 						<FormLabel component="legend">Gender</FormLabel>
-						<RadioGroup row aria-label="gender" name="Gender" value={state.Gender} onChange={handleChange}>
+						<RadioGroup row aria-label="gender" name="Gender" value={patientDetails.Gender} onChange={handleChange}>
 							<FormControlLabel value="Male" control={<Radio />} label="Male" />
 							<FormControlLabel value="Female" control={<Radio />} label="Female" />
 							<FormControlLabel value="Unknown" control={<Radio />} label="Unknown" />
@@ -209,7 +212,7 @@ const PatientDetails = ({ state, setState }) => {
 						size="small"
 						color="secondary"
 						name="Medicare_No"
-						value={state.Medicare_No}
+						value={patientDetails.Medicare_No}
 						onChange={handleChange}
 						fullWidth
 					/>
@@ -226,7 +229,7 @@ const PatientDetails = ({ state, setState }) => {
 							labelId="medicare-origin-label"
 							id="medicare-origin"
 							name="Medicare_Origin"
-							value={state.Medicare_Origin}
+							value={patientDetails.Medicare_Origin}
 							onChange={handleChange}
 							label="Medicare Origin"
 						>
@@ -243,7 +246,7 @@ const PatientDetails = ({ state, setState }) => {
 						size="small"
 						color="secondary"
 						name="Hospital_Chart_No"
-						value={state.Hospital_Chart_No}
+						value={patientDetails.Hospital_Chart_No}
 						onChange={handleChange}
 						fullWidth
 					/>
@@ -255,7 +258,7 @@ const PatientDetails = ({ state, setState }) => {
 						size="small"
 						color="secondary"
 						name="P_Comments"
-						value={state.P_Comments}
+						value={patientDetails.P_Comments}
 						onChange={handleChange}
 						multiline
 						rows={6}

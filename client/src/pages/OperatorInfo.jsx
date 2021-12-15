@@ -2,6 +2,8 @@ import React from 'react'
 import { Button, Container, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { saveCallTransaction } from '../features/callTransaction';
 
 const useStyles = makeStyles((theme) => ({
 	paper: {
@@ -23,14 +25,16 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const OperatorInfo = ({ state, setState }) => {
+const OperatorInfo = () => {
 	const classes = useStyles();
+	const dispatch = useDispatch();
+	const callTransaction = useSelector((state) => state.callTransaction.value)
 
 	const handleChange = (e) => {
-		setState({
-			...state,
-			[e.target.name]: e.target.value
-		})
+		dispatch(saveCallTransaction({
+			...callTransaction,
+			[e.target.name]: e.target.value,
+		}));
 	}
 
 	return (
@@ -51,7 +55,7 @@ const OperatorInfo = ({ state, setState }) => {
 						name="Vehicle_ID"
 						inputProps={{ maxLength: 7 }}
 						autoFocus
-						value={state.Vehicle_ID}
+						value={callTransaction.Vehicle_ID}
 						onChange={handleChange}
 
 					/>
@@ -65,7 +69,7 @@ const OperatorInfo = ({ state, setState }) => {
 						label="Driver ID"
 						name="Driver_ID"
 						inputProps={{ maxLength: 4 }}
-						value={state.Driver_ID}
+						value={callTransaction.Driver_ID}
 						onChange={handleChange}
 					/>
 					<TextField
@@ -78,7 +82,7 @@ const OperatorInfo = ({ state, setState }) => {
 						label="Attendant ID"
 						name="Attendant_ID"
 						inputProps={{ maxLength: 4 }}
-						value={state.Attendant_ID}
+						value={callTransaction.Attendant_ID}
 						onChange={handleChange}
 					/>
 					<TextField
@@ -91,7 +95,7 @@ const OperatorInfo = ({ state, setState }) => {
 						label="Assistant ID"
 						name="Assisting_ID"
 						inputProps={{ maxLength: 4 }}
-						value={state.Assisting_ID}
+						value={callTransaction.Assisting_ID}
 						onChange={handleChange}
 					/>
 					<FormControl
@@ -107,7 +111,7 @@ const OperatorInfo = ({ state, setState }) => {
 							id="vehicleStatus"
 							label="Vehicle Status"
 							name="Vehicle_Status"
-							value={state.Vehicle_Status}
+							value={callTransaction.Vehicle_Status}
 							onChange={handleChange}
 						>
 							<MenuItem value={"on-site"}>on-site</MenuItem>
@@ -142,13 +146,8 @@ const OperatorInfo = ({ state, setState }) => {
 							</Button>
 						</Grid>
 					</Grid>
-
-
-
 				</form>
 			</div>
-
-
 		</Container>
 	)
 }

@@ -1,6 +1,8 @@
 import { Box, Checkbox, Grid, List, ListItem, ListItemIcon, ListItemText, TextField, Typography } from '@material-ui/core';
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles';
+import { useSelector, useDispatch } from 'react-redux';
+import { store } from '../../../features/patientHistory';
 
 const historyList = ["Alcoholism", "Angina", "Asthma", "Back Injury", "Bi Polar", "Bronchitis", "CABG (Coronary Artery Bypass Graft)", "CHF (Congestive Heart Failure)", "COPD (Chronic Obstructive Pulmonary Disease)", "Depression", "Drug Dependency", "Emphysema", "Epilepsy", "Hip Replacement", "HTN (Hypertension)", "Hypoglycemia", "IDDM (Insulin Dependent Diabetic)", "Manic Depressive", "Myocardial Infarction", "NIDDM (None Insulin Dependent Diabetic)", "Schizophrenia", "Seizures", "Stroke", "Thyroid", "Transient Ischemic Attack (TIA)"];
 
@@ -19,16 +21,17 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const PastHistory = ({ state, setState, checked, setChecked }) => {
+const PastHistory = ({ checked, setChecked }) => {
 	const classes = useStyles();
+	const dispatch = useDispatch();
+	const patientHistory = useSelector((state) => state.patientHistory.value)
 
 	const handleChange = (e) => {
-		setState({
-			...state,
-			[e.target.name]: e.target.value
-		})
+		dispatch(store({
+			...patientHistory,
+			[e.target.name]: e.target.value,
+		}))
 	}
-
 	const handleToggle = (value) => () => {
 		const currentIndex = checked.indexOf(value);
 		const newChecked = [...checked];
@@ -40,10 +43,10 @@ const PastHistory = ({ state, setState, checked, setChecked }) => {
 		}
 
 		setChecked(newChecked);
-		setState({
-			...state,
+		dispatch(store({
+			...patientHistory,
 			PH_History: newChecked,
-		})
+		}))
 	};
 
 	return (
@@ -88,7 +91,7 @@ const PastHistory = ({ state, setState, checked, setChecked }) => {
 						variant="outlined"
 						color="secondary"
 						name="PH_Comment"
-						value={state.PH_Comment}
+						value={patientHistory.PH_Comment}
 						onChange={handleChange}
 					/>
 

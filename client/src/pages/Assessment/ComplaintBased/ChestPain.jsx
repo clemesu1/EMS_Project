@@ -1,19 +1,23 @@
 import { FormControl, FormControlLabel, FormLabel, Grid, InputLabel, MenuItem, Radio, RadioGroup, Select, TextField } from '@material-ui/core'
 import React from 'react'
 import InputMask from "react-input-mask";
+import { useSelector, useDispatch } from 'react-redux';
+import { store } from '../../../features/chestPain';
 
 const qualityList = ["Aching", "Burning", "Cramping", "Crushing", "Dull", "General Discomfort", "Heavy", "No Pain", "Other", "Pressure", "Sharp", "Stabbing", "Tearing", "Throbbing", "Tight", "Undertermined"];
 const painSources = ["Chest cardiac", "Chest respiratory", "Chest musculoskeletal", "Other"];
 const radiationSites = ["No radiation / Localized", "Head / Neck", "Chest", "Abdomen", "Left arm", "Right arm", "Other"];
 const onsetStates = ["Inactive", "Mild activity", "Intense activity", "Resting", "Sleeping", "Other"];
 const pacemaker = ["No", "Unknown", "Pacemaker", "Implanted Defibrillator", "Other"];
-const ChestPain = ({ state, setState }) => {
+const ChestPain = () => {
+    const dispatch = useDispatch();
+	const chestPain = useSelector((state) => state.chestPain.value)
 
     const handleChange = (e) => {
-        setState({
-            ...state,
-            [e.target.name]: e.target.value,
-        })
+        dispatch(store({
+			...chestPain,
+			[e.target.name]: e.target.value,
+		}))
     }
 
     return (
@@ -28,7 +32,7 @@ const ChestPain = ({ state, setState }) => {
                     type="number"
                     name="Pain_Severity"
                     id="pain-severity"
-                    value={state.Pain_Severity}
+                    value={chestPain.Pain_Severity}
                     onChange={handleChange}
                     fullWidth
                 />
@@ -41,7 +45,7 @@ const ChestPain = ({ state, setState }) => {
                     size="small"
                     name="Name_of_PreEMS_Medic"
                     id="name-of-pre-ems-medic"
-                    value={state.Name_of_PreEMS_Medic}
+                    value={chestPain.Name_of_PreEMS_Medic}
                     onChange={handleChange}
                     fullWidth
                 />
@@ -49,7 +53,7 @@ const ChestPain = ({ state, setState }) => {
             <Grid item container xs={12} sm={6}>
                 <FormControl component="fieldset" color="secondary">
                     <FormLabel component="legend">Self-Medication Administered</FormLabel>
-                    <RadioGroup row aria-label="self-medication administered" name="Self_Medic_Admin" value={state.Self_Medic_Admin} onChange={handleChange}>
+                    <RadioGroup row aria-label="self-medication administered" name="Self_Medic_Admin" value={chestPain.Self_Medic_Admin} onChange={handleChange}>
                         <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
                         <FormControlLabel value="No" control={<Radio />} label="No" />
                     </RadioGroup>
@@ -67,7 +71,7 @@ const ChestPain = ({ state, setState }) => {
                         labelId="response-to-medication-label"
                         id="response-to-medication"
                         name="Response_to_Medic"
-                        value={state.Response_to_Medic || ''}
+                        value={chestPain.Response_to_Medic || ''}
                         onChange={handleChange}
                         label="Response to Medication"
                     >
@@ -80,7 +84,7 @@ const ChestPain = ({ state, setState }) => {
                 </FormControl>
             </Grid>
             <Grid item xs={12} sm={6}>
-                <InputMask mask="99:99" value={state.OnSet} onChange={handleChange}>
+                <InputMask mask="99:99" value={chestPain.OnSet} onChange={handleChange}>
                     <TextField
                         label="Onset"
                         variant="filled"
@@ -100,7 +104,7 @@ const ChestPain = ({ state, setState }) => {
                     size="small"
                     name="Provoked"
                     id="provoked"
-                    value={state.Provoked}
+                    value={chestPain.Provoked}
                     onChange={handleChange}
                     fullWidth
                 />
@@ -117,7 +121,7 @@ const ChestPain = ({ state, setState }) => {
                         labelId="quality-label"
                         id="quality"
                         name="Quality"
-                        value={state.Quality || ''}
+                        value={chestPain.Quality || ''}
                         onChange={handleChange}
                         label="Quality"
                     >
@@ -128,7 +132,7 @@ const ChestPain = ({ state, setState }) => {
                 </FormControl>
             </Grid>
             <Grid item xs={12} sm={6}>
-                {state.Quality !== 'Other' ? '' :
+                {chestPain.Quality !== 'Other' ? '' :
                     <TextField
                         label="Other"
                         variant="filled"
@@ -136,7 +140,7 @@ const ChestPain = ({ state, setState }) => {
                         size="small"
                         name="Qty_Other"
                         id="qty-other"
-                        value={state.Qty_Other}
+                        value={chestPain.Qty_Other}
                         onChange={handleChange}
                         fullWidth
                     />
@@ -154,7 +158,7 @@ const ChestPain = ({ state, setState }) => {
                         labelId="source-of-pain-label"
                         id="source-of-pain"
                         name="Source_of_Pain"
-                        value={state.Source_of_Pain || ''}
+                        value={chestPain.Source_of_Pain || ''}
                         onChange={handleChange}
                         label="Source of Pain"
                     >
@@ -165,7 +169,7 @@ const ChestPain = ({ state, setState }) => {
                 </FormControl>
             </Grid>
             <Grid item xs={12} sm={6}>
-                {state.Source_of_Pain !== 'Other' ? '' :
+                {chestPain.Source_of_Pain !== 'Other' ? '' :
                     <TextField
                         label="Other"
                         variant="filled"
@@ -173,7 +177,7 @@ const ChestPain = ({ state, setState }) => {
                         size="small"
                         name="SPain_Other"
                         id="s-pain-other"
-                        value={state.SPain_Other}
+                        value={chestPain.SPain_Other}
                         onChange={handleChange}
                         fullWidth
                     />
@@ -191,7 +195,7 @@ const ChestPain = ({ state, setState }) => {
                         labelId="pain-radiation-site-label"
                         id="pain-radiation-site"
                         name="Pain_radiation_site"
-                        value={state.Pain_radiation_site || ''}
+                        value={chestPain.Pain_radiation_site || ''}
                         onChange={handleChange}
                         label="Pain Radiation Site"
                     >
@@ -202,7 +206,7 @@ const ChestPain = ({ state, setState }) => {
                 </FormControl>
             </Grid>
             <Grid item xs={12} sm={6}>
-                {state.Pain_radiation_site !== 'Other' ? '' :
+                {chestPain.Pain_radiation_site !== 'Other' ? '' :
                     <TextField
                         label="Other"
                         variant="filled"
@@ -210,7 +214,7 @@ const ChestPain = ({ state, setState }) => {
                         size="small"
                         name="PRSite_Other"
                         id="p-r-site-other"
-                        value={state.PRSite_Other}
+                        value={chestPain.PRSite_Other}
                         onChange={handleChange}
                         fullWidth
                     />
@@ -228,7 +232,7 @@ const ChestPain = ({ state, setState }) => {
                         labelId="state-at-onsite-label"
                         id="state-at-onsite"
                         name="State_at_Onset"
-                        value={state.State_at_Onset || ''}
+                        value={chestPain.State_at_Onset || ''}
                         onChange={handleChange}
                         label="State at Onset"
                     >
@@ -239,7 +243,7 @@ const ChestPain = ({ state, setState }) => {
                 </FormControl>
             </Grid>
             <Grid item xs={12} sm={6}>
-                {state.State_at_Onset !== 'Other' ? '' :
+                {chestPain.State_at_Onset !== 'Other' ? '' :
                     <TextField
                         label="Other"
                         variant="filled"
@@ -247,7 +251,7 @@ const ChestPain = ({ state, setState }) => {
                         size="small"
                         name="SOnset_Other"
                         id="s-onset-other"
-                        value={state.SOnset_Other}
+                        value={chestPain.SOnset_Other}
                         onChange={handleChange}
                         fullWidth
                     />
@@ -265,7 +269,7 @@ const ChestPain = ({ state, setState }) => {
                         labelId="pace-implant-defib-label"
                         id="pace-implant-defib"
                         name="Pace_Implant_Defib"
-                        value={state.Pace_Implant_Defib || ''}
+                        value={chestPain.Pace_Implant_Defib || ''}
                         onChange={handleChange}
                         label="Pacemaker/Implant Defibrillator"
                     >
@@ -276,7 +280,7 @@ const ChestPain = ({ state, setState }) => {
                 </FormControl>
             </Grid>
             <Grid item xs={12} sm={6}>
-                {state.Pace_Implant_Defib !== 'Other' ? '' :
+                {chestPain.Pace_Implant_Defib !== 'Other' ? '' :
                     <TextField
                         label="Other"
                         variant="filled"
@@ -284,7 +288,7 @@ const ChestPain = ({ state, setState }) => {
                         size="small"
                         name="PIDefib_Other"
                         id="p-i-defib-other"
-                        value={state.PIDefib_Other}
+                        value={chestPain.PIDefib_Other}
                         onChange={handleChange}
                         fullWidth
                     />

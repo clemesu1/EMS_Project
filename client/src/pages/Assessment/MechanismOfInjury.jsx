@@ -1,7 +1,8 @@
-import { Box, Card, CardContent, CardHeader, Container, FormControl, FormControlLabel, Grid, InputLabel, MenuItem, Radio, RadioGroup, Select } from '@material-ui/core'
+import { TextField, Box, Card, CardContent, CardHeader, Container, FormControl, FormControlLabel, Grid, InputLabel, MenuItem, Radio, RadioGroup, Select } from '@material-ui/core'
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles';
-import { TextField } from '@material-ui/core';
+import { useSelector, useDispatch } from 'react-redux';
+import { store } from '../../features/mechanismInjury';
 
 const useStyles = makeStyles((theme) => ({
 	formControl: {
@@ -19,23 +20,24 @@ const injuryNatures = ["Blunt trauma", "Burn trauma", "Other", "Penetrating trau
 const equipmentList = ["Airbag deployed", "Child safety seat", "Eye protection", "Harness", "Helmet", "Lap Belt", "Personal floatation device", "Protective clothing / Gear", "Shoulder belt", "Unknown", "None", "Other"];
 
 const MechanismOfInjury = ({ assessmentItems }) => {
-	const { mechanismInjury, setMechanismInjury } = assessmentItems;
 
 	return (
 		<Box p={3}>
 			<Container>
-				<MechanismTab state={mechanismInjury} setState={setMechanismInjury} />
+				<MechanismTab />
 			</Container>
 		</Box>
 	)
 }
 
-const MechanismTab = ({ state, setState }) => {
+const MechanismTab = () => {
 	const classes = useStyles();
+	const dispatch = useDispatch();
+	const mechanismInjury = useSelector((state) => state.mechanismInjury.value)
 
 	const handleChange = (e) => {
-		setState(prev => ({
-			...prev,
+		dispatch(store({
+			...mechanismInjury,
 			[e.target.name]: e.target.value,
 		}))
 	}
@@ -51,7 +53,7 @@ const MechanismTab = ({ state, setState }) => {
 								row
 								aria-label="work related"
 								name="Work_related"
-								value={state.Work_related}
+								value={mechanismInjury.Work_related}
 								onChange={handleChange}
 							>
 								<FormControlLabel value="Yes" control={<Radio />} label="Yes" />
@@ -74,7 +76,7 @@ const MechanismTab = ({ state, setState }) => {
 							labelId="cause-of-injury-label"
 							id="cause-of-injury"
 							name="Cause_of_Injury"
-							value={state.Cause_of_Injury}
+							value={mechanismInjury.Cause_of_Injury}
 							onChange={handleChange}
 							label="Cause of Injury"
 						>
@@ -85,13 +87,13 @@ const MechanismTab = ({ state, setState }) => {
 					</FormControl>
 				</Grid>
 				<Grid item xs={12} sm={6}>
-					{state.Cause_of_Injury !== "Other" ? '' : (
+					{mechanismInjury.Cause_of_Injury !== "Other" ? '' : (
 						<TextField
 							variant="filled"
 							color="secondary"
 							id="cause-of-injury-other"
 							name="COI_Other"
-							value={state.COI_Other}
+							value={mechanismInjury.COI_Other}
 							onChange={handleChange}
 							label="Other"
 							fullWidth
@@ -112,7 +114,7 @@ const MechanismTab = ({ state, setState }) => {
 							labelId="human-factor-label"
 							id="human-factor"
 							name="Human_Factor"
-							value={state.Human_Factor}
+							value={mechanismInjury.Human_Factor}
 							onChange={handleChange}
 							label="Human Factor"
 						>
@@ -123,13 +125,13 @@ const MechanismTab = ({ state, setState }) => {
 					</FormControl>
 				</Grid>
 				<Grid item xs={12} sm={6}>
-					{state.Human_Factor !== "Other" ? '' : (
+					{mechanismInjury.Human_Factor !== "Other" ? '' : (
 						<TextField
 							variant="filled"
 							color="secondary"
 							id="human-factor-other"
 							name="HF_Other"
-							value={state.HF_Other}
+							value={mechanismInjury.HF_Other}
 							onChange={handleChange}
 							label="Other"
 							fullWidth
@@ -150,7 +152,7 @@ const MechanismTab = ({ state, setState }) => {
 							labelId="nature-of-injury-label"
 							id="nature-of-injury"
 							name="Nature_of_Injury"
-							value={state.Nature_of_Injury}
+							value={mechanismInjury.Nature_of_Injury}
 							onChange={handleChange}
 							label="Nature of Resulting Injury"
 						>
@@ -161,13 +163,13 @@ const MechanismTab = ({ state, setState }) => {
 					</FormControl>
 				</Grid>
 				<Grid item xs={12} sm={6}>
-					{state.Nature_of_Injury !== "Other" ? '' : (
+					{mechanismInjury.Nature_of_Injury !== "Other" ? '' : (
 						<TextField
 							variant="filled"
 							color="secondary"
 							id="nature-of-injury-other"
 							name="NOI_Other"
-							value={state.NOI_Other}
+							value={mechanismInjury.NOI_Other}
 							onChange={handleChange}
 							label="Other"
 							fullWidth
@@ -188,7 +190,7 @@ const MechanismTab = ({ state, setState }) => {
 							labelId="safety-protect-equip-label"
 							id="safety-protect-equip"
 							name="Safety_Protect_Equip"
-							value={state.Safety_Protect_Equip}
+							value={mechanismInjury.Safety_Protect_Equip}
 							onChange={handleChange}
 							label="Safety/Protective Equipment"
 						>
@@ -199,13 +201,13 @@ const MechanismTab = ({ state, setState }) => {
 					</FormControl>
 				</Grid>
 				<Grid item xs={12} sm={6}>
-					{state.Safety_Protect_Equip !== "Other" ? '' : (
+					{mechanismInjury.Safety_Protect_Equip !== "Other" ? '' : (
 						<TextField
 							variant="filled"
 							color="secondary"
 							id="safety-protect-equip-other"
 							name="SPE_Other"
-							value={state.SPE_Other}
+							value={mechanismInjury.SPE_Other}
 							onChange={handleChange}
 							label="Other"
 							fullWidth
@@ -218,7 +220,7 @@ const MechanismTab = ({ state, setState }) => {
 						color="secondary"
 						id="comments"
 						name="Comments"
-						value={state.Comments}
+						value={mechanismInjury.Comments}
 						onChange={handleChange}
 						label="Comments"
 						multiline

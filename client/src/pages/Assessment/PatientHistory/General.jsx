@@ -1,6 +1,8 @@
 import { Box, Checkbox, FormControl, FormControlLabel, FormGroup, Grid, MenuItem, Paper, Radio, RadioGroup, Select, TextField, Typography } from '@material-ui/core'
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles';
+import { useSelector, useDispatch } from 'react-redux';
+import { store } from '../../../features/patientHistory';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -25,21 +27,23 @@ const destinationConditions = ["Stable", "Improved", "Deteriorated"]
 const treatmentsProvided = ["Yes", "No", "Unknown", "Not applicable"]
 const suspectedIntoxication = ["Yes as reported by patient", "Yes as reported by bystander", "Yes as suspected by provider", "Not suspected"];
 
-const General = ({ state, setState, bodySystems, setBodySystems }) => {
+const General = ({ bodySystems, setBodySystems }) => {
 	const classes = useStyles();
+	const dispatch = useDispatch();
+	const patientHistory = useSelector((state) => state.patientHistory.value)
 
 	const handleChange = (e) => {
-		setState({
-			...state,
-			[e.target.name]: e.target.value
-		})
+		dispatch(store({
+			...patientHistory,
+			[e.target.name]: e.target.value,
+		}))
 	}
 
 	const handleSingleCheckboxChange = (e) => {
-		setState({
-			...state,
+		dispatch(store({
+			...patientHistory,
 			G_DNR_Order: e.target.checked,
-		})
+		}))
 	}
 
 	const handleCheckboxChange = (e, value) => {
@@ -53,11 +57,10 @@ const General = ({ state, setState, bodySystems, setBodySystems }) => {
 
 		const dataList = bodySystems.filter(obj => obj.checked === true).map(obj => obj.label)
 
-		setState({
-			...state,
+		dispatch(store({
+			...patientHistory,
 			G_BodySystem: dataList
-		})
-
+		}))
 	}
 
 	return (
@@ -112,7 +115,7 @@ const General = ({ state, setState, bodySystems, setBodySystems }) => {
 							InputLabelProps={{ shrink: true }}
 							type="date"
 							autoComplete="date"
-							value={state.G_Inj_Date}
+							value={patientHistory.G_Inj_Date}
 							onChange={handleChange}
 							fullWidth
 						/>
@@ -135,7 +138,7 @@ const General = ({ state, setState, bodySystems, setBodySystems }) => {
 							InputLabelProps={{ shrink: true }}
 							type="time"
 							autoComplete="date"
-							value={state.G_Inj_Time}
+							value={patientHistory.G_Inj_Time}
 							onChange={handleChange}
 							fullWidth
 						/>
@@ -158,7 +161,7 @@ const General = ({ state, setState, bodySystems, setBodySystems }) => {
 						>
 							<Select
 								name="G_Co_Responders"
-								value={state.G_Co_Responders || ''}
+								value={patientHistory.G_Co_Responders || ''}
 								onChange={handleChange}
 							>
 								{coRespondersList.map((item, index) => (
@@ -185,7 +188,7 @@ const General = ({ state, setState, bodySystems, setBodySystems }) => {
 						>
 							<Select
 								name="G_Treat_Rendered"
-								value={state.G_Treat_Rendered || ''}
+								value={patientHistory.G_Treat_Rendered || ''}
 								onChange={handleChange}
 							>
 								{treatmentsProvided.map((item, index) => (
@@ -212,7 +215,7 @@ const General = ({ state, setState, bodySystems, setBodySystems }) => {
 						>
 							<Select
 								name="G_Pt_Condi_Dest"
-								value={state.G_Pt_Condi_Dest || ''}
+								value={patientHistory.G_Pt_Condi_Dest || ''}
 								onChange={handleChange}
 							>
 								{destinationConditions.map((item, index) => (
@@ -232,7 +235,7 @@ const General = ({ state, setState, bodySystems, setBodySystems }) => {
 					</Grid>
 					<Grid item xs>
 						<FormControl component="fieldset">
-							<RadioGroup row aria-label="patient displacement" name="G_Pt_Disp" value={state.G_Pt_Disp} onChange={handleChange}>
+							<RadioGroup row aria-label="patient displacement" name="G_Pt_Disp" value={patientHistory.G_Pt_Disp} onChange={handleChange}>
 								<FormControlLabel value="Yes" control={<Radio />} label="Yes" />
 								<FormControlLabel value="No" control={<Radio />} label="No" />
 							</RadioGroup>
@@ -256,7 +259,7 @@ const General = ({ state, setState, bodySystems, setBodySystems }) => {
 						>
 							<Select
 								name="G_Susp_Intoxi"
-								value={state.G_Susp_Intoxi || ''}
+								value={patientHistory.G_Susp_Intoxi || ''}
 								onChange={handleChange}
 							>
 								{suspectedIntoxication.map((item, index) => (
@@ -268,7 +271,7 @@ const General = ({ state, setState, bodySystems, setBodySystems }) => {
 				</Grid>
 				<Grid item container spacing={2} xs={12} lg={3} justifyContent="flex-start" alignItems="center">
 					<Grid item xs>
-						<FormControlLabel control={<Checkbox checked={state.G_DNR_Order || false} name="G_DNR_Order" onChange={handleSingleCheckboxChange} />} label="DNR Order" />
+						<FormControlLabel control={<Checkbox checked={patientHistory.G_DNR_Order || false} name="G_DNR_Order" onChange={handleSingleCheckboxChange} />} label="DNR Order" />
 					</Grid>
 				</Grid>
 			</Grid>

@@ -1,13 +1,17 @@
 import { Grid, TextField, Typography } from '@material-ui/core'
 import React from 'react'
+import { useSelector, useDispatch } from 'react-redux';
+import { store } from '../../../features/patientHistory';
 
-const EventsPrior = ({ state, setState }) => {
-	
+const EventsPrior = () => {
+	const dispatch = useDispatch();
+	const patientHistory = useSelector((state) => state.patientHistory.value)
+
 	const handleChange = (e) => {
-		setState({
-			...state,
-			[e.target.name]: e.target.value
-		})
+		dispatch(store({
+			...patientHistory,
+			[e.target.name]: e.target.value,
+		}))
 	}
 
 	return (
@@ -25,7 +29,7 @@ const EventsPrior = ({ state, setState }) => {
 						variant="outlined"
 						color="secondary"
 						name="EP_Comment"
-						value={state.EP_Comment}
+						value={patientHistory.EP_Comment}
 						onChange={handleChange}
 					/>
 				</Grid>

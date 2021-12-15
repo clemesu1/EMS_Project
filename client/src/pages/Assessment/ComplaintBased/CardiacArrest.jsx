@@ -1,5 +1,7 @@
 import { Button, FormControl, FormControlLabel, FormLabel, Grid, InputLabel, MenuItem, Radio, RadioGroup, Select, TextField } from '@material-ui/core'
 import React from 'react'
+import { useSelector, useDispatch } from 'react-redux';
+import { store } from '../../../features/cardiacArrest';
 
 const witnesses = ["Ambulance crew", "Bystander", "Family / Friend", "Fire service personnel", "Law enforcement personnel", "Not witnessed", "Other", "Other first responder"];
 const defibrillatorTypes = ["Unknown", "Monophasic", "Biphasic", "Manual", "Automated", "Semi-automated", "Other"];
@@ -8,13 +10,15 @@ const cprReasons = ["Obivious death protocol criteria met", "valid 'Do Not Resus
 const pacemaker = ["No", "Unknown", "Pacemaker", "Implanted Defibrillator", "Other"]
 
 
-const CardiacArrest = ({ state, setState }) => {
+const CardiacArrest = () => {
+    const dispatch = useDispatch();
+	const cardiacArrest = useSelector((state) => state.cardiacArrest.value)
 
     const handleChange = (e) => {
-        setState({
-            ...state,
-            [e.target.name]: e.target.value,
-        })
+        dispatch(store({
+			...cardiacArrest,
+			[e.target.name]: e.target.value,
+		}))
     }
 
     return (
@@ -31,7 +35,7 @@ const CardiacArrest = ({ state, setState }) => {
                         labelId="arrest-class-label"
                         id="arrest-class"
                         name="Arrest_Clarify"
-                        value={state.Arrest_Clarify || ''}
+                        value={cardiacArrest.Arrest_Clarify || ''}
                         onChange={handleChange}
                         label="Arrest Classification"
                     >
@@ -54,7 +58,7 @@ const CardiacArrest = ({ state, setState }) => {
                             labelId="witness-of-arrest-label"
                             id="witness-of-arrest"
                             name="Witness"
-                            value={state.Witness || ''}
+                            value={cardiacArrest.Witness || ''}
                             onChange={handleChange}
                             label="Witness of Arrest"
                         >
@@ -64,7 +68,7 @@ const CardiacArrest = ({ state, setState }) => {
                         </Select>
                     </FormControl>
                 </Grid>
-                {state.Witness !== 'Other' ? '' :
+                {cardiacArrest.Witness !== 'Other' ? '' :
                     <Grid item xs={12} sm={12}>
                         <TextField
                             label="Other"
@@ -73,7 +77,7 @@ const CardiacArrest = ({ state, setState }) => {
                             size="small"
                             name="Witns_Other"
                             id="witness-other"
-                            value={state.Witns_Other}
+                            value={cardiacArrest.Witns_Other}
                             onChange={handleChange}
                             fullWidth
                         />
@@ -85,7 +89,7 @@ const CardiacArrest = ({ state, setState }) => {
             <Grid item xs={12} sm={6}>
                 <FormControl component="fieldset" color="secondary">
                     <FormLabel component="legend">Defibrillation prior to ambulance arrival</FormLabel>
-                    <RadioGroup row aria-label="defibrillation prior to ambulance arrival" name="Defib_Prior_Ambul_arrival" value={state.Defib_Prior_Ambul_arrival} onChange={handleChange}>
+                    <RadioGroup row aria-label="defibrillation prior to ambulance arrival" name="Defib_Prior_Ambul_arrival" value={cardiacArrest.Defib_Prior_Ambul_arrival} onChange={handleChange}>
                         <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
                         <FormControlLabel value="No" control={<Radio />} label="No" />
                     </RadioGroup>
@@ -101,7 +105,7 @@ const CardiacArrest = ({ state, setState }) => {
                     type="number"
                     name="No_Defib_Prior_EMS"
                     id="no-defib-prior-ems"
-                    value={state.No_Defib_Prior_EMS}
+                    value={cardiacArrest.No_Defib_Prior_EMS}
                     onChange={handleChange}
                     fullWidth
                 />
@@ -111,10 +115,10 @@ const CardiacArrest = ({ state, setState }) => {
                 <Grid item container xs={12} sm={4} spacing={2}>
                     <Grid item xs={6} sm={6}>
                         <Button variant="contained" fullWidth onClick={() => {
-                            setState({
-                                ...state,
+                             dispatch(store({
+                                ...cardiacArrest,
                                 Spon_Circ: new Date().toLocaleTimeString('en-US'),
-                            })
+                            }))
                         }}>
                             Spont. Circulation
                         </Button>
@@ -126,17 +130,17 @@ const CardiacArrest = ({ state, setState }) => {
                             size="small"
                             name="Spon_Circ"
                             id="spon-circ"
-                            value={state.Spon_Circ}
+                            value={cardiacArrest.Spon_Circ}
                             onChange={handleChange}
                             fullWidth
                         />
                     </Grid>
                     <Grid item xs={6} sm={6}>
                         <Button variant="contained" fullWidth onClick={() => {
-                            setState({
-                                ...state,
+                             dispatch(store({
+                                ...cardiacArrest,
                                 Spon_Respir: new Date().toLocaleTimeString('en-US'),
-                            })
+                            }))
                         }}>
                             Spont. Respiration
                         </Button>
@@ -148,17 +152,17 @@ const CardiacArrest = ({ state, setState }) => {
                             size="small"
                             name="Spon_Respir"
                             id="spon-respir"
-                            value={state.Spon_Respir}
+                            value={cardiacArrest.Spon_Respir}
                             onChange={handleChange}
                             fullWidth
                         />
                     </Grid>
                     <Grid item xs={6} sm={6}>
                         <Button variant="contained" fullWidth onClick={() => {
-                            setState({
-                                ...state,
+                             dispatch(store({
+                                ...cardiacArrest,
                                 Time_of_First_CPR: new Date().toLocaleTimeString('en-US'),
-                            })
+                            }))
                         }}>
                             Time of First CPR
                         </Button>
@@ -170,17 +174,17 @@ const CardiacArrest = ({ state, setState }) => {
                             size="small"
                             name="Time_of_First_CPR"
                             id="time-of-first-cpr"
-                            value={state.Time_of_First_CPR}
+                            value={cardiacArrest.Time_of_First_CPR}
                             onChange={handleChange}
                             fullWidth
                         />
                     </Grid>
                     <Grid item xs={6} sm={6}>
                         <Button variant="contained" fullWidth onClick={() => {
-                            setState({
-                                ...state,
+                              dispatch(store({
+                                ...cardiacArrest,
                                 Time_of_Crew_CPR: new Date().toLocaleTimeString('en-US'),
-                            })
+                            }))
                         }}>
                             Time of Crew CPR
                         </Button>
@@ -192,7 +196,7 @@ const CardiacArrest = ({ state, setState }) => {
                             size="small"
                             name="Time_of_Crew_CPR"
                             id="time-of-crew-cpr"
-                            value={state.Time_of_Crew_CPR}
+                            value={cardiacArrest.Time_of_Crew_CPR}
                             onChange={handleChange}
                             fullWidth
                         />
@@ -204,10 +208,10 @@ const CardiacArrest = ({ state, setState }) => {
                 <Grid item container xs={12} sm={8} spacing={2} alignItems="center">
                     <Grid item xs={6} sm={6}>
                         <Button variant="contained" fullWidth onClick={() => {
-                            setState({
-                                ...state,
+                               dispatch(store({
+                                ...cardiacArrest,
                                 Time_first_Defib: new Date().toLocaleTimeString('en-US'),
-                            })
+                            }))
                         }}>
                             Time of first defibrillation
                         </Button>
@@ -219,17 +223,17 @@ const CardiacArrest = ({ state, setState }) => {
                             size="small"
                             name="Time_first_Defib"
                             id="time-first-defib"
-                            value={state.Time_first_Defib}
+                            value={cardiacArrest.Time_first_Defib}
                             onChange={handleChange}
                             fullWidth
                         />
                     </Grid>
                     <Grid item xs={6} sm={6}>
                         <Button variant="contained" fullWidth onClick={() => {
-                            setState({
-                                ...state,
+                              dispatch(store({
+                                ...cardiacArrest,
                                 Time_CPR_Discontinue: new Date().toLocaleTimeString('en-US'),
-                            })
+                            }))
                         }}>
                             Time of CPR Discontinued
                         </Button>
@@ -241,17 +245,17 @@ const CardiacArrest = ({ state, setState }) => {
                             size="small"
                             name="Time_CPR_Discontinue"
                             id="time-cpr-discontinue"
-                            value={state.Time_CPR_Discontinue}
+                            value={cardiacArrest.Time_CPR_Discontinue}
                             onChange={handleChange}
                             fullWidth
                         />
                     </Grid>
                     <Grid item xs={6} sm={6}>
                         <Button variant="contained" fullWidth onClick={() => {
-                            setState({
-                                ...state,
+                              dispatch(store({
+                                ...cardiacArrest,
                                 Pulse_rate_dest: new Date().toLocaleTimeString('en-US'),
-                            })
+                            }))
                         }}>
                             Pulse rate at destination
                         </Button>
@@ -263,7 +267,7 @@ const CardiacArrest = ({ state, setState }) => {
                             size="small"
                             name="Pulse_rate_dest"
                             id="pulse-rate-dest"
-                            value={state.Pulse_rate_dest}
+                            value={cardiacArrest.Pulse_rate_dest}
                             onChange={handleChange}
                             fullWidth
                         />
@@ -282,7 +286,7 @@ const CardiacArrest = ({ state, setState }) => {
                         labelId="type-of-ambul-defib-label"
                         id="type-of-ambul-defib"
                         name="Type_of_Ambul_Defib"
-                        value={state.Type_of_Ambul_Defib || ''}
+                        value={cardiacArrest.Type_of_Ambul_Defib || ''}
                         onChange={handleChange}
                         label="Type of Ambulance Defibrillator"
                     >
@@ -293,7 +297,7 @@ const CardiacArrest = ({ state, setState }) => {
                 </FormControl>
             </Grid>
             <Grid item xs={12} sm={4}>
-                {state.Type_of_Ambul_Defib !== 'Other' ? '' :
+                {cardiacArrest.Type_of_Ambul_Defib !== 'Other' ? '' :
                     <TextField
                         label="Other"
                         variant="filled"
@@ -301,7 +305,7 @@ const CardiacArrest = ({ state, setState }) => {
                         size="small"
                         name="Typ_Amb_Defib_Other"
                         id="typ-amb-defib-other"
-                        value={state.Typ_Amb_Defib_Other}
+                        value={cardiacArrest.Typ_Amb_Defib_Other}
                         onChange={handleChange}
                         fullWidth
                     />
@@ -319,7 +323,7 @@ const CardiacArrest = ({ state, setState }) => {
                         labelId="reason-cpr-discontinue-label"
                         id="reason-cpr-discontinue"
                         name="Reason_CPR_Discontinue"
-                        value={state.Reason_CPR_Discontinue || ''}
+                        value={cardiacArrest.Reason_CPR_Discontinue || ''}
                         onChange={handleChange}
                         label="Reason CPR Discontinued in the Field"
                     >
@@ -330,7 +334,7 @@ const CardiacArrest = ({ state, setState }) => {
                 </FormControl>
             </Grid>
             <Grid item xs={12} sm={4}>
-                {state.Reason_CPR_Discontinue !== 'Other' ? '' :
+                {cardiacArrest.Reason_CPR_Discontinue !== 'Other' ? '' :
                     <TextField
                         label="Other"
                         variant="filled"
@@ -338,7 +342,7 @@ const CardiacArrest = ({ state, setState }) => {
                         size="small"
                         name="CPR_Discon_Other"
                         id="cpr-discon-other"
-                        value={state.CPR_Discon_Other}
+                        value={cardiacArrest.CPR_Discon_Other}
                         onChange={handleChange}
                         fullWidth
                     />
@@ -356,7 +360,7 @@ const CardiacArrest = ({ state, setState }) => {
                         labelId="reason-not-init-cpr-label"
                         id="reason-not-init-cpr"
                         name="Reason_not_Init_CPR"
-                        value={state.Reason_not_Init_CPR || ''}
+                        value={cardiacArrest.Reason_not_Init_CPR || ''}
                         onChange={handleChange}
                         label="Reason not initiating CPR"
                     >
@@ -367,7 +371,7 @@ const CardiacArrest = ({ state, setState }) => {
                 </FormControl>
             </Grid>
             <Grid item xs={12} sm={4}>
-                {state.Reason_not_Init_CPR !== 'Other' ? '' :
+                {cardiacArrest.Reason_not_Init_CPR !== 'Other' ? '' :
                     <TextField
                         label="Other"
                         variant="filled"
@@ -375,7 +379,7 @@ const CardiacArrest = ({ state, setState }) => {
                         size="small"
                         name="NInit_CPR_Other"
                         id="n-init-cpr-other"
-                        value={state.NInit_CPR_Other}
+                        value={cardiacArrest.NInit_CPR_Other}
                         onChange={handleChange}
                         fullWidth
                     />
@@ -393,7 +397,7 @@ const CardiacArrest = ({ state, setState }) => {
                         labelId="pace-implant-defib-label"
                         id="pace-implant-defib"
                         name="Pace_Implant_Defib"
-                        value={state.Pace_Implant_Defib || ''}
+                        value={cardiacArrest.Pace_Implant_Defib || ''}
                         onChange={handleChange}
                         label="Pacemaker/Implant Defibrillator"
                     >
@@ -404,7 +408,7 @@ const CardiacArrest = ({ state, setState }) => {
                 </FormControl>
             </Grid>
             <Grid item xs={12} sm={4}>
-                {state.Pace_Implant_Defib !== 'Other' ? '' :
+                {cardiacArrest.Pace_Implant_Defib !== 'Other' ? '' :
                     <TextField
                         label="Other"
                         variant="filled"
@@ -412,7 +416,7 @@ const CardiacArrest = ({ state, setState }) => {
                         size="small"
                         name="PImp_Defib_Other"
                         id="p-imp-defib-other"
-                        value={state.PImp_Defib_Other}
+                        value={cardiacArrest.PImp_Defib_Other}
                         onChange={handleChange}
                         fullWidth
                     />

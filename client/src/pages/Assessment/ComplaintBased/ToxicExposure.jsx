@@ -1,7 +1,7 @@
-import { Button, FormControl, InputLabel, MenuItem, Select } from '@material-ui/core'
-import { Typography } from '@material-ui/core';
-import { Container, Grid, TextField } from '@material-ui/core'
+import { Button, FormControl, InputLabel, MenuItem, Select, Typography,  Container, Grid, TextField} from '@material-ui/core'
 import React from 'react'
+import { useSelector, useDispatch } from 'react-redux';
+import { store } from '../../../features/toxicExposure';
 
 const substanceNames = ["Amobarbital (Sodium Amytal; hypnotics) ", "Aprobarbital (hypnotic) ", "Butabarbital (hypnotics) ", "Butalbital (Fiorinal; sedative) ", "Hexobarbital (Sombulex; hypnotic/anesthetic) ", "Methylphenobarbital (Mebaral; antianxiety, anticonvulsant) ", "Pentobarbital (Nembutal; hypnotic) ", "Phenobarbital (Luminal; hypnotic, sedative, anticonvulsant) ", "Secobarbital (Seconal; hypnotic) ", "Sodium thiopental ", "Talbutal (Lotusate; hypnotic) ", "Thiobarbital (anesthetic) ", "Narcotic", "Heroin ", "Morphine ", "Opium ", "Cocaine", "Alcohol", "Prescription drugs"];
 const substanceTypes = ["Unknown", "Medications", "Alcohol", "Chemicals", "Plants", "Food", "Venom", "Radioactive material", "Smoke / Gas", "Other"];
@@ -9,12 +9,15 @@ const entryRoutes = ["Absorption", "Bite / Sting", "Ingestion", "Inhalation", "I
 const reactionTypes = ["GI disturbances", "Local reaction", "Loss of consciousness", "Other", "Respiratory distress", "Systemic symptoms"];
 const evidenceTypes = ["Containers", "Odour", "Other", "Paraphernalia", "Physical Signs", "Pills", "Traces of subtances found"];
 
-const ToxicExposure = ({ state, setState, assessmentItems }) => {
+const ToxicExposure = ({  assessmentItems }) => {
+    const dispatch = useDispatch();
+	const toxicExposure = useSelector((state) => state.toxicExposure.value)
+
     const handleChange = (e) => {
-        setState({
-            ...state,
-            [e.target.name]: e.target.value,
-        })
+        dispatch(store({
+			...toxicExposure,
+			[e.target.name]: e.target.value,
+		}))
     }
 
     const { substanceAmount, setSubstanceAmount, substanceUnit, setSubstanceUnit } = assessmentItems;
@@ -27,10 +30,10 @@ const ToxicExposure = ({ state, setState, assessmentItems }) => {
 
         const substanceValue = substanceAmount.length >= 0 ? substanceAmount + ' ' + substanceUnit : '0'
 
-        setState({
-            ...state,
+        dispatch(store({
+			...toxicExposure,
             Amount_of_substance: substanceValue
-        })
+        }))
     }
 
     return (
@@ -44,7 +47,7 @@ const ToxicExposure = ({ state, setState, assessmentItems }) => {
                         size="small"
                         name="Duration"
                         id="duration"
-                        value={state.Duration}
+                        value={toxicExposure.Duration}
                         onChange={handleChange}
                     />
                 </Grid>
@@ -60,7 +63,7 @@ const ToxicExposure = ({ state, setState, assessmentItems }) => {
                             labelId="nature-of-exposure-label"
                             id="nature-of-exposure"
                             name="Nature_of_Expo"
-                            value={state.Nature_of_Expo || ''}
+                            value={toxicExposure.Nature_of_Expo || ''}
                             onChange={handleChange}
                             label="Nature of Exposure"
                         >
@@ -76,10 +79,10 @@ const ToxicExposure = ({ state, setState, assessmentItems }) => {
                         color="default"
                         fullWidth
                         onClick={() => {
-                            setState({
-                                ...state,
+                            dispatch(store({
+                                ...toxicExposure,
                                 Exposure_time: new Date().toLocaleTimeString('en-US'),
-                            })
+                            }))
                         }}
                     >
                         Time of Exposure
@@ -92,7 +95,7 @@ const ToxicExposure = ({ state, setState, assessmentItems }) => {
                         size="small"
                         name="Exposure_time"
                         id="exposure-time"
-                        value={state.Exposure_time}
+                        value={toxicExposure.Exposure_time}
                         onChange={handleChange}
                         fullWidth
                     />
@@ -110,7 +113,7 @@ const ToxicExposure = ({ state, setState, assessmentItems }) => {
                             labelId="name-of-substance-label"
                             id="name-of-substance"
                             name="Name_of_substance"
-                            value={state.Name_of_substance || ''}
+                            value={toxicExposure.Name_of_substance || ''}
                             onChange={handleChange}
                             label="Name of Substance"
                         >
@@ -176,7 +179,7 @@ const ToxicExposure = ({ state, setState, assessmentItems }) => {
                                 labelId="type-of-substance-label"
                                 id="type-of-substance"
                                 name="Type_of_substance"
-                                value={state.Type_of_substance || ''}
+                                value={toxicExposure.Type_of_substance || ''}
                                 onChange={handleChange}
                                 label="Type of Substance"
                             >
@@ -186,7 +189,7 @@ const ToxicExposure = ({ state, setState, assessmentItems }) => {
                             </Select>
                         </FormControl>
                     </Grid>
-                    {state.Type_of_substance !== 'Other' ? '' :
+                    {toxicExposure.Type_of_substance !== 'Other' ? '' :
                         <Grid item xs={12} sm={12} md={6}>
                             <TextField
                                 label="Other"
@@ -195,7 +198,7 @@ const ToxicExposure = ({ state, setState, assessmentItems }) => {
                                 size="small"
                                 name="Typ_sub_Other"
                                 id="type-sub-other"
-                                value={state.Typ_sub_Other}
+                                value={toxicExposure.Typ_sub_Other}
                                 onChange={handleChange}
                                 fullWidth
                             />
@@ -215,7 +218,7 @@ const ToxicExposure = ({ state, setState, assessmentItems }) => {
                                 labelId="route-of-entry-label"
                                 id="route-of-entry"
                                 name="Route_of_entry"
-                                value={state.Route_of_entry || ''}
+                                value={toxicExposure.Route_of_entry || ''}
                                 onChange={handleChange}
                                 label="Route of Entry"
                             >
@@ -225,7 +228,7 @@ const ToxicExposure = ({ state, setState, assessmentItems }) => {
                             </Select>
                         </FormControl>
                     </Grid>
-                    {state.Route_of_entry !== 'Other' ? '' :
+                    {toxicExposure.Route_of_entry !== 'Other' ? '' :
                         <Grid item xs={12} sm={12} md={6}>
                             <TextField
                                 label="Other"
@@ -234,7 +237,7 @@ const ToxicExposure = ({ state, setState, assessmentItems }) => {
                                 size="small"
                                 name="Route_Other"
                                 id="route-other"
-                                value={state.Route_Other}
+                                value={toxicExposure.Route_Other}
                                 onChange={handleChange}
                                 fullWidth
                             />
@@ -254,7 +257,7 @@ const ToxicExposure = ({ state, setState, assessmentItems }) => {
                                 labelId="type-of-reaction-label"
                                 id="type-of-reaction"
                                 name="Type_of_reaction"
-                                value={state.Type_of_reaction || ''}
+                                value={toxicExposure.Type_of_reaction || ''}
                                 onChange={handleChange}
                                 label="Type of reaction to substance"
                             >
@@ -264,7 +267,7 @@ const ToxicExposure = ({ state, setState, assessmentItems }) => {
                             </Select>
                         </FormControl>
                     </Grid>
-                    {state.Type_of_reaction !== 'Other' ? '' :
+                    {toxicExposure.Type_of_reaction !== 'Other' ? '' :
                         <Grid item xs={12} sm={12} md={6}>
                             <TextField
                                 label="Other"
@@ -273,7 +276,7 @@ const ToxicExposure = ({ state, setState, assessmentItems }) => {
                                 size="small"
                                 name="Reaction_Other"
                                 id="reaction-other"
-                                value={state.Reaction_Other}
+                                value={toxicExposure.Reaction_Other}
                                 onChange={handleChange}
                                 fullWidth
                             />
@@ -293,7 +296,7 @@ const ToxicExposure = ({ state, setState, assessmentItems }) => {
                                 labelId="evidence-of-substance-label"
                                 id="evidence-of-substance"
                                 name="Evidence"
-                                value={state.Evidence || ''}
+                                value={toxicExposure.Evidence || ''}
                                 onChange={handleChange}
                                 label="Evidence of Substance"
                             >
@@ -303,7 +306,7 @@ const ToxicExposure = ({ state, setState, assessmentItems }) => {
                             </Select>
                         </FormControl>
                     </Grid>
-                    {state.Evidence !== 'Other' ? '' :
+                    {toxicExposure.Evidence !== 'Other' ? '' :
                         <Grid item xs={12} sm={12} md={6}>
                             <TextField
                                 label="Other"
@@ -312,7 +315,7 @@ const ToxicExposure = ({ state, setState, assessmentItems }) => {
                                 size="small"
                                 name="Evidence_Other"
                                 id="evidence-other"
-                                value={state.Evidence_Other}
+                                value={toxicExposure.Evidence_Other}
                                 onChange={handleChange}
                                 fullWidth
                             />

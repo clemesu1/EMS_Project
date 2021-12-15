@@ -1,6 +1,8 @@
 import { Box, Grid, List, ListItem, ListItemIcon, Checkbox, ListItemText, TextField, Typography } from '@material-ui/core'
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles';
+import { useSelector, useDispatch } from 'react-redux';
+import { store } from '../../../features/patientHistory';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -17,14 +19,16 @@ const useStyles = makeStyles((theme) => ({
 const drugList = ["ASA", "Cephalosporines (Keflex, Cefzil, Ceftin, Suprax, Vantin)", "Codeine", "Demerol", "Morphine", "Nitro", "Penicillin", "Sulpha drugs"];
 const environmentalList = ["Almonds", "Cashews", "Eggs", "Fish", "Hazelnuts", "Latex", "Milk", "Other Nuts", "Peanuts", "Sesame seeds", "Shellfish", "Soy", "Walnuts", "Wheat"];
 
-const Allergies = ({ state, setState, checkedDrug, setCheckedDrug, checkedEnv, setCheckedEnv }) => {
+const Allergies = ({ checkedDrug, setCheckedDrug, checkedEnv, setCheckedEnv }) => {
 	const classes = useStyles();
+	const dispatch = useDispatch();
+	const patientHistory = useSelector((state) => state.patientHistory.value)
 
 	const handleChange = (e) => {
-		setState({
-			...state,
-			[e.target.name]: e.target.value
-		})
+		dispatch(store({
+			...patientHistory,
+			[e.target.name]: e.target.value,
+		}))
 	}
 
 	const handleDrugToggle = (value) => () => {
@@ -39,10 +43,10 @@ const Allergies = ({ state, setState, checkedDrug, setCheckedDrug, checkedEnv, s
 
 		setCheckedDrug(newChecked);
 
-		setState({
-			...state,
+		dispatch(store({
+			...patientHistory,
 			Alr_Drugs: newChecked,
-		})
+		}))
 	};
 
 	const handleEnvToggle = (value) => () => {
@@ -59,10 +63,10 @@ const Allergies = ({ state, setState, checkedDrug, setCheckedDrug, checkedEnv, s
 
 		setCheckedEnv(newChecked);
 
-		setState({
-			...state,
+		dispatch(store({
+			...patientHistory,
 			Alr_Env: newChecked,
-		})
+		}))
 	};
 
 	return (
@@ -151,7 +155,7 @@ const Allergies = ({ state, setState, checkedDrug, setCheckedDrug, checkedEnv, s
 						multiline
 						rows={18}
 						name="Alr_Others"
-						value={state.Alr_Others}
+						value={patientHistory.Alr_Others}
 						onChange={handleChange}
 					/>
 				</Grid>

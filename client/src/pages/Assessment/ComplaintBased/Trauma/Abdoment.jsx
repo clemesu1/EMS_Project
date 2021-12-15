@@ -1,14 +1,19 @@
 import React from 'react'
 import { Container, FormControl, Grid, InputLabel, MenuItem, Select } from '@material-ui/core'
+import { useSelector, useDispatch } from 'react-redux';
+import { store } from '../../../../features/traumaAssessment';
 
 const traumaList = ["Deformity", "Contusions", "Crepitus", "Abrasions", "Avulsions", "Punctures", "Paradoxical Mov't", "Burn - Superficial", "Burn - partial", "Burn - full", "Burn - circumferencial", "Lacerations ", "Pulsating Mass", "Swelling", "Discolouration", "Gaurding", "Tenderness", "Instability ", "Rigidity", "Tracheal Deviation", "JVD (Jugular vien distention)", "Flail Segment", "SQ Emphysema", "Shortening - ext rot", "Shortening - int rot", "Shortening - no rot", "Amputation - complete", "Amputation - partial"];
 
-const Abdoment = ({ state, setState }) => {
+const Abdoment = () => {
+    const dispatch = useDispatch();
+	const traumaAssessment = useSelector((state) => state.traumaAssessment.value)
+
     const handleChange = (e) => {
-        setState(prev => ({
-            ...prev,
-            [e.target.name]: e.target.value,
-        }));
+        dispatch(store({
+			...traumaAssessment,
+			[e.target.name]: e.target.value,
+		}))
     }
 
     return (
@@ -26,7 +31,7 @@ const Abdoment = ({ state, setState }) => {
                             labelId="ab-luq-label"
                             id="ab-luq"
                             name="Ab_LUQ"
-                            value={state.Ab_LUQ || ''}
+                            value={traumaAssessment.Ab_LUQ || ''}
                             onChange={handleChange}
                         >
                             {traumaList.map((item, index) => (
@@ -47,7 +52,7 @@ const Abdoment = ({ state, setState }) => {
                             labelId="ab-ruq-label"
                             id="ab-ruq"
                             name="Ab_RUQ"
-                            value={state.Ab_RUQ || ''}
+                            value={traumaAssessment.Ab_RUQ || ''}
                             onChange={handleChange}
                         >
                             {traumaList.map((item, index) => (
@@ -68,7 +73,7 @@ const Abdoment = ({ state, setState }) => {
                             labelId="ab-ubq-label"
                             id="ab-ubq"
                             name="Ab_UBQ"
-                            value={state.Ab_UBQ || ''}
+                            value={traumaAssessment.Ab_UBQ || ''}
                             onChange={handleChange}
                         >
                             {traumaList.map((item, index) => (
@@ -89,7 +94,7 @@ const Abdoment = ({ state, setState }) => {
                             labelId="ab-llq-label"
                             id="ab-llq"
                             name="Ab_LLQ"
-                            value={state.Ab_LLQ || ''}
+                            value={traumaAssessment.Ab_LLQ || ''}
                             onChange={handleChange}
                         >
                             {traumaList.map((item, index) => (
@@ -110,7 +115,7 @@ const Abdoment = ({ state, setState }) => {
                             labelId="ab-rlq-label"
                             id="ab-rlq"
                             name="Ab_RLQ"
-                            value={state.Ab_RLQ || ''}
+                            value={traumaAssessment.Ab_RLQ || ''}
                             onChange={handleChange}
                         >
                             {traumaList.map((item, index) => (

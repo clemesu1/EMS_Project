@@ -1,6 +1,8 @@
 import { Grid, TextField, Typography } from '@material-ui/core'
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles';
+import { useSelector, useDispatch } from 'react-redux';
+import { store } from '../../../features/patientHistory';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -8,14 +10,16 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-const LastMeal = ({ state, setState }) => {
+const LastMeal = () => {
 	const classes = useStyles();
+	const dispatch = useDispatch();
+	const patientHistory = useSelector((state) => state.patientHistory.value)
 
 	const handleChange = (e) => {
-		setState({
-			...state,
-			[e.target.name]: e.target.value
-		})
+		dispatch(store({
+			...patientHistory,
+			[e.target.name]: e.target.value,
+		}))
 	}
 
 	return (
@@ -34,7 +38,7 @@ const LastMeal = ({ state, setState }) => {
 							variant="outlined"
 							color="secondary"
 							name="LM_Comment"
-							value={state.LM_Comment}
+							value={patientHistory.LM_Comment}
 							onChange={handleChange}
 						/>
 					</Grid>

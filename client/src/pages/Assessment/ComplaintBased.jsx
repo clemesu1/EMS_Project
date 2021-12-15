@@ -37,7 +37,7 @@ function a11yProps(index) {
 const ComplaintBased = (props) => {
 	const { assessmentItems } = props;
 
-	const { respiratory, setRespiratory, breathSoundChecksII, setBreathSoundChecksII, seizure, setSeizure, toxicExposure, setToxicExposure, cardiacArrest, setCardiacArrest, chestPain, setChestPain, neonatalAssessment, setNeonatalAssessment, obstetric, setObstetric, traumaAssessment, setTraumaAssessment } = assessmentItems;
+	const {  breathSoundChecksII, setBreathSoundChecksII } = assessmentItems;
 
 	const [selectedTab, setSelectedTab] = useState(0);
 
@@ -68,29 +68,29 @@ const ComplaintBased = (props) => {
 			</AppBar>
 			<Box p={3}>
 				<TabPanel value={selectedTab} index={0}>
-					<Respiratory state={respiratory} setState={setRespiratory} breath={breathSoundChecksII} setBreath={setBreathSoundChecksII} />
+					<Respiratory breath={breathSoundChecksII} setBreath={setBreathSoundChecksII} />
 				</TabPanel>
 				<TabPanel value={selectedTab} index={1}>
-					<Seizure state={seizure} setState={setSeizure} />
+					<Seizure />
 				</TabPanel>
 				<TabPanel value={selectedTab} index={2}>
-					<ToxicExposure state={toxicExposure} setState={setToxicExposure} assessmentItems={assessmentItems} />
+					<ToxicExposure assessmentItems={assessmentItems} />
 				</TabPanel>
 				<TabPanel value={selectedTab} index={3}>
-					<CardiacArrest state={cardiacArrest} setState={setCardiacArrest} />
+					<CardiacArrest />
 				</TabPanel>
 				<TabPanel value={selectedTab} index={4}>
-					<ChestPain state={chestPain} setState={setChestPain} />
+					<ChestPain />
 				</TabPanel>
 				<TabPanel value={selectedTab} index={5}>
-					<Neonatal state={neonatalAssessment} setState={setNeonatalAssessment} />
+					<Neonatal />
 				</TabPanel>
 				<TabPanel value={selectedTab} index={6}>
-					<Obstetric state={obstetric} setState={setObstetric} />
+					<Obstetric />
 				</TabPanel>
 			</Box>
 			<TabPanel value={selectedTab} index={7}>
-				<Trauma state={traumaAssessment} setState={setTraumaAssessment}/>
+				<Trauma />
 			</TabPanel>
 
 		</div>

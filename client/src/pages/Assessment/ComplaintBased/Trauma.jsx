@@ -40,7 +40,6 @@ function a11yProps(index) {
 const Trauma = (props) => {
 
 	const [selectedTab, setSelectedTab] = useState(0);
-	const { state, setState } = props;
 
 	const handleTabChange = (e, value) => {
 		setSelectedTab(value);
@@ -61,28 +60,28 @@ const Trauma = (props) => {
 				</Tabs>
 			</AppBar>
 			<TabPanel value={selectedTab} index={0}>
-				<Head state={state} setState={setState} />
+				<Head />
 			</TabPanel>
 			<TabPanel value={selectedTab} index={1}>
-				<Neck state={state} setState={setState} />
+				<Neck />
 			</TabPanel>
 			<TabPanel value={selectedTab} index={2}>
-				<Chest state={state} setState={setState} />
+				<Chest />
 			</TabPanel>
 			<TabPanel value={selectedTab} index={3}>
-				<Abdoment state={state} setState={setState} />
+				<Abdoment />
 			</TabPanel>
 			<TabPanel value={selectedTab} index={4}>
-				<Pelvis state={state} setState={setState}/>
+				<Pelvis />
 			</TabPanel>
 			<TabPanel value={selectedTab} index={5}>
-				<UpperExtremities state={state} setState={setState}/>
+				<UpperExtremities />
 			</TabPanel>
 			<TabPanel value={selectedTab} index={6}>
-				<LowerExtremities state={state} setState={setState}/>
+				<LowerExtremities />
 			</TabPanel>
 			<TabPanel value={selectedTab} index={7}>
-				<Back state={state} setState={setState}/>
+				<Back />
 			</TabPanel>
 		</div>
 	)

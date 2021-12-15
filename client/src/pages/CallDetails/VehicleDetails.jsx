@@ -1,13 +1,13 @@
 import { Button, ButtonGroup, Container, FormControl, Grid, InputLabel, MenuItem, Paper, Select, TextField, Typography } from '@material-ui/core'
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles';
+import { useSelector, useDispatch } from 'react-redux';
+import { saveVehicleDetails } from '../../features/vehicleDetails';
 
 const useStyles = makeStyles((theme) => ({
-
 	root: {
 		'&$disabled': {
-			color: '#000000',
-
+			color: theme.palette.type === 'dark' ? '#FFF' : '#000',
 		},
 	},
 	disabled: {},
@@ -19,26 +19,29 @@ const useStyles = makeStyles((theme) => ({
 
 const crewTypes = ["EMT-1", "EMT-2", "EMT-3", "EMR", "PCP", "ACP", "CCP", "RT", "RN", "MD", "Student", "Other"];
 
-const VehicleDetails = ({ state, setState }) => {
+const VehicleDetails = () => {
 	const classes = useStyles();
 
+	const dispatch = useDispatch();
+	const vehicleDetails = useSelector((state) => state.vehicleDetails.value)
+
 	const handleIncrement = () => {
-		setState(prev => ({
-			...prev,
-			No_Transported: state.No_Transported + 1,
+		dispatch(saveVehicleDetails({
+			...vehicleDetails,
+			No_Transported: vehicleDetails.No_Transported + 1,
 		}));
 	}
 
 	const handleDecrement = () => {
-		setState(prev => ({
-			...prev,
-			No_Transported: state.No_Transported - 1,
+		dispatch(saveVehicleDetails({
+			...vehicleDetails,
+			No_Transported: vehicleDetails.No_Transported - 1,
 		}));
 	}
 
 	const handleChange = (e) => {
-		setState(prev => ({
-			...prev,
+		dispatch(saveVehicleDetails({
+			...vehicleDetails,
 			[e.target.name]: e.target.value,
 		}));
 	}
@@ -59,7 +62,7 @@ const VehicleDetails = ({ state, setState }) => {
 							<Button disabled classes={{
 								root: classes.root, // class name, e.g. `root-x`
 								disabled: classes.disabled, // class name, e.g. `disabled-x`
-							}}>{state.No_Transported}</Button>
+							}}>{vehicleDetails.No_Transported}</Button>
 							<Button variant="contained" onClick={handleDecrement}>-</Button>
 						</ButtonGroup>
 					</Grid>
@@ -80,10 +83,10 @@ const VehicleDetails = ({ state, setState }) => {
 										variant="contained"
 										fullWidth
 										onClick={() => {
-											setState({
-												...state,
+											dispatch(saveVehicleDetails({
+												...vehicleDetails,
 												T_Notified: new Date().toLocaleTimeString('en-US'),
-											})
+											}))
 										}}
 									>
 										Notified
@@ -96,14 +99,14 @@ const VehicleDetails = ({ state, setState }) => {
 										color="secondary"
 										name="T_Notified"
 										fullWidth
-										value={state.T_Notified}
+										value={vehicleDetails.T_Notified}
 										onChange={handleChange}
 										onClick={() => {
-											if (state.T_Notified === '')
-												setState({
-													...state,
+											if (vehicleDetails.T_Notified === '')
+												dispatch(saveVehicleDetails({
+													...vehicleDetails,
 													T_Notified: new Date().toLocaleTimeString('en-US'),
-												})
+												}))
 										}}
 									/>
 								</Grid>
@@ -115,10 +118,10 @@ const VehicleDetails = ({ state, setState }) => {
 										variant="contained"
 										fullWidth
 										onClick={() => {
-											setState({
-												...state,
+											dispatch(saveVehicleDetails({
+												...vehicleDetails,
 												T_enRoute: new Date().toLocaleTimeString('en-US'),
-											})
+											}))
 										}}
 									>
 										En Route
@@ -131,14 +134,14 @@ const VehicleDetails = ({ state, setState }) => {
 										color="secondary"
 										name="T_enRoute"
 										fullWidth
-										value={state.T_enRoute}
+										value={vehicleDetails.T_enRoute}
 										onChange={handleChange}
 										onClick={() => {
-											if (state.T_enRoute === '')
-												setState({
-													...state,
+											if (vehicleDetails.T_enRoute === '')
+												dispatch(saveVehicleDetails({
+													...vehicleDetails,
 													T_enRoute: new Date().toLocaleTimeString('en-US'),
-												})
+												}))
 										}}
 									/>
 								</Grid>
@@ -150,10 +153,10 @@ const VehicleDetails = ({ state, setState }) => {
 										variant="contained"
 										fullWidth
 										onClick={() => {
-											setState({
-												...state,
+											dispatch(saveVehicleDetails({
+												...vehicleDetails,
 												T_at_Scene: new Date().toLocaleTimeString('en-US'),
-											})
+											}))
 										}}
 									>
 										At Scene
@@ -166,14 +169,14 @@ const VehicleDetails = ({ state, setState }) => {
 										color="secondary"
 										name="T_at_Scene"
 										fullWidth
-										value={state.T_at_Scene}
+										value={vehicleDetails.T_at_Scene}
 										onChange={handleChange}
 										onClick={() => {
-											if (state.T_at_Scene === '')
-												setState({
-													...state,
+											if (vehicleDetails.T_at_Scene === '')
+												dispatch(saveVehicleDetails({
+													...vehicleDetails,
 													T_at_Scene: new Date().toLocaleTimeString('en-US'),
-												})
+												}))
 										}}
 									/>
 								</Grid>
@@ -185,10 +188,10 @@ const VehicleDetails = ({ state, setState }) => {
 										variant="contained"
 										fullWidth
 										onClick={() => {
-											setState({
-												...state,
+											dispatch(saveVehicleDetails({
+												...vehicleDetails,
 												T_Crew_Patient: new Date().toLocaleTimeString('en-US'),
-											})
+											}))
 										}}
 									>
 										Crew Patient
@@ -201,14 +204,14 @@ const VehicleDetails = ({ state, setState }) => {
 										color="secondary"
 										name="T_Crew_Patient"
 										fullWidth
-										value={state.T_Crew_Patient}
+										value={vehicleDetails.T_Crew_Patient}
 										onChange={handleChange}
 										onClick={() => {
-											if (state.T_Crew_Patient === '')
-												setState({
-													...state,
+											if (vehicleDetails.T_Crew_Patient === '')
+												dispatch(saveVehicleDetails({
+													...vehicleDetails,
 													T_Crew_Patient: new Date().toLocaleTimeString('en-US'),
-												})
+												}))
 										}}
 									/>
 								</Grid>
@@ -219,10 +222,10 @@ const VehicleDetails = ({ state, setState }) => {
 										variant="contained"
 										fullWidth
 										onClick={() => {
-											setState({
-												...state,
+											dispatch(saveVehicleDetails({
+												...vehicleDetails,
 												T_Left_Scene: new Date().toLocaleTimeString('en-US'),
-											})
+											}))
 										}}
 									>
 										Left Scene
@@ -235,14 +238,14 @@ const VehicleDetails = ({ state, setState }) => {
 										color="secondary"
 										name="T_Left_Scene"
 										fullWidth
-										value={state.T_Left_Scene}
+										value={vehicleDetails.T_Left_Scene}
 										onChange={handleChange}
 										onClick={() => {
-											if (state.T_Left_Scene === '')
-												setState({
-													...state,
+											if (vehicleDetails.T_Left_Scene === '')
+												dispatch(saveVehicleDetails({
+													...vehicleDetails,
 													T_Left_Scene: new Date().toLocaleTimeString('en-US'),
-												})
+												}))
 										}}
 									/>
 								</Grid>
@@ -254,10 +257,10 @@ const VehicleDetails = ({ state, setState }) => {
 										variant="contained"
 										fullWidth
 										onClick={() => {
-											setState({
-												...state,
+											dispatch(saveVehicleDetails({
+												...vehicleDetails,
 												T_at_destn: new Date().toLocaleTimeString('en-US'),
-											})
+											}))
 										}}
 									>
 										At Destination
@@ -270,14 +273,14 @@ const VehicleDetails = ({ state, setState }) => {
 										color="secondary"
 										name="T_at_destn"
 										fullWidth
-										value={state.T_at_destn}
+										value={vehicleDetails.T_at_destn}
 										onChange={handleChange}
 										onClick={() => {
-											if (state.T_at_destn === '')
-												setState({
-													...state,
+											if (vehicleDetails.T_at_destn === '')
+												dispatch(saveVehicleDetails({
+													...vehicleDetails,
 													T_at_destn: new Date().toLocaleTimeString('en-US'),
-												})
+												}))
 										}}
 									/>
 								</Grid>
@@ -289,10 +292,10 @@ const VehicleDetails = ({ state, setState }) => {
 										variant="contained"
 										fullWidth
 										onClick={() => {
-											setState({
-												...state,
+											dispatch(saveVehicleDetails({
+												...vehicleDetails,
 												T_available: new Date().toLocaleTimeString('en-US'),
-											})
+											}))
 										}}
 									>
 										Available
@@ -305,14 +308,14 @@ const VehicleDetails = ({ state, setState }) => {
 										color="secondary"
 										name="T_available"
 										fullWidth
-										value={state.T_available}
+										value={vehicleDetails.T_available}
 										onChange={handleChange}
 										onClick={() => {
-											if (state.T_available === '')
-												setState({
-													...state,
+											if (vehicleDetails.T_available === '')
+												dispatch(saveVehicleDetails({
+													...vehicleDetails,
 													T_available: new Date().toLocaleTimeString('en-US'),
-												})
+												}))
 										}}
 									/>
 								</Grid>
@@ -324,10 +327,10 @@ const VehicleDetails = ({ state, setState }) => {
 										variant="contained"
 										fullWidth
 										onClick={() => {
-											setState({
-												...state,
+											dispatch(saveVehicleDetails({
+												...vehicleDetails,
 												T_backarea: new Date().toLocaleTimeString('en-US'),
-											})
+											}))
 										}}
 									>
 										Back Area
@@ -340,14 +343,14 @@ const VehicleDetails = ({ state, setState }) => {
 										color="secondary"
 										name="T_backarea"
 										fullWidth
-										value={state.T_backarea}
+										value={vehicleDetails.T_backarea}
 										onChange={handleChange}
 										onClick={() => {
-											if (state.T_backarea === '')
-												setState({
-													...state,
+											if (vehicleDetails.T_backarea === '')
+												dispatch(saveVehicleDetails({
+													...vehicleDetails,
 													T_backarea: new Date().toLocaleTimeString('en-US'),
-												})
+												}))
 										}}
 									/>
 								</Grid>
@@ -376,7 +379,7 @@ const VehicleDetails = ({ state, setState }) => {
 										labelId="rts-type-label"
 										id="rts-type"
 										name="RTS_Type"
-										value={state.RTS_Type}
+										value={vehicleDetails.RTS_Type}
 										onChange={handleChange}
 										label="Type"
 									>
@@ -397,7 +400,7 @@ const VehicleDetails = ({ state, setState }) => {
 										labelId="rts-change-label"
 										id="rts-change"
 										name="RTS_Change"
-										value={state.RTS_Change}
+										value={vehicleDetails.RTS_Change}
 										onChange={handleChange}
 										label="Change in Response"
 									>
@@ -431,7 +434,7 @@ const VehicleDetails = ({ state, setState }) => {
 										labelId="rfs-type-label"
 										id="rfs-type"
 										name="RFS_Type"
-										value={state.RFS_Type}
+										value={vehicleDetails.RFS_Type}
 										onChange={handleChange}
 										label="Type"
 									>
@@ -452,7 +455,7 @@ const VehicleDetails = ({ state, setState }) => {
 										labelId="rfs-change-label"
 										id="rfs-change"
 										name="RFS_Change"
-										value={state.RFS_Change}
+										value={vehicleDetails.RFS_Change}
 										onChange={handleChange}
 										label="Change in Response"
 									>
@@ -486,7 +489,7 @@ const VehicleDetails = ({ state, setState }) => {
 											labelId="c-driver-label"
 											id="c-driver"
 											name="C_driver"
-											value={state.C_driver}
+											value={vehicleDetails.C_driver}
 											onChange={handleChange}
 											label="Driver"
 										>
@@ -497,14 +500,14 @@ const VehicleDetails = ({ state, setState }) => {
 									</FormControl>
 								</Grid>
 								<Grid item xs={12} sm={6} md={12} lg={12}>
-									{state.C_driver !== "Other" ? '' : (
+									{vehicleDetails.C_driver !== "Other" ? '' : (
 										<TextField
 											variant="filled"
 											size="small"
 											color="secondary"
 											label="Other"
 											name="C_driv_oth"
-											value={state.C_driv_oth}
+											value={vehicleDetails.C_driv_oth}
 											onChange={handleChange}
 											fullWidth
 										/>
@@ -524,7 +527,7 @@ const VehicleDetails = ({ state, setState }) => {
 											labelId="c-attendant-label"
 											id="c-attendant"
 											name="C_attendant"
-											value={state.C_attendant}
+											value={vehicleDetails.C_attendant}
 											onChange={handleChange}
 											label="Attendant"
 										>
@@ -535,14 +538,14 @@ const VehicleDetails = ({ state, setState }) => {
 									</FormControl>
 								</Grid>
 								<Grid item xs={12} sm={6} md={12} lg={12}>
-									{state.C_attendant !== "Other" ? '' : (
+									{vehicleDetails.C_attendant !== "Other" ? '' : (
 										<TextField
 											variant="filled"
 											size="small"
 											color="secondary"
 											label="Other"
 											name="C_attn_oth"
-											value={state.C_attn_oth}
+											value={vehicleDetails.C_attn_oth}
 											onChange={handleChange}
 											fullWidth
 										/>
@@ -562,7 +565,7 @@ const VehicleDetails = ({ state, setState }) => {
 											labelId="c-assistant-label"
 											id="c-assistant"
 											name="C_assistant"
-											value={state.C_assistant}
+											value={vehicleDetails.C_assistant}
 											onChange={handleChange}
 											label="Assistant"
 										>
@@ -573,14 +576,14 @@ const VehicleDetails = ({ state, setState }) => {
 									</FormControl>
 								</Grid>
 								<Grid item xs={12} sm={6} md={12} lg={12}>
-									{state.C_assistant !== "Other" ? '' : (
+									{vehicleDetails.C_assistant !== "Other" ? '' : (
 										<TextField
 											variant="filled"
 											size="small"
 											color="secondary"
 											label="Other"
 											name="C_asst_oth"
-											value={state.C_asst_oth}
+											value={vehicleDetails.C_asst_oth}
 											onChange={handleChange}
 											fullWidth
 										/>
@@ -606,7 +609,7 @@ const VehicleDetails = ({ state, setState }) => {
 									size="small"
 									color="secondary"
 									name="M_Out"
-									value={state.M_Out}
+									value={vehicleDetails.M_Out}
 									onChange={handleChange}
 									fullWidth
 								/>
@@ -617,7 +620,7 @@ const VehicleDetails = ({ state, setState }) => {
 									variant="filled"
 									size="small"
 									name="M_atScene"
-									value={state.M_atScene}
+									value={vehicleDetails.M_atScene}
 									onChange={handleChange}
 									color="secondary"
 									fullWidth
@@ -629,7 +632,7 @@ const VehicleDetails = ({ state, setState }) => {
 									variant="filled"
 									size="small"
 									name="M_atDest"
-									value={state.M_atDest}
+									value={vehicleDetails.M_atDest}
 									onChange={handleChange}
 									color="secondary"
 									fullWidth
@@ -641,7 +644,7 @@ const VehicleDetails = ({ state, setState }) => {
 									variant="filled"
 									size="small"
 									name="M_In"
-									value={state.M_In}
+									value={vehicleDetails.M_In}
 									onChange={handleChange}
 									color="secondary"
 									fullWidth
@@ -653,7 +656,7 @@ const VehicleDetails = ({ state, setState }) => {
 									variant="filled"
 									size="small"
 									name="M_Total"
-									value={state.M_Total}
+									value={vehicleDetails.M_Total}
 									onChange={handleChange}
 									color="secondary"
 									fullWidth

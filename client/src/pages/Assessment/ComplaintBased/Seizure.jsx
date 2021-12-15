@@ -1,6 +1,8 @@
 import React from 'react'
 import { Box, Button, ButtonGroup, Container, FormControl, FormControlLabel, Grid, InputLabel, MenuItem, Paper, Radio, RadioGroup, Select, TextField, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
+import { useSelector, useDispatch } from 'react-redux';
+import { store } from '../../../features/seizure';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -19,42 +21,43 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Seizure = (props) => {
-    const { state, setState } = props;
     const classes = useStyles();
+    const dispatch = useDispatch();
+	const seizure = useSelector((state) => state.seizure.value)
 
     const handleChange = (e) => {
-        setState(prev => ({
-            ...prev,
-            [e.target.name]: e.target.value,
-        }));
+        dispatch(store({
+			...seizure,
+			[e.target.name]: e.target.value,
+		}))
     }
 
 
     const handleDurationIncrement = () => {
-        setState(prev => ({
-            ...prev,
-            Seiz_Duration: state.Seiz_Duration + 1,
+        dispatch(store({
+			...seizure,
+            Seiz_Duration: seizure.Seiz_Duration + 1,
         }));
     }
 
     const handleDurationDecrement = () => {
-        setState(prev => ({
-            ...prev,
-            Seiz_Duration: state.Seiz_Duration - 1,
+        dispatch(store({
+			...seizure,
+            Seiz_Duration: seizure.Seiz_Duration - 1,
         }));
     }
 
     const handleCountIncrement = () => {
-        setState(prev => ({
-            ...prev,
-            No_of_Seizure: state.No_of_Seizure + 1,
+        dispatch(store({
+			...seizure,
+            No_of_Seizure: seizure.No_of_Seizure + 1,
         }));
     }
 
     const handleCountDecrement = () => {
-        setState(prev => ({
-            ...prev,
-            No_of_Seizure: state.No_of_Seizure - 1,
+        dispatch(store({
+			...seizure,
+            No_of_Seizure: seizure.No_of_Seizure - 1,
         }));
     }
 
@@ -75,7 +78,7 @@ const Seizure = (props) => {
                         <Grid item xs={12}>
                             <Box p={1}>
                                 <FormControl component="fieldset" color="secondary">
-                                    <RadioGroup row aria-label="witnessed seizure" name="Witnessed_Seizure" value={state.Witnessed_Seizure} onChange={handleChange}>
+                                    <RadioGroup row aria-label="witnessed seizure" name="Witnessed_Seizure" value={seizure.Witnessed_Seizure} onChange={handleChange}>
                                         <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
                                         <FormControlLabel value="No" control={<Radio />} label="No" />
                                     </RadioGroup>
@@ -96,7 +99,7 @@ const Seizure = (props) => {
                             <Select
                                 labelId="cause-label"
                                 name="Cause"
-                                value={state.Cause || ''}
+                                value={seizure.Cause || ''}
                                 onChange={handleChange}
                             >
                                 <MenuItem value={"Diabetes"}>Diabetes</MenuItem>
@@ -110,14 +113,14 @@ const Seizure = (props) => {
                         </FormControl>
                     </Grid>
                     <Grid item xs={12}>
-                        {state.Cause !== "Other" ? '' : (
+                        {seizure.Cause !== "Other" ? '' : (
                             <TextField
                                 variant="filled"
                                 size="small"
                                 color="secondary"
                                 label="Other"
                                 name="Cause_Other"
-                                value={state.Cause_Other}
+                                value={seizure.Cause_Other}
                                 onChange={handleChange}
                                 fullWidth
                             />
@@ -135,7 +138,7 @@ const Seizure = (props) => {
                         <Select
                             labelId="witness-of-seizure-label"
                             name="Witness_of_Seizure"
-                            value={state.Witness_of_Seizure || ''}
+                            value={seizure.Witness_of_Seizure || ''}
                             onChange={handleChange}
                         >
                             <MenuItem value={"Family / Friend"}>Family / Friend</MenuItem>
@@ -148,7 +151,7 @@ const Seizure = (props) => {
                         </Select>
                     </FormControl>
                 </Grid>
-                {state.Witness_of_Seizure !== "Other" ? '' : (
+                {seizure.Witness_of_Seizure !== "Other" ? '' : (
                     <Grid item xs={12} md={4}>
                         <TextField
                             variant="filled"
@@ -156,7 +159,7 @@ const Seizure = (props) => {
                             color="secondary"
                             label="Other"
                             name="S_Other"
-                            value={state.S_Other}
+                            value={seizure.S_Other}
                             onChange={handleChange}
                             fullWidth
                         />
@@ -173,7 +176,7 @@ const Seizure = (props) => {
                         <Select
                             labelId="type-of-seizure-label"
                             name="Type_of_Seizure"
-                            value={state.Type_of_Seizure || ''}
+                            value={seizure.Type_of_Seizure || ''}
                             onChange={handleChange}
                         >
                             <MenuItem value={"Grand Mal"}>Grand Mal</MenuItem>
@@ -184,7 +187,7 @@ const Seizure = (props) => {
                         </Select>
                     </FormControl>
                 </Grid>
-                {state.Type_of_Seizure !== "Other" ? '' : (
+                {seizure.Type_of_Seizure !== "Other" ? '' : (
                     <Grid item xs={12} md={4}>
                         <TextField
                             variant="filled"
@@ -192,7 +195,7 @@ const Seizure = (props) => {
                             color="secondary"
                             label="Other"
                             name="Type_Other"
-                            value={state.Type_Other}
+                            value={seizure.Type_Other}
                             onChange={handleChange}
                             fullWidth
                         />
@@ -213,7 +216,7 @@ const Seizure = (props) => {
                                     root: classes.root, // class name, e.g. `root-x`
                                     disabled: classes.disabled, // class name, e.g. `disabled-x`
                                 }}>
-                                    {state.Seiz_Duration}
+                                    {seizure.Seiz_Duration}
                                 </Button>
                                 <Button variant="contained" onClick={handleDurationDecrement}>-</Button>
                             </ButtonGroup>
@@ -238,7 +241,7 @@ const Seizure = (props) => {
                                     root: classes.root, // class name, e.g. `root-x`
                                     disabled: classes.disabled, // class name, e.g. `disabled-x`
                                 }}>
-                                    {state.No_of_Seizure}
+                                    {seizure.No_of_Seizure}
                                 </Button>
                                 <Button variant="contained" onClick={handleCountDecrement}>-</Button>
                             </ButtonGroup>
@@ -263,7 +266,7 @@ const Seizure = (props) => {
                                 id="seizure-duration"
                                 name="Seiz_Duration"
                                 type="number"
-                                value={state.Seiz_Duration}
+                                value={seizure.Seiz_Duration}
                                 onChange={handleChange}
                                 endAdornment={<InputAdornment position="end">min</InputAdornment>}
                                 inputProps={{
@@ -286,7 +289,7 @@ const Seizure = (props) => {
                             type="number"
                             placeholder="0"
                             size="small"
-                            value={state.No_of_Seizure}
+                            value={seizure.No_of_Seizure}
                             onChange={handleChange}
                         />
                     </Grid>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { AppBar, Box, Container, FormControl, Grid, MenuItem, Select, Tab, Tabs, Typography } from '@material-ui/core'
+import { InputLabel, AppBar, Box, Container, FormControl, Grid, MenuItem, Select, Tab, Tabs, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
 import General from './PatientHistory/General';
 import Allergies from './PatientHistory/Allergies';
@@ -7,7 +7,8 @@ import Medications from './PatientHistory/Medications';
 import LastMeal from './PatientHistory/LastMeal';
 import EventsPrior from './PatientHistory/EventsPrior';
 import PastHistory from './PatientHistory/PastHistory';
-import { InputLabel } from '@material-ui/core';
+import { useSelector, useDispatch } from 'react-redux';
+import { store } from '../../features/patientHistory';
 
 const useStyles = makeStyles((theme) => ({
 	content: {
@@ -55,8 +56,9 @@ function a11yProps(index) {
 
 const PatientHistory = (props) => {
 	const classes = useStyles();
+	const dispatch = useDispatch();
+	const patientHistory = useSelector((state) => state.patientHistory.value)
 
-	const { state, setState } = props;
 	const { assessmentItems } = props;
 
 	const [selectedTab, setSelectedTab] = useState(0);
@@ -66,10 +68,10 @@ const PatientHistory = (props) => {
 	}
 
 	const handleChange = (e) => {
-		setState({
-			...state,
-			[e.target.name]: e.target.value
-		})
+		dispatch(store({
+			...patientHistory,
+			[e.target.name]: e.target.value,
+		}))
 	}
 
 	const { bodySystems, setBodySystems, checkedDrug, setCheckedDrug, checkedEnv, setCheckedEnv, checkedMeds, setCheckedMeds, checkedHist, setCheckedHist } = assessmentItems;
@@ -92,7 +94,7 @@ const PatientHistory = (props) => {
 								<Select
 									labelId="chief-complaint-label"
 									name="Chief_Complaint"
-									value={state.Chief_Complaint || ''}
+									value={patientHistory.Chief_Complaint || ''}
 									onChange={handleChange}
 									label="Chief Complaint"
 								>
@@ -122,105 +124,28 @@ const PatientHistory = (props) => {
 			</AppBar>
 			<div>
 				<TabPanel value={selectedTab} index={0}>
-					<General state={state} setState={setState} bodySystems={bodySystems} setBodySystems={setBodySystems} />
+					<General bodySystems={bodySystems} setBodySystems={setBodySystems}/>
 				</TabPanel>
 				<TabPanel value={selectedTab} index={1}>
-					<Allergies state={state} setState={setState}
+					<Allergies 
 						checkedDrug={checkedDrug} setCheckedDrug={setCheckedDrug}
 						checkedEnv={checkedEnv} setCheckedEnv={setCheckedEnv}
 					/>
 				</TabPanel>
 				<TabPanel value={selectedTab} index={2}>
-					<Medications state={state} setState={setState} checked={checkedMeds} setChecked={setCheckedMeds} />
+					<Medications  checked={checkedMeds} setChecked={setCheckedMeds} />
 				</TabPanel>
 				<TabPanel value={selectedTab} index={3}>
-					<LastMeal state={state} setState={setState} />
+					<LastMeal />
 				</TabPanel>
 				<TabPanel value={selectedTab} index={4}>
-					<EventsPrior state={state} setState={setState} />
+					<EventsPrior  />
 				</TabPanel>
 				<TabPanel value={selectedTab} index={5}>
-					<PastHistory state={state} setState={setState} checked={checkedHist} setChecked={setCheckedHist} />
+					<PastHistory checked={checkedHist} setChecked={setCheckedHist} />
 				</TabPanel>
 			</div>
 		</div>
-
-
-		// 
-
-
-		// <div>
-		// 	<Grid container spacing={3} className={classes.content}>
-		// 		<Grid item container spacing={2} justifyContent="center" alignItems="center">
-		// 			<Grid item xs={12} sm={8} md={6}>
-		// 				<FormControl
-		// 					variant="filled"
-		// 					color="secondary"
-		// 					size="small"
-		// 					fullWidth
-		// 				>
-		// 					<InputLabel id="chief-complaint-label">Chief Complaint</InputLabel>
-		// 					<Select
-		// 						labelId="chief-complaint-label"
-		// 						name="Chief_Complaint"
-		// 						value={state.Chief_Complaint || ''}
-		// 						onChange={handleChange}
-		// 						label="Chief Complaint"
-		// 					>
-		// 						{chiefComplaints.map((item, index) => (
-		// 							<MenuItem key={index} value={item}>{item}</MenuItem>
-		// 						))}
-		// 					</Select>
-		// 				</FormControl>
-		// 			</Grid>
-		// 		</Grid>
-		// 	</Grid>
-		// 	<Grid container>
-		// 		<Grid item container xs={12}>
-		// <AppBar position="static">
-		// 	<Tabs value={selectedTab} 
-		// 	onChange={handleTabChange} 
-		// 	aria-label="patient history tabs"
-		// 	 scrollButtons="auto" 
-		// 	 variant="scrollable">
-		// 		<Tab label="General" {...a11yProps(0)} />
-		// 		<Tab label="Allergies" {...a11yProps(1)} />
-		// 		<Tab label="Medications" {...a11yProps(2)} />
-		// 		<Tab label="Last Meal" {...a11yProps(3)} />
-		// 		<Tab label="Events Prior" {...a11yProps(4)} />
-		// 		<Tab label="Past History" {...a11yProps(5)} />
-		// 	</Tabs>
-		// </AppBar>
-		// 			<Grid item xs={12}>
-		// <TabPanel value={selectedTab} index={0}>
-		// 	<General state={state} setState={setState} bodySystems={bodySystems} setBodySystems={setBodySystems} />
-		// </TabPanel>
-		// <TabPanel value={selectedTab} index={1}>
-		// 	<Allergies state={state} setState={setState}
-		// 		checkedDrug={checkedDrug} setCheckedDrug={setCheckedDrug}
-		// 		checkedEnv={checkedEnv} setCheckedEnv={setCheckedEnv}
-		// 	/>
-		// </TabPanel>
-		// <TabPanel value={selectedTab} index={2}>
-		// 	<Medications state={state} setState={setState} checked={checkedMeds} setChecked={setCheckedMeds} />
-		// </TabPanel>
-		// <TabPanel value={selectedTab} index={3}>
-		// 	<LastMeal state={state} setState={setState} />
-		// </TabPanel>
-		// <TabPanel value={selectedTab} index={4}>
-		// 	<EventsPrior state={state} setState={setState} />
-		// </TabPanel>
-		// <TabPanel value={selectedTab} index={5}>
-		// 	<PastHistory state={state} setState={setState} checked={checkedHist} setChecked={setCheckedHist} />
-		// </TabPanel>
-		// 			</Grid>
-
-		// 		</Grid>
-		// 	</Grid>
-
-
-
-		// </div>
 	)
 }
 

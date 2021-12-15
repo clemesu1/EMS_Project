@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import { AppBar, Divider, Drawer, Hidden, IconButton, List, ListItem, ListItemIcon, ListItemText, SwipeableDrawer, Toolbar, Typography } from '@material-ui/core';
-import { Menu as MenuIcon, Save as SaveIcon } from '@material-ui/icons';
+import { makeStyles, useTheme, createTheme, ThemeProvider } from '@material-ui/core/styles';
+import { AppBar, CssBaseline, Divider, Drawer, Fab, Hidden, IconButton, List, ListItem, ListItemIcon, ListItemText, Menu, MenuItem, Snackbar, SwipeableDrawer, Toolbar, Tooltip, Typography } from '@material-ui/core';
+import { Menu as MenuIcon, Save as SaveIcon, MoreVert as MoreIcon, Close as CloseIcon } from '@material-ui/icons';
 import { Link, Switch, Route, Redirect } from "react-router-dom";
 import CallIcon from '@material-ui/icons/Call';
 import AssessmentIcon from '@material-ui/icons/Assessment';
@@ -13,6 +13,10 @@ import axios from 'axios';
 import OperatorInfo from '../pages/OperatorInfo';
 import Assessment from '../pages/Assessment';
 import VitalSigns from '../pages/VitalSigns';
+import Brightness4Icon from '@material-ui/icons/Brightness4'
+import Brightness7Icon from '@material-ui/icons/Brightness7'
+
+import { useSelector } from 'react-redux';
 
 const drawerWidth = 240;
 
@@ -52,6 +56,16 @@ const useStyles = makeStyles(theme => ({
 		...theme.mixins.toolbar,
 		justifyContent: 'flex-end',
 	},
+	fab: {
+		position: 'fixed',
+		bottom: theme.spacing(2),
+		right: theme.spacing(2),
+	},
+	snackbar: {
+		[theme.breakpoints.down('xs')]: {
+			bottom: 90,
+		},
+	},
 	title: {
 		flexGrow: 1,
 	},
@@ -60,333 +74,16 @@ const useStyles = makeStyles(theme => ({
 		textDecoration: 'none',
 	}
 }));
-const Dashboard = (props) => {
+
+const ColorModeContext = React.createContext({ toggleColorMode: () => { } })
+
+const DashboardContent = (props) => {
 	const { window } = props;
 	const classes = useStyles();
 	const theme = useTheme();
 	const [open, setOpen] = useState(false);
 
-	const [callTransaction, setCallTransaction] = useState({
-		Call_ID: '12345',
-		MIN: '234545',
-		Driver_ID: '',
-		Attendant_ID: '',
-		Assisting_ID: '',
-		Vehicle_ID: '',
-		Vehicle_Status: '',
-	})
-
-	const [vehicleDetails, setVehicleDetails] = useState({
-		Call_ID: '12345',
-		Date_Notified: '',
-		T_Notified: '',
-		T_enRoute: '',
-		T_at_Scene: '',
-		T_Crew_Patient: '',
-		T_Left_Scene: '',
-		T_at_destn: '',
-		T_available: '',
-		T_backarea: '',
-		RTS_Type: '',
-		RTS_Change: '',
-		RFS_Type: '',
-		RFS_Change: '',
-		No_Transported: 0,
-		C_driver: '',
-		C_driv_oth: '',
-		C_attendant: '',
-		C_attn_oth: '',
-		C_assistant: '',
-		C_asst_oth: '',
-		M_Out: '',
-		M_atScene: '',
-		M_atDest: '',
-		M_In: '',
-		M_Total: '',
-		Dest_determinant: '',
-		Doc_Start: '',
-		Doc_Finish: '',
-	})
-
-	const [patientDetails, setPatientDetails] = useState({
-		Call_ID: '12345',
-		Surname: '',
-		Given_Name: '',
-		Street: '',
-		Community: '',
-		Province: '',
-		Country: '',
-		PostalCode: '',
-		Tel_No: '',
-		DOB: '',
-		Age: '',
-		Race: '',
-		Gender: '',
-		Medicare_No: '',
-		Medicare_Origin: '',
-		Hospital_Chart_No: '',
-		P_Comments: '',
-	})
-
-	const [incidentDetails, setIncidentDetails] = useState({
-		Call_ID: '12345',
-		Service_Code: '',
-		Service_Type: '',
-		Dispatch_Code: '',
-		Date_of_Incident: '',
-		Inc_Street: '',
-		Inc_Community: '',
-		Inc_Province: '',
-		Inc_PostalCode: '',
-		Dest_Determinant: '',
-		DD_Other: '',
-		Geo_Locator: '',
-		Inc_Loc_Type: '',
-		Dest_Facility_Code: '',
-		Dest_Street: '',
-		Dest_Community: '',
-		Dest_Province: '',
-		Dest_PostalCode: '',
-		Dest_Facility: '',
-		Scene_Facility_Code: '',
-		Fact_Affect_EMS: '',
-		Fact_Other: '',
-		Patient_Contact: '',
-		Patient_Disposition: '',
-		Pt_Disp_Other: '',
-		Service_Payment_Respons: '',
-		Service_Payment_Number: '',
-	});
-
-	const [patientHistory, setPatientHistory] = useState({
-		Call_ID: '12345',
-		Chief_Complaint: '',
-		G_BodySystem: '',
-		G_Inj_Date: '',
-		G_Inj_Time: '',
-		G_Co_Responders: '',
-		G_Treat_Rendered: '',
-		G_Pt_Condi_Dest: '',
-		G_Pt_Disp: '',
-		G_Susp_Intoxi: '',
-		G_DNR_Order: false,
-		Alr_Drugs: '',
-		Alr_Env: '',
-		Alr_Others: '',
-		Med_Name: '',
-		Med_Others: '',
-		LM_Comment: '',
-		EP_Comment: '',
-		PH_History: '',
-		PH_Comment: '',
-	})
-
-	const [neuroResponse, setNeuroResponse] = useState({
-		Call_ID: '12345',
-		LOC: '',
-		Status: '',
-		R_Eye_Size: '',
-		L_Eye_Size: '',
-		R_Eye_React: '',
-		L_Eye_React: '',
-		Sense_UR: '',
-		Sense_UL: '',
-		Sense_LR: '',
-		Sense_LL: '',
-		Motor_UR: '',
-		Motor_UL: '',
-		Motor_LR: '',
-		Motor_LL: '',
-	})
-
-	const [abcs, setABCs] = useState({
-		Call_ID: '12345',
-		Airway_Status: '',
-		Breath_Effort: '',
-		Breath_Rate: '',
-		Breath_Rhythm: '',
-		Circul_Site: '',
-		Circul_Rate: '',
-		Circul_Vol: '',
-		Circul_Rhythm: '',
-	})
-
-	const [assessFindings, setAssessFindings] = useState({
-		Call_ID: '12345',
-		Assess_Find: '',
-		Body_Area_Find: '',
-		Find_Other: '',
-	})
-
-	const [respiratory, setRespiratory] = useState({
-		Call_ID: '12345',
-		Level_of_distress: '',
-		Breath_sound_I: '',
-		Breath_sound_II: '',
-		PreEMS_Medication: '',
-		Response_to_Medic: '',
-		Pain_Scale: '',
-		Coughing: '',
-		Tobacco: '',
-		Allerg_Exposure: '',
-		Medication_Admin: '',
-		JVD: '',
-		Periph_Edema: '',
-		Acc_Mus_Use: '',
-	})
-
-	const [seizure, setSeizure] = useState({
-		Call_ID: '12345',
-		Witnessed_Seizure: '',
-		Cause: '',
-		Cause_Other: '',
-		Witness_of_Seizure: '',
-		S_Other: '',
-		Type_of_Seizure: '',
-		Type_Other: '',
-		No_of_Seizure: 0,
-		Seiz_Duration: 0,
-	})
-
-	const [toxicExposure, setToxicExposure] = useState({
-		Call_ID: '12345',
-		Nature_of_Expo: '',
-		Exposure_time: '',
-		Name_of_substance: '',
-		Type_of_substance: '',
-		Typ_sub_Other: '',
-		Amount_of_substance: '',
-		Duration: '',
-		Route_of_entry: '',
-		Route_Other: '',
-		Type_of_reaction: '',
-		Reaction_Other: '',
-		Evidence: '',
-		Evidence_Other: '',
-	})
-
-	const [cardiacArrest, setCardiacArrest] = useState({
-		Call_ID: '12345',
-		Arrest_Clarify: '',
-		Witness: '',
-		Witns_Other: '',
-		Defib_Prior_Ambul_arrival: '',
-		Time_of_First_CPR: '',
-		Time_of_Crew_CPR: '',
-		Time_first_Defib: '',
-		No_Defib_Prior_EMS: '',
-		Time_CPR_Discontinue: '',
-		Spon_Circ: '',
-		Spon_Respir: '',
-		Pulse_rate_dest: '',
-		Type_of_Ambul_Defib: '',
-		Typ_Amb_Defib_Other: '',
-		Reason_CPR_Discontinue: '',
-		CPR_Discon_Other: '',
-		Reason_not_Init_CPR: '',
-		NInit_CPR_Other: '',
-		Pace_Implant_Defib: '',
-		PImp_Defib_Other: '',
-	})
-
-	const [chestPain, setChestPain] = useState({
-		Call_ID: '12345',
-		Pain_Severity: '',
-		Name_of_PreEMS_Medic: '',
-		Self_Medic_Admin: '',
-		Response_to_Medic: '',
-		OnSet: '',
-		Provoked: '',
-		Quality: '',
-		Qty_Other: '',
-		Source_of_Pain: '',
-		SPain_Other: '',
-		Pain_radiation_site: '',
-		PRSite_Other: '',
-		State_at_Onset: '',
-		SOnset_Other: '',
-		Pace_Implant_Defib: '',
-		PIDefib_Other: '',
-	})
-
-
-	const [neonatalAssessment, setNeonatalAssessment] = useState({
-		Call_ID: '12345',
-		Inf_Time_Breath: '',
-		min1_Heartrate: '',
-		min1_Respeffort: '',
-		min1_Muscletone: '',
-		min1_Reflexirrit: '',
-		min1_Colour: '',
-		min5_Heartrate: '',
-		min5_Respeffort: '',
-		min5_Muscletone: '',
-		min5_Reflexirrit: '',
-		min5_Colour: '',
-		min1_Total: '',
-		min5_Total: '',
-	})
-
-	const [obstetric, setObstetric] = useState({
-		Call_ID: '12345',
-		Parity: '',
-		Gravidity: '',
-		Gestation_Stage: '',
-		Delivery: '',
-		Deliv_Other: '',
-		Baby_Presentation: '',
-		Baby_Prsnt_Other: '',
-		Time_of_Birth: new Date().toLocaleTimeString('en-US'),
-		Time_Placenta_Delivered: new Date().toLocaleTimeString('en-US'),
-	})
-
-	const [mechanismInjury, setMechanismInjury] = useState({
-		Call_ID: '12345',
-		Cause_of_Injury: '',
-		COI_Other: '',
-		Human_Factor: '',
-		HF_Other: '',
-		Nature_of_Injury: '',
-		Safety_Protect_Equip: '',
-		SPE_Other: '',
-		Work_related: '',
-		Comments: '',
-		MVC: '',
-	})
-
-	const [traumaAssessment, setTraumaAssessment] = useState({
-		Call_ID: '12345',
-		H_Face: '',
-		H_REar: '',
-		H_LEar: '',
-		H_Nose: '',
-		H_Mouth: '',
-		H_Scalp: '',
-		N_Anterior: '',
-		N_Posterior: '',
-		C_Left: '',
-		C_Right: '',
-		Ab_LUQ: '',
-		Ab_RUQ: '',
-		Ab_LLQ: '',
-		Ab_RLQ: '',
-		Ab_UBQ: '',
-		P_Vaginal: '',
-		P_Genitalia: '',
-		UE_LArm: '',
-		UE_RArm: '',
-		UE_LHand: '',
-		UE_RHand: '',
-		LE_LLeg: '',
-		LE_RLeg: '',
-		LE_LFoot: '',
-		LE_RFoot: '',
-		B_Thoratic: '',
-		B_Lumbar: '',
-	})
-
-
-
+	const colorMode = React.useContext(ColorModeContext)
 
 	const [bodySystems, setBodySystems] = useState([
 		{
@@ -551,110 +248,23 @@ const Dashboard = (props) => {
 		setCheckedMeds: setCheckedMeds,
 		checkedHist: checkedHist,
 		setCheckedHist: setCheckedHist,
-		neuroResponse: neuroResponse,
-		setNeuroResponse: setNeuroResponse,
 		status: status,
 		setStatus: setStatus,
-		abcs: abcs,
-		setABCs: setABCs,
-		assessFindings: assessFindings,
-		setAssessFindings: setAssessFindings,
+
 		assessChecked: assessChecked,
 		setAssessChecked: setAssessChecked,
 		bodyChecked: bodyChecked,
 		setBodyChecked: setBodyChecked,
-		respiratory: respiratory,
-		setRespiratory: setRespiratory,
+	
 		breathSoundChecksII: breathSoundChecksII,
 		setBreathSoundChecksII: setBreathSoundChecksII,
-		seizure: seizure,
-		setSeizure: setSeizure,
-		toxicExposure: toxicExposure,
-		setToxicExposure: setToxicExposure,
+		
 		substanceAmount: substanceAmount,
 		setSubstanceAmount: setSubstanceAmount,
 		substanceUnit: substanceUnit,
 		setSubstanceUnit: setSubstanceUnit,
-		cardiacArrest: cardiacArrest,
-		setCardiacArrest: setCardiacArrest,
-		chestPain: chestPain,
-		setChestPain: setChestPain,
-		neonatalAssessment: neonatalAssessment,
-		setNeonatalAssessment: setNeonatalAssessment,
-		obstetric: obstetric,
-		setObstetric: setObstetric,
-		mechanismInjury: mechanismInjury,
-		setMechanismInjury: setMechanismInjury,
-		traumaAssessment: traumaAssessment,
-		setTraumaAssessment: setTraumaAssessment,
+	
 	}
-
-	const [interventions, setInterventions] = useState({
-		Call_ID: '12345',
-		Proc_Time_Start: '',
-		Proc_Time_End: '',
-		Procedur: '',
-		Proc_Other: '',
-		Procedur_outcome: '',
-		Device_Method: '',
-		Procedur_Technician: '',
-		Device_Size: '',
-		Procedur_Success: '',
-		Treatment_Type: '',
-		Treat_Total_Time: '',
-		Treatment_technician: '',
-		Adm_Rt_Other: '',
-		Admin_Route: '',
-		Dosage_Amount: '',
-		Dosage_Unit: '',
-		Treatment_Outcome: '',
-	})
-
-	const [medications, setMedications] = useState({
-		Call_ID: '12345',
-		Medic_Given_Date: null,
-		Medic_Given_Time: '',
-		Medic_Given: '',
-		Medic_Amount: '',
-		Medic_Unit: '',
-		Route: '',
-		Effect_on_Patient: '',
-		Paramedic_ID: '',
-	})
-
-	const [vitalSign, setVitalSign] = useState({
-		Call_ID: '12345',
-		Vitals_Date: null,
-		Vitals_Time: '',
-		Heart_Rate: '',
-		Heart_Site: '',
-		Heart_Site_Oth: '',
-		Card_Rhyth: '',
-		Card_Rhyth_Oth: '',
-		BP_Sys: '',
-		BP_Dia: '',
-		Resp_Rate: '',
-		Oxy_Sat: '',
-		Glucose: '',
-		Glascow_Eye: '',
-		Glascow_Verbal: '',
-		Glascow_Motor: '',
-		Skin_Color: '',
-		Skin_Temp: '',
-		Skin_Moisture: '',
-		VT_Temp: '',
-		VT_Temp_Site: '',
-		LOC: '',
-	})
-
-	const vitalSignFields = {
-		interventions: interventions,
-		setInterventions: setInterventions,
-		medications: medications,
-		setMedications: setMedications,
-		vitalSign: vitalSign,
-		setVitalSign: setVitalSign,
-	};
 
 	const handleDrawerToggle = () => {
 		setOpen(!open);
@@ -664,9 +274,48 @@ const Dashboard = (props) => {
 		setOpen(false);
 	};
 
+	const [snackOpen, setSnackOpen] = React.useState(false);
+
+	const handleSnackClose = (event, reason) => {
+		if (reason === 'clickaway') {
+			return;
+		}
+
+		setSnackOpen(false);
+	};
+
+	const [anchorEl, setAnchorEl] = React.useState(null)
+	const openMenu = Boolean(anchorEl);
+	const handleMenuClick = (event) => {
+		setAnchorEl(event.currentTarget)
+	}
+
+	const handleMenuClose = () => {
+		setAnchorEl(null)
+	}
+	const callTransaction = useSelector((state) => state.callTransaction.value)
+	const incidentDetails = useSelector((state) => state.incidentDetails.value)
+	const patientDetails = useSelector((state) => state.patientDetails.value)
+	const vehicleDetails = useSelector((state) => state.vehicleDetails.value)
+	const patientHistory = useSelector((state) => state.patientHistory.value)
+	const neuroResponse = useSelector((state) => state.neuroResponse.value)
+	const abcs = useSelector((state) => state.abcs.value)
+	const assessFindings = useSelector((state) => state.assessFindings.value)
+	const respiratory = useSelector((state) => state.respiratory.value)
+	const seizure = useSelector((state) => state.seizure.value)
+	const toxicExposure = useSelector((state) => state.toxicExposure.value)
+	const cardiacArrest = useSelector((state) => state.cardiacArrest.value)
+	const chestPain = useSelector((state) => state.chestPain.value)
+	const neonatalAssessment = useSelector((state) => state.neonatalAssessment.value)
+	const obstetric = useSelector((state) => state.obstetric.value)
+	const mechanismInjury = useSelector((state) => state.mechanismInjury.value)
+	const traumaAssessment = useSelector((state) => state.traumaAssessment.value)
+	const interventions = useSelector((state) => state.interventions.value)
+	const medications = useSelector((state) => state.medications.value)
+	const vitalSign = useSelector((state) => state.vitalSign.value)
+
 	const handleSave = (e) => {
 		e.preventDefault();
-
 		const EMSDATA = {
 			"Call_Transaction": callTransaction,
 			"Patient_Details": patientDetails,
@@ -696,42 +345,41 @@ const Dashboard = (props) => {
 			.catch(err => {
 				console.error(err);
 			});
-		alert("Data Saved!")
+		setSnackOpen(true)
 	}
 
 	const drawer = (
-
 		<div>
 			<div className={classes.toolbar} />
 			<Divider />
 			<List>
 				<Link to="/call-details" className={classes.link}>
 					<ListItem button onClick={handleDrawerClose}>
-						<ListItemIcon><CallIcon color="secondary" /></ListItemIcon>
+						<ListItemIcon><CallIcon color="inherit" /></ListItemIcon>
 						<ListItemText primary={"Call Details"} />
 					</ListItem>
 				</Link>
 				<Link to="/assessment" className={classes.link}>
 					<ListItem button onClick={handleDrawerClose}>
-						<ListItemIcon><AssessmentIcon color="secondary" /></ListItemIcon>
+						<ListItemIcon><AssessmentIcon color="inherit" /></ListItemIcon>
 						<ListItemText primary={"Assessment"} />
 					</ListItem>
 				</Link>
 				<Link to="/vital-signs" className={classes.link}>
 					<ListItem button onClick={handleDrawerClose}>
-						<ListItemIcon><ShowChartIcon color="secondary" /></ListItemIcon>
+						<ListItemIcon><ShowChartIcon color="inherit" /></ListItemIcon>
 						<ListItemText primary={"Vital Signs"} />
 					</ListItem>
 				</Link>
 				<Link to="/treatment" className={classes.link}>
 					<ListItem button onClick={handleDrawerClose}>
-						<ListItemIcon><HealingIcon color="secondary" /></ListItemIcon>
+						<ListItemIcon><HealingIcon color="inherit" /></ListItemIcon>
 						<ListItemText primary={"Treatment"} />
 					</ListItem>
 				</Link>
 				<Link to="/call-report" className={classes.link}>
 					<ListItem button onClick={handleDrawerClose}>
-						<ListItemIcon><DescriptionIcon color="secondary" /></ListItemIcon>
+						<ListItemIcon><DescriptionIcon color="inherit" /></ListItemIcon>
 						<ListItemText primary={"Call Report"} />
 					</ListItem>
 				</Link>
@@ -739,12 +387,23 @@ const Dashboard = (props) => {
 		</div >
 	);
 
+	const action = (
+		<IconButton
+			size="small"
+			aria-label="close"
+			color="inherit"
+			onClick={handleSnackClose}
+		>
+			<CloseIcon fontSize="small" />
+		</IconButton>
+	)
+
 	const container = window !== undefined ? () => window().document.body : undefined;
 	const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
 
 	return (
 		<div className={classes.root}>
-			<AppBar position="fixed" className={classes.appBar} color="primary">
+			<AppBar position="fixed" className={classes.appBar} color={theme.palette.type === 'dark' ? 'default' : 'primary'} elevation={0}>
 				<Toolbar>
 					<IconButton
 						color="inherit"
@@ -758,15 +417,47 @@ const Dashboard = (props) => {
 					<Typography variant="h6" noWrap className={classes.title}>
 						Dotty Care
 					</Typography>
-					<IconButton aria-label="save data in fields" edge="end" color="inherit" onClick={handleSave}>
-						<SaveIcon />
-					</IconButton>
-					{/* <IconButton aria-label="display more actions" edge="end" color="inherit">
-						<MoreIcon />
-					</IconButton> */}
+					<Tooltip title="More">
+						<IconButton
+							id="menu-button"
+							color="inherit"
+							aria-controls="more-menu"
+							aria-haspopup="true"
+							onClick={handleMenuClick}
+						>
+							<MoreIcon />
+						</IconButton>
+					</Tooltip>
+					<Menu
+						id="more-menu"
+						anchorEl={anchorEl}
+						open={openMenu}
+						onClose={handleMenuClose}
+						MenuListProps={{
+							'aria-labelledby': 'menu-button'
+						}}
+					>
+						<MenuItem onClick={colorMode.toggleColorMode} color="inherit">
+							{theme.palette.type === 'dark' ? (
+								<>
+									<ListItemIcon>
+										<Brightness7Icon />
+									</ListItemIcon>
+									Light Mode
+								</>
+							) : (
+								<>
+									<ListItemIcon>
+										<Brightness4Icon />
+									</ListItemIcon>
+									Dark Mode
+								</>
+							)}{' '}
+						</MenuItem>
+					</Menu>
 				</Toolbar>
 			</AppBar>
-			<nav className={classes.drawer} aria-label="mailbox folders">
+			<nav className={classes.drawer} aria-label="side navigation">
 				{/* The implementation can be swapped with js to avoid SEO duplication of links. */}
 				<Hidden smUp implementation="css">
 					<SwipeableDrawer
@@ -801,7 +492,6 @@ const Dashboard = (props) => {
 			</nav>
 			<div className={classes.content}>
 				<div className={classes.drawerHeader} />
-
 				<Switch>
 					<Redirect exact from="/" to="/operator-info" />
 					<Redirect exact from="/call-details" to="/call-details/vehicle-details" />
@@ -810,18 +500,12 @@ const Dashboard = (props) => {
 					<Redirect exact from="/treatment" to="/treatment/interventions" />
 
 					<Route path="/operator-info">
-						<OperatorInfo state={callTransaction} setState={setCallTransaction} />
+						<OperatorInfo />
 					</Route>
 
 					<Route exact path="/call-details/:page?"
 						render={props =>
 							<CallDetails
-								vehicleDetails={vehicleDetails}
-								setVehicleDetails={setVehicleDetails}
-								patientDetails={patientDetails}
-								setPatientDetails={setPatientDetails}
-								incidentDetails={incidentDetails}
-								setIncidentDetails={setIncidentDetails}
 								{...props}
 							/>
 						}
@@ -830,8 +514,6 @@ const Dashboard = (props) => {
 					<Route exact path="/assessment/:page?"
 						render={props =>
 							<Assessment
-								patientHistory={patientHistory}
-								setPatientHistory={setPatientHistory}
 								assessmentItems={assessmentItems}
 								{...props}
 							/>
@@ -841,7 +523,6 @@ const Dashboard = (props) => {
 					<Route exact path="/vital-signs/:page?"
 						render={props =>
 							<VitalSigns
-								vitalSignFields={vitalSignFields}
 								{...props}
 							/>
 						}
@@ -849,7 +530,6 @@ const Dashboard = (props) => {
 					<Route exact path="/treatment/:page?"
 						render={props =>
 							<VitalSigns
-								vitalSignFields={vitalSignFields}
 								{...props}
 							/>
 						}
@@ -858,11 +538,71 @@ const Dashboard = (props) => {
 						{/* <Hospital /> */}
 					</Route>
 				</Switch>
-				{/* {JSON.stringify(vehicleDetails)} */}
-
 			</div>
-		</div >
+			<Tooltip title="Save data" aria-label="save data">
+				<Fab color="secondary" className={classes.fab} onClick={handleSave}>
+					<SaveIcon />
+				</Fab>
+			</Tooltip>
+			<Snackbar
+				anchorOrigin={{
+					vertical: 'bottom',
+					horizontal: 'left',
+				}}
+				open={snackOpen}
+				autoHideDuration={5000}
+				onClose={handleSnackClose}
+				message="Data saved"
+				action={action}
+				className={classes.snackbar}
+			/>
+
+
+		</div>
 	)
 }
 
-export default Dashboard
+
+
+export default function Dashboard() {
+	const [mode, setMode] = React.useState('light');
+	const colorMode = React.useMemo(
+		() => ({
+			toggleColorMode: () => {
+				setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
+			},
+		}),
+		[],
+	);
+
+	const theme = React.useMemo(
+		() =>
+			createTheme({
+				palette: {
+					type: mode,
+					primary: {
+						main: '#fedbd0',
+						light: '#ffffff',
+						dark: '#caa99f',
+						contrastText: '#000000',
+					},
+					secondary: {
+						light: '#600750',
+						main: '#903c7c',
+						dark: '#340028',
+						contrastText: '#ffffff',
+					},
+				}
+			}),
+		[mode],
+	);
+
+	return (
+		<ColorModeContext.Provider value={colorMode}>
+			<ThemeProvider theme={theme}>
+				<CssBaseline />
+				<DashboardContent />
+			</ThemeProvider>
+		</ColorModeContext.Provider>
+	)
+}

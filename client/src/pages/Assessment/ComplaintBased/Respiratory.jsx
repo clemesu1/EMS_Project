@@ -1,6 +1,8 @@
 import { Checkbox, FormControl, FormControlLabel, FormGroup, Grid, InputLabel, MenuItem, Paper, Radio, RadioGroup, Select, TextField, Typography, Container, Box } from '@material-ui/core'
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles';
+import { useSelector, useDispatch } from 'react-redux';
+import { store } from '../../../features/respiratory';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -13,16 +15,18 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Respiratory = (props) => {
-    const { state, setState, breath, setBreath } = props;
+    const { breath, setBreath } = props;
 
     const classes = useStyles();
+    const dispatch = useDispatch();
+	const respiratory = useSelector((state) => state.respiratory.value)
 
 
     const handleChange = (e) => {
-        setState({
-            ...state,
-            [e.target.name]: e.target.value,
-        })
+        dispatch(store({
+			...respiratory,
+			[e.target.name]: e.target.value,
+		}))
     }
 
     const handleCheckboxChange = (e) => {
@@ -36,10 +40,10 @@ const Respiratory = (props) => {
 
         const dataList = breath.filter(obj => obj.checked === true).map(obj => obj.label)
 
-        setState({
-            ...state,
+        dispatch(store({
+			...respiratory,
             Breath_sound_II: dataList
-        })
+        }))
 
     }
 
@@ -57,7 +61,7 @@ const Respiratory = (props) => {
                         <Grid item container xs={12} spacing={2} alignItems="center">
                             <Box p={3}>
                                 <FormControl component="fieldset" color="secondary">
-                                    <RadioGroup row aria-label="level of distress" name="Level_of_distress" value={state.Level_of_distress} onChange={handleChange}>
+                                    <RadioGroup row aria-label="level of distress" name="Level_of_distress" value={respiratory.Level_of_distress} onChange={handleChange}>
                                         <FormControlLabel value="Mild" control={<Radio />} label="Mild" />
                                         <FormControlLabel value="Moderate" control={<Radio />} label="Moderate" />
                                         <FormControlLabel value="Severe" control={<Radio />} label="Severe" />
@@ -79,7 +83,7 @@ const Respiratory = (props) => {
                             <Grid item xs={4}>
                                 <Box p={3}>
                                     <FormControl component="fieldset" color="secondary">
-                                        <RadioGroup aria-label="breath sound I" name="Breath_sound_I" value={state.Breath_sound_I} onChange={handleChange}>
+                                        <RadioGroup aria-label="breath sound I" name="Breath_sound_I" value={respiratory.Breath_sound_I} onChange={handleChange}>
                                             <FormControlLabel value="Equal" control={<Radio />} label="Equal" />
                                             <FormControlLabel value="Clear" control={<Radio />} label="Clear" />
                                             <FormControlLabel value="Unequal" control={<Radio />} label="Unequal" />
@@ -149,7 +153,7 @@ const Respiratory = (props) => {
                             minRows={3}
                             maxRows={3}
                             name="PreEMS_Medication"
-                            value={state.PreEMS_Medication}
+                            value={respiratory.PreEMS_Medication}
                             onChange={handleChange}
                         />
                     </Grid>
@@ -165,7 +169,7 @@ const Respiratory = (props) => {
                             <Grid item container xs={12} spacing={2} alignItems="center">
                                 <Box p={3}>
                                     <FormControl component="fieldset" color="secondary">
-                                        <RadioGroup row aria-label="response to pre-ems med" name="Response_to_Medic" value={state.Response_to_Medic} onChange={handleChange}>
+                                        <RadioGroup row aria-label="response to pre-ems med" name="Response_to_Medic" value={respiratory.Response_to_Medic} onChange={handleChange}>
                                             <FormControlLabel value="Improved" control={<Radio />} label="Improved" />
                                             <FormControlLabel value="Unchanged" control={<Radio />} label="Unchanged" />
                                             <FormControlLabel value="Deteriorated" control={<Radio />} label="Deteriorated" />
@@ -188,7 +192,7 @@ const Respiratory = (props) => {
                             <Select
                                 labelId="coughing-label"
                                 name="Coughing"
-                                value={state.Coughing || ''}
+                                value={respiratory.Coughing || ''}
                                 onChange={handleChange}
                             >
                                 <MenuItem value={"No cough"}>No cough</MenuItem>
@@ -209,7 +213,7 @@ const Respiratory = (props) => {
                             <Select
                                 labelId="pain-scale-label"
                                 name="Pain_Scale"
-                                value={state.Pain_Scale || ''}
+                                value={respiratory.Pain_Scale || ''}
                                 onChange={handleChange}
                             >
                                 {["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"].map((item, index) => (
@@ -230,7 +234,7 @@ const Respiratory = (props) => {
                         <Grid item container xs={12} spacing={2} alignItems="center">
                             <Box p={3}>
                                 <FormControl component="fieldset" color="secondary">
-                                    <RadioGroup row aria-label="tobacco" name="Tobacco" value={state.Tobacco} onChange={handleChange}>
+                                    <RadioGroup row aria-label="tobacco" name="Tobacco" value={respiratory.Tobacco} onChange={handleChange}>
                                         <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
                                         <FormControlLabel value="No" control={<Radio />} label="No" />
                                         <FormControlLabel value="Unknown" control={<Radio />} label="Unknown" />
@@ -251,7 +255,7 @@ const Respiratory = (props) => {
                         <Grid item container xs={12} spacing={2} alignItems="center">
                             <Box p={3}>
                                 <FormControl component="fieldset" color="secondary">
-                                    <RadioGroup row aria-label="allergen exposure" name="Allerg_Exposure" value={state.Allerg_Exposure} onChange={handleChange}>
+                                    <RadioGroup row aria-label="allergen exposure" name="Allerg_Exposure" value={respiratory.Allerg_Exposure} onChange={handleChange}>
                                         <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
                                         <FormControlLabel value="No" control={<Radio />} label="No" />
                                         <FormControlLabel value="Unknown" control={<Radio />} label="Unknown" />
@@ -272,7 +276,7 @@ const Respiratory = (props) => {
                         <Grid item container xs={12} spacing={2} alignItems="center">
                             <Box p={3}>
                                 <FormControl component="fieldset" color="secondary">
-                                    <RadioGroup row aria-label="medication administered" name="Medication_Admin" value={state.Medication_Admin} onChange={handleChange}>
+                                    <RadioGroup row aria-label="medication administered" name="Medication_Admin" value={respiratory.Medication_Admin} onChange={handleChange}>
                                         <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
                                         <FormControlLabel value="No" control={<Radio />} label="No" />
                                         <FormControlLabel value="Unknown" control={<Radio />} label="Unknown" />
@@ -293,7 +297,7 @@ const Respiratory = (props) => {
                         <Grid item container xs={12} spacing={2} alignItems="center">
                             <Box p={3}>
                                 <FormControl component="fieldset" color="secondary">
-                                    <RadioGroup row aria-label="jvd" name="JVD" value={state.JVD} onChange={handleChange}>
+                                    <RadioGroup row aria-label="jvd" name="JVD" value={respiratory.JVD} onChange={handleChange}>
                                         <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
                                         <FormControlLabel value="No" control={<Radio />} label="No" />
                                         <FormControlLabel value="Unknown" control={<Radio />} label="Unknown" />
@@ -314,7 +318,7 @@ const Respiratory = (props) => {
                         <Grid item container xs={12} spacing={2} alignItems="center">
                             <Box p={3}>
                                 <FormControl component="fieldset" color="secondary">
-                                    <RadioGroup row aria-label="peripheral edema" name="Periph_Edema" value={state.Periph_Edema} onChange={handleChange}>
+                                    <RadioGroup row aria-label="peripheral edema" name="Periph_Edema" value={respiratory.Periph_Edema} onChange={handleChange}>
                                         <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
                                         <FormControlLabel value="No" control={<Radio />} label="No" />
                                         <FormControlLabel value="Unknown" control={<Radio />} label="Unknown" />
@@ -335,7 +339,7 @@ const Respiratory = (props) => {
                         <Grid item container xs={12} spacing={2} alignItems="center">
                             <Box p={3}>
                                 <FormControl component="fieldset" color="secondary">
-                                    <RadioGroup row aria-label="accessory muscle use" name="Acc_Mus_Use" value={state.Acc_Mus_Use} onChange={handleChange}>
+                                    <RadioGroup row aria-label="accessory muscle use" name="Acc_Mus_Use" value={respiratory.Acc_Mus_Use} onChange={handleChange}>
                                         <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
                                         <FormControlLabel value="No" control={<Radio />} label="No" />
                                         <FormControlLabel value="Unknown" control={<Radio />} label="Unknown" />

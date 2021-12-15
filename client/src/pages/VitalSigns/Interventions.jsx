@@ -1,6 +1,8 @@
 import { Button, Container, FormControl, FormControlLabel, FormLabel, Grid, InputLabel, MenuItem, Paper, Radio, RadioGroup, Select, TextField, Typography } from '@material-ui/core'
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles';
+import { useSelector, useDispatch } from 'react-redux';
+import { store } from '../../features/interventions';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -13,14 +15,16 @@ const useStyles = makeStyles((theme) => ({
 
 const procedureTypes = ["None", "Airway cleared", "Airway patency", "Ventilation", "IV initiation", "Blood sle drawn", "Chest compressions", "Delivery", "Bleeding control", "Extremity immobilization", "Spinal immobilization", "MAST", "Emergency rapid extrication", "Physical restraint", "Other"];
 
-const Interventions = ({ state, setState }) => {
+const Interventions = () => {
     const classes = useStyles();
+    const dispatch = useDispatch();
+	const interventions = useSelector((state) => state.interventions.value)
 
     const handleChange = (e) => {
-        setState(prev => ({
-            ...prev,
-            [e.target.name]: e.target.value,
-        }))
+        dispatch(store({
+			...interventions,
+			[e.target.name]: e.target.value,
+		}))
     }
 
     return (
@@ -41,8 +45,8 @@ const Interventions = ({ state, setState }) => {
                                         fullWidth
                                         variant="contained"
                                         onClick={() => {
-                                            setState(prev => ({
-                                                ...prev,
+                                            dispatch(store({
+                                                ...interventions,
                                                 Proc_Time_Start: new Date().toLocaleTimeString('en-US'),
                                             }))
                                         }}
@@ -56,7 +60,7 @@ const Interventions = ({ state, setState }) => {
                                         color="secondary"
                                         size="small"
                                         name="Proc_Time_Start"
-                                        value={state.Proc_Time_Start}
+                                        value={interventions.Proc_Time_Start}
                                         onChange={handleChange}
                                         fullWidth
                                     />
@@ -66,8 +70,8 @@ const Interventions = ({ state, setState }) => {
                                         fullWidth
                                         variant="contained"
                                         onClick={() => {
-                                            setState(prev => ({
-                                                ...prev,
+                                            dispatch(store({
+                                                ...interventions,
                                                 Proc_Time_End: new Date().toLocaleTimeString('en-US'),
                                             }))
                                         }}
@@ -81,7 +85,7 @@ const Interventions = ({ state, setState }) => {
                                         color="secondary"
                                         size="small"
                                         name="Proc_Time_End"
-                                        value={state.Proc_Time_End}
+                                        value={interventions.Proc_Time_End}
                                         onChange={handleChange}
                                         fullWidth
                                     />
@@ -100,7 +104,7 @@ const Interventions = ({ state, setState }) => {
                                         <Select
                                             labelId="procedure-label"
                                             name="Procedur"
-                                            value={state.Procedur}
+                                            value={interventions.Procedur}
                                             onChange={handleChange}
                                         >
                                             {procedureTypes.map((item, index) => (
@@ -111,7 +115,7 @@ const Interventions = ({ state, setState }) => {
                                     </FormControl>
                                 </Grid>
                                 <Grid item xs={12} lg={6}>
-                                    {state.Procedur !== "Other" ? '' : (
+                                    {interventions.Procedur !== "Other" ? '' : (
                                         <TextField
                                             label="Other"
                                             variant="filled"
@@ -119,7 +123,7 @@ const Interventions = ({ state, setState }) => {
                                             size="small"
                                             name="Proc_Other"
                                             id="proc-other"
-                                            value={state.Proc_Other}
+                                            value={interventions.Proc_Other}
                                             onChange={handleChange}
                                             fullWidth
                                         />
@@ -136,7 +140,7 @@ const Interventions = ({ state, setState }) => {
                                         <Select
                                             labelId="device-method-label"
                                             name="Device_Method"
-                                            value={state.Device_Method}
+                                            value={interventions.Device_Method}
                                             onChange={handleChange}
                                         >
                                         </Select>
@@ -151,7 +155,7 @@ const Interventions = ({ state, setState }) => {
                                         size="small"
                                         name="Procedur_Technician"
                                         label="Technician ID"
-                                        value={state.Procedur_Technician}
+                                        value={interventions.Procedur_Technician}
                                         onChange={handleChange}
                                         fullWidth
                                     />
@@ -168,7 +172,7 @@ const Interventions = ({ state, setState }) => {
                                         <Select
                                             labelId="device-size-label"
                                             name="Device_Size"
-                                            value={state.Device_Size}
+                                            value={interventions.Device_Size}
                                             onChange={handleChange}
                                         >
                                         </Select>
@@ -185,7 +189,7 @@ const Interventions = ({ state, setState }) => {
                                         <Select
                                             labelId="outcome-label"
                                             name="Procedur_outcome"
-                                            value={state.Procedur_outcome}
+                                            value={interventions.Procedur_outcome}
                                             onChange={handleChange}
                                         >
                                             <MenuItem value={"Stable"}>Stable</MenuItem>
@@ -198,7 +202,7 @@ const Interventions = ({ state, setState }) => {
                                 <Grid item xs={12} md={6} lg={3}>
                                     <FormControl component="fieldset" color="secondary">
                                         <FormLabel component="legend">Successful</FormLabel>
-                                        <RadioGroup row aria-label="successful" name="Procedur_Success" value={state.Procedur_Success} onChange={handleChange}>
+                                        <RadioGroup row aria-label="successful" name="Procedur_Success" value={interventions.Procedur_Success} onChange={handleChange}>
                                             <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
                                             <FormControlLabel value="No" control={<Radio />} label="No" />
                                         </RadioGroup>
@@ -226,7 +230,7 @@ const Interventions = ({ state, setState }) => {
                                     size="small"
                                     name="Treatment_technician"
                                     id="treatment-technician"
-                                    value={state.Treatment_technician}
+                                    value={interventions.Treatment_technician}
                                     onChange={handleChange}
                                     fullWidth
                                 />
@@ -236,8 +240,8 @@ const Interventions = ({ state, setState }) => {
                                     fullWidth
                                     variant="contained"
                                     onClick={() => {
-                                        setState(prev => ({
-                                            ...prev,
+                                        dispatch(store({
+                                            ...interventions,
                                             Treat_Total_Time: new Date().toLocaleTimeString('en-US'),
                                         }))
                                     }}
@@ -251,7 +255,7 @@ const Interventions = ({ state, setState }) => {
                                     color="secondary"
                                     size="small"
                                     name="Treat_Total_Time"
-                                    value={state.Treat_Total_Time}
+                                    value={interventions.Treat_Total_Time}
                                     onChange={handleChange}
                                     fullWidth
                                 />
@@ -269,7 +273,7 @@ const Interventions = ({ state, setState }) => {
                                             placeholder="0"
                                             id="dosage-amount"
                                             name="Dosage_Amount"
-                                            value={state.Dosage_Amount}
+                                            value={interventions.Dosage_Amount}
                                             onChange={handleChange}
                                             fullWidth
                                         />
@@ -284,7 +288,7 @@ const Interventions = ({ state, setState }) => {
                                             <Select
                                                 id="dosage-unit"
                                                 name="Dosage_Unit"
-                                                value={state.Dosage_Unit || ''}
+                                                value={interventions.Dosage_Unit || ''}
                                                 onChange={handleChange}
                                             >
                                                 <MenuItem value="mcg">mcg</MenuItem>
@@ -311,7 +315,7 @@ const Interventions = ({ state, setState }) => {
                                         <Select
                                             labelId="type-of-treatment-label"
                                             name="Treatment_Type"
-                                            value={state.Treatment_Type}
+                                            value={interventions.Treatment_Type}
                                             onChange={handleChange}
                                         >
                                             <MenuItem value="Medication">Medication</MenuItem>
@@ -333,7 +337,7 @@ const Interventions = ({ state, setState }) => {
                                         <Select
                                             labelId="treatment-outcome-label"
                                             name="Treatment_Outcome"
-                                            value={state.Treatment_Outcome}
+                                            value={interventions.Treatment_Outcome}
                                             onChange={handleChange}
                                         >
                                             <MenuItem value="Unchanged">Unchanged</MenuItem>
@@ -355,7 +359,7 @@ const Interventions = ({ state, setState }) => {
                                         <Select
                                             labelId="admin-route-label"
                                             name="Admin_Route"
-                                            value={state.Admin_Route}
+                                            value={interventions.Admin_Route}
                                             onChange={handleChange}
                                         >
                                             <MenuItem value="Something">Something</MenuItem>
@@ -364,7 +368,7 @@ const Interventions = ({ state, setState }) => {
                                     </FormControl>
                                 </Grid>
                                 <Grid item xs={12}>
-                                    {state.Admin_Route !== "Other" ? '' : (
+                                    {interventions.Admin_Route !== "Other" ? '' : (
                                         <TextField
                                             label="Other"
                                             variant="filled"
@@ -372,7 +376,7 @@ const Interventions = ({ state, setState }) => {
                                             size="small"
                                             name="Adm_Rt_Other"
                                             id="adm-rt-other"
-                                            value={state.Adm_Rt_Other}
+                                            value={interventions.Adm_Rt_Other}
                                             onChange={handleChange}
                                             fullWidth
                                         />

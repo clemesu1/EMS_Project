@@ -1,6 +1,8 @@
 import { FormControl, FormControlLabel, FormLabel, Grid, Paper, Radio, RadioGroup, Typography } from '@material-ui/core'
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles';
+import { useSelector, useDispatch } from 'react-redux';
+import { store } from '../../../features/abcs';
 
 const useStyles = makeStyles((theme) => ({
 	paper: {
@@ -12,14 +14,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ABCs = (props) => {
-	const { state, setState } = props
 	const classes = useStyles();
+	const dispatch = useDispatch();
+	const abcs = useSelector((state) => state.abcs.value)
 
 	const handleChange = (e) => {
-		setState({
-			...state,
-			[e.target.name]: e.target.value
-		})
+		dispatch(store({
+			...abcs,
+			[e.target.name]: e.target.value,
+		}))
 	}
 
 	return (
@@ -32,7 +35,7 @@ const ABCs = (props) => {
 				<Paper variant="outlined" className={classes.paper}>
 
 					<FormControl component="fieldset" fullWidth>
-						<RadioGroup row aria-label="airway-status" name="Airway_Status" value={state.Airway_Status} onChange={handleChange} >
+						<RadioGroup row aria-label="airway-status" name="Airway_Status" value={abcs.Airway_Status} onChange={handleChange} >
 							<FormControlLabel value="Clear" control={<Radio />} label="Clear" />
 							<FormControlLabel value="Completely Obstructed" control={<Radio />} label="Completely Obstructed" />
 							<FormControlLabel value="Partially Obstructed" control={<Radio />} label="Partially Obstructed" />
@@ -50,7 +53,7 @@ const ABCs = (props) => {
 
 					<FormControl component="fieldset">
 						<FormLabel color="secondary" component="legend">Effort</FormLabel>
-						<RadioGroup aria-label="breath-effort" name="Breath_Effort" value={state.Breath_Effort} onChange={handleChange}>
+						<RadioGroup aria-label="breath-effort" name="Breath_Effort" value={abcs.Breath_Effort} onChange={handleChange}>
 							<FormControlLabel value="Effortless" control={<Radio />} label="Effortless" />
 							<FormControlLabel value="Laboured" control={<Radio />} label="Laboured" />
 						</RadioGroup>
@@ -62,7 +65,7 @@ const ABCs = (props) => {
 
 					<FormControl component="fieldset">
 						<FormLabel color="secondary" component="legend">Rate</FormLabel>
-						<RadioGroup aria-label="breath-rate" name="Breath_Rate" value={state.Breath_Rate} onChange={handleChange}>
+						<RadioGroup aria-label="breath-rate" name="Breath_Rate" value={abcs.Breath_Rate} onChange={handleChange}>
 							<FormControlLabel value="Fast" control={<Radio />} label="Fast" />
 							<FormControlLabel value="Normal" control={<Radio />} label="Normal" />
 							<FormControlLabel value="Slow" control={<Radio />} label="Slow" />
@@ -77,7 +80,7 @@ const ABCs = (props) => {
 
 					<FormControl component="fieldset" >
 						<FormLabel color="secondary" component="legend">Rhythm</FormLabel>
-						<RadioGroup aria-label="breath-rhythm" name="Breath_Rhythm" value={state.Breath_Rhythm} onChange={handleChange}>
+						<RadioGroup aria-label="breath-rhythm" name="Breath_Rhythm" value={abcs.Breath_Rhythm} onChange={handleChange}>
 							<FormControlLabel value="Regular" control={<Radio />} label="Regular" />
 							<FormControlLabel value="Irregular" control={<Radio />} label="Irregular" />
 						</RadioGroup>
@@ -95,7 +98,7 @@ const ABCs = (props) => {
 
 						<FormControl component="fieldset" fullWidth>
 							<FormLabel color="secondary" component="legend">Site</FormLabel>
-							<RadioGroup row aria-label="circul-site" name="Circul_Site" value={state.Circul_Site} onChange={handleChange} style={{ justifyContent: 'space-between' }} >
+							<RadioGroup row aria-label="circul-site" name="Circul_Site" value={abcs.Circul_Site} onChange={handleChange} style={{ justifyContent: 'space-between' }} >
 								<FormControlLabel value="Carotid" control={<Radio />} label="Carotid" />
 								<FormControlLabel value="Radial" control={<Radio />} label="Radial" />
 								<FormControlLabel value="Brachial" control={<Radio />} label="Brachial" />
@@ -110,7 +113,7 @@ const ABCs = (props) => {
 
 						<FormControl component="fieldset">
 							<FormLabel color="secondary" component="legend">Rate</FormLabel>
-							<RadioGroup aria-label="circul-rate" name="Circul_Rate" value={state.Circul_Rate} onChange={handleChange}>
+							<RadioGroup aria-label="circul-rate" name="Circul_Rate" value={abcs.Circul_Rate} onChange={handleChange}>
 								<FormControlLabel value="Fast" control={<Radio />} label="Fast" />
 								<FormControlLabel value="Normal" control={<Radio />} label="Normal" />
 								<FormControlLabel value="Slow" control={<Radio />} label="Slow" />
@@ -123,7 +126,7 @@ const ABCs = (props) => {
 					<Paper variant="outlined" className={classes.paper}>
 						<FormControl component="fieldset">
 							<FormLabel color="secondary" component="legend">Volume</FormLabel>
-							<RadioGroup aria-label="circul-vol" name="Circul_Vol" value={state.Circul_Vol} onChange={handleChange}>
+							<RadioGroup aria-label="circul-vol" name="Circul_Vol" value={abcs.Circul_Vol} onChange={handleChange}>
 								<FormControlLabel value="Weak" control={<Radio />} label="Weak" />
 								<FormControlLabel value="Normal" control={<Radio />} label="Normal" />
 								<FormControlLabel value="Bounding" control={<Radio />} label="Bounding" />
@@ -135,7 +138,7 @@ const ABCs = (props) => {
 					<Paper variant="outlined" className={classes.paper}>
 						<FormControl component="fieldset">
 							<FormLabel color="secondary" component="legend">Rhythm</FormLabel>
-							<RadioGroup aria-label="circul-rhythm" name="Circul_Rhythm" value={state.Circul_Rhythm} onChange={handleChange}>
+							<RadioGroup aria-label="circul-rhythm" name="Circul_Rhythm" value={abcs.Circul_Rhythm} onChange={handleChange}>
 								<FormControlLabel value="Regular" control={<Radio />} label="Regular" />
 								<FormControlLabel value="Irregular" control={<Radio />} label="Irregular" />
 							</RadioGroup>

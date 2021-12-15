@@ -2,6 +2,8 @@ import React from 'react';
 import { Checkbox, Grid, ListItem, ListItemIcon, ListItemText, TextField, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { FixedSizeList } from 'react-window';
+import { useSelector, useDispatch } from 'react-redux';
+import { store } from '../../../features/patientHistory';
 
 const medications = ["Accupril", "Acebutolol", "Acetaminophen", "Adalat", "Advil", "Albuterol", "Allopurinol", "Alprazolam", "Altace", "Amitriptyline", "Amoxillin Amoxil", "Anaprox", "ASA", "Atenolol", "Ativan", "Atropine", "Bactrim", "Beclovent", "Benedryl", "Benylin", "Biaxin", "Captopril", "Cardizem", "Cialis", "Cimetidine", "Cipro", "Claritin", "Claritin", "Claritromycin", "Clonazepam", "Codeine", "Colace", "Coumadin",
 	"Demerol", "Diabeta", "Diazepam", "Digoxin", "Dilantin", "Dilaudid", "Diltiazem", "Diphenhydramine", "EffexorErythromycin", "Endocet", "Ferrous sulphate", "Flonase", "Flovent", "Folic acid", "Furosemide", "Glucagon", "Glucophge", "Glyburide", "GLyburide", "Haldol", "Hmulin N", "Humulin R", "Hydrochlorothiazide", "Hydromorphone", "Ibuprofen", "Imodium", "Inderal", "Insulin", "Ipratropium", "Isoptin", "Keflex", "Lanoxin",
@@ -21,14 +23,16 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const Medications = ({ state, setState, checked, setChecked }) => {
+const Medications = ({ checked, setChecked }) => {
 	const classes = useStyles();
+	const dispatch = useDispatch();
+	const patientHistory = useSelector((state) => state.patientHistory.value)
 
 	const handleChange = (e) => {
-		setState({
-			...state,
-			[e.target.name]: e.target.value
-		})
+		dispatch(store({
+			...patientHistory,
+			[e.target.name]: e.target.value,
+		}))
 	}
 	const handleToggle = (value) => () => {
 		const currentIndex = checked.indexOf(value);
@@ -42,10 +46,10 @@ const Medications = ({ state, setState, checked, setChecked }) => {
 
 		setChecked(newChecked);
 
-		setState({
-			...state,
+		dispatch(store({
+			...patientHistory,
 			Med_Name: newChecked,
-		})
+		}))
 	};
 
 	return (
@@ -69,7 +73,7 @@ const Medications = ({ state, setState, checked, setChecked }) => {
 						variant="outlined"
 						color="secondary"
 						name="Med_Others"
-						value={state.Med_Others}
+						value={patientHistory.Med_Others}
 						onChange={handleChange}
 					/>
 				</Grid>
